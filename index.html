@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Board Game</title>
+  <style>
+    .board {
+      display: grid;
+      grid-template-columns: repeat(6, 50px);
+      grid-template-rows: repeat(6, 50px);
+      gap: 5px;
+    }
+
+    .tile {
+      width: 50px;
+      height: 50px;
+      border: 1px solid black;
+    }
+
+    .flooded {
+      background-color: lightblue;
+    }
+
+    .sunk {
+      background-color: darkblue;
+    }
+  </style>
+</head>
+
+<body>
+  HI
+  <div class="board" id="board"></div>
+
+  <!-- Import your JavaScript files here -->
+  <script src="forbiddenisland.js"></script>
+  <script type="module"  src="game.js"></script>
+</body>
+
+</html>
