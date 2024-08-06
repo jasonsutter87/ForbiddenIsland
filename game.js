@@ -1,5 +1,6 @@
 // Import forbiddenisland.js
 import './forbiddenisland.js';
+import { game_board } from './lookups.js';
 
 // Function to set up the board
 function createBoard(board) {
@@ -8,35 +9,40 @@ function createBoard(board) {
 
   // Create the grid
   for (let row = 0; row < board.length; row++) {
+    const rowElement = document.createElement('div');
+    rowElement.className = 'row'; // Optional: style rows separately
     for (let col = 0; col < board[row].length; col++) {
+      const tileData = board[row][col];
       const tile = document.createElement('div');
       tile.className = 'tile'; // Basic styling for each tile
 
-      // Add classes based on tile properties (for example)
-      if (board[row][col] === 'flooded') {
+      // Handle different tile data cases
+      if (tileData === 'x') {
+        tile.classList.add('blocked');
+      } else if (tileData.flooded) {
         tile.classList.add('flooded');
-      } else if (board[row][col] === 'sunk') {
+      } else if (tileData.sunk) {
         tile.classList.add('sunk');
+      } else {
+        tile.classList.add('normal');
       }
 
-      boardElement.appendChild(tile);
+      // Add content or additional classes based on other properties
+      if (tileData.name) {
+        // Create and append the image element
+        const img = document.createElement('img');
+        img.src = `./assets/game-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
+        img.alt = tileData.name; // Optional: add alt text for accessibility
+        tile.appendChild(img);
+      }
+
+      rowElement.appendChild(tile);
     }
+    boardElement.appendChild(rowElement);
   }
 }
-
-// Example board setup (for demonstration)
-const exampleBoard = [
-  ['c', 'c', 'c', 'c', 'c', 'c'],
-  ['c', 'c', 'c', 'c', 'c', 'c'],
-  ['c', 'c', 'c', 'c', 'c', 'c'],
-  ['c', 'c', 'c', 'c', 'c', 'c'],
-  ['c', 'c', 'c', 'c', 'c', 'c'],
-  ['c', 'c', 'c', 'c', 'c', 'c'],
-];
-
-
-
+game_board;
 // Set up the board when the window loads
 window.onload = () => {
-  createBoard(exampleBoard);
+  createBoard(game_board);
 };
