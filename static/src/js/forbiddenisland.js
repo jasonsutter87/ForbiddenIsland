@@ -79,6 +79,7 @@ PLAYER_CARDS;
 FLOOD_CARDS;
 // Set intial flood level
 let flood_level = 0;
+let flood_draw_count = 2;
 //starting game board temp starting position
 game_board;
 let flood_discard = [];
@@ -118,11 +119,10 @@ let floodSix = (gameBoard) => {
     if(ind < 6) {
        let tile = selectObjectById(game_board, val.id)
        tile.flooded = true 
-       moveCardNewPile(flood_discard, gameBoard)
+       moveCardNewPile(flood_discard, gameBoard);
     }
   });
 };
-
 
 let moveCardNewPile = (inbound, outbound) => {
   if (outbound.length > 0) {
@@ -141,6 +141,36 @@ let selectObjectById = (board, id) => {
   return null;
 };
 
+let raiseTheWaterLevel = () => { 
+  flood_level++
+    switch (true) {
+      case (flood_level >= 8):
+        flood_draw_count = 5;
+        break;
+      case (flood_level >= 6):
+        flood_draw_count = 4;
+        break;
+      case (flood_level >= 3):
+        flood_draw_count = 3;
+        break;
+      default:
+        flood_draw_count = 2; // Base case
+    }
+} 
+
+let floodByWaterLevel = (floodDeck, waterLevel) => {
+  for (let i = 0; i < waterLevel; i++) {
+    if (floodDeck.length > 0) {
+      let val = floodDeck.shift();
+      let tile = selectObjectById(game_board, val.id);
+      if (tile) {
+        tile.flooded = true;
+        moveCardNewPile(flood_discard, [val]);
+      }
+    }
+  }
+};
+
 
 //////////////////
 //  Game Start  //
@@ -157,19 +187,23 @@ let shuffled_actions_cards = ACTION_CARDS;
 let shuffled_player_cards = PLAYER_CARDS;
 let shuffled_flood_cards = FLOOD_CARDS.slice();
 let starting_flood_cards = shuffled_flood_cards.slice();
-shuffle(starting_flood_cards);
 
 setDifficulty(DIFFICULTY.novice)
+console.log(flood_level)
 placeTilesOnBoard(game_board, shuffled_flood_cards)
+
+//shuffle flood cards one last time
+shuffle(starting_flood_cards);
+
+//flood starting 6 lands
 floodSix(starting_flood_cards)
 
+// raiseTheWaterLevel()
+// floodByWaterLevel(starting_flood_cards, flood_draw_count)
 
 
 
-//gameboard
-// console.log('gameboard', game_board)
-// console.log('starting_flood_cards', starting_flood_cards)
-console.log('shuffled_actions_cards', shuffled_actions_cards)
-// console.log('shuffled_player_cards', shuffled_player_cards)
+
+
 
 //End New Game Runner Start
