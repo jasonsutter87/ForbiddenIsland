@@ -34,14 +34,19 @@ html {
   
   .board {
     display: grid;
-    grid-template-columns: repeat(6, 150px);
-    grid-template-rows: repeat(6, 150px);
-    gap: 5px;
+    grid-template-columns: repeat(6, 14vh); 
+    grid-template-rows: repeat(6, 14vh); 
+    gap: .5rem;
+  }
+
+  .row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 1.5rem;
   }
   
   .tile {
-    width: 150px;
-    height: 150px;
+    width: 14vh;
+    height: 14vh;
     border: 1px solid black;
     padding: 0;
   }
@@ -52,10 +57,17 @@ html {
   
   .flooded {
     background-color: lightblue;
+    cursor: pointer;
   }
   
   .sunk {
     background-color: darkblue;
+    visibility: hidden;
+    cursor: none;
+  }
+
+  .normal {
+    cursor: pointer;
   }
   
   

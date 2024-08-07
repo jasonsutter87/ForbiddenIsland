@@ -16,6 +16,8 @@ function createBoard(board) {
       const tile = document.createElement('div');
       tile.className = 'tile'; // Basic styling for each tile
 
+      console.log(tile)
+
       // Handle different tile data cases
       if (tileData === 'x') {
         tile.classList.add('blocked');
@@ -25,8 +27,6 @@ function createBoard(board) {
             img.src = `./assets/images/flooded-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
             img.alt = tileData.name; // Optional: add alt text for accessibility
           tile.appendChild(img);
-      } else if (tileData.sunk) {
-        tile.classList.add('sunk');
       } else {
         tile.classList.add('normal');
          // Create and append the image element
@@ -34,6 +34,10 @@ function createBoard(board) {
          img.src = `./assets/images/game-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
          img.alt = tileData.name; // Optional: add alt text for accessibility
          tile.appendChild(img);
+      }
+
+      if (tileData.sunk) {
+        tile.classList.add('sunk');
       }
 
       // Add content or additional classes based on other properties
