@@ -1,0 +1,60 @@
+<div class="index-main-blog-post mb-4 mt-2 my-lg-0">
+  {{ $page := . }}
+
+
+        <div class="">
+          <a href="{{ .RelPermalink }}">
+            <img src="{{ .Params.image }}" alt="{{ .Params.alt }}" class="w-100">
+          </a>
+        </div>
+
+        <div class="article_content_inner p-4 pt-3 pb-5">
+
+          <div class="d-lg-block justify-content-between align-items-center">
+            {{- with $page.Params.tags -}}
+            {{ $size := len $page.Params.tags }}
+              {{if gt $size 1}}
+              <div class="tags mt-2">
+                {{- range $index, $element := .   -}}
+                  {{ if ne $index (sub $size 1)}} 
+                    <a class="mr-2 primary-link-alt text-uppercase" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
+                      {{ $element }},
+                    </a>
+                  {{ else }}
+                    <a class="mr-2 primary-link-alt text-uppercase" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
+                      {{ $element }}
+                    </a>
+                  {{ end }}
+                {{- end -}}
+              </div>
+              {{ else }}
+                <div class="tags mt-2">
+                  {{- range .   -}}
+                  <a class="mr-2 primary-link-alt text-uppercase" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
+                    {{ . }}
+                  </a>
+                  {{- end -}}
+                </div>
+              {{ end }}
+              
+          
+            {{- end -}}
+
+            <span class="mid-text">{{ $page.Date.Format "January 2, 2006" }}</span>
+          </div>
+
+          <h4 class="h4-heading secondary-text mt-4">
+            <a href="{{ .RelPermalink }}" class="secondary-link-alt">
+              {{ .Title }}
+            </a>
+          </h4>
+
+
+          <div class="card-text mid-black-text mt-4">
+            {{ .Summary | htmlUnescape | chomp }}
+          </div>
+
+
+        </div>
+
+</div>

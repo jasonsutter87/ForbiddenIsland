@@ -21,19 +21,24 @@ function createBoard(board) {
         tile.classList.add('blocked');
       } else if (tileData.flooded) {
         tile.classList.add('flooded');
+          const img = document.createElement('img');
+            img.src = `./assets/images/flooded-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
+            img.alt = tileData.name; // Optional: add alt text for accessibility
+          tile.appendChild(img);
       } else if (tileData.sunk) {
         tile.classList.add('sunk');
       } else {
         tile.classList.add('normal');
+         // Create and append the image element
+         const img = document.createElement('img');
+         img.src = `./assets/images/game-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
+         img.alt = tileData.name; // Optional: add alt text for accessibility
+         tile.appendChild(img);
       }
 
       // Add content or additional classes based on other properties
       if (tileData.name) {
-        // Create and append the image element
-        const img = document.createElement('img');
-        img.src = `./assets/game-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
-        img.alt = tileData.name; // Optional: add alt text for accessibility
-        tile.appendChild(img);
+       
       }
 
       rowElement.appendChild(tile);
@@ -41,6 +46,7 @@ function createBoard(board) {
     boardElement.appendChild(rowElement);
   }
 }
+
 game_board;
 // Set up the board when the window loads
 window.onload = () => {

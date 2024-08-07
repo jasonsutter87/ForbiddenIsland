@@ -1,0 +1,61 @@
+<div class="post_article title-card-border">
+  {{ $page := . }}
+    <div class="row">
+      <div class="col-12">
+        <div class="article_content">
+          <div class="article_content_inner">
+            <!--category-->
+            <div class="d-lg-flex justify-content-between align-items-center">
+              {{- with $page.Params.tags -}}
+              {{ $size := len $page.Params.tags }}
+                {{if gt $size 1}}
+                <div class="tags mt-2 my-lg-2">
+                  {{- range $index, $element := .   -}}
+                    {{ if ne $index (sub $size 1)}} 
+                      <a class="mr-2 primary-link-alt text-uppercase" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
+                        {{ $element }},
+                      </a>
+                    {{ else }}
+                      <a class="mr-2 primary-link-alt text-uppercase" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
+                        {{ $element }}
+                      </a>
+                    {{ end }}
+                  {{- end -}}
+                </div>
+                {{ else }}
+                  <div class="tags mt-2 my-lg-2">
+                    {{- range .   -}}
+                    <a class="mr-2 primary-link-alt text-uppercase" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
+                      {{ . }}
+                    </a>
+                    {{- end -}}
+                  </div>
+                {{ end }}
+                
+            
+              {{- end -}}
+
+
+
+
+
+
+
+              <span class="mid-text">{{ $page.Date.Format "January 2, 2006" }}</span>
+
+            </div>
+
+            <h4 class="h4-heading mt-3 mt-lg-0">
+              <a href="{{ $page.RelPermalink }}" class="secondary-link-alt">
+                {{ $page.Title }}
+              </a>
+
+            </h4>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+</div>

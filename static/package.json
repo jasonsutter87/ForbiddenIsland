@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "build:js": "uglifyjs static/src/js/site.js -o public/src/js/site.js"
+    },
+    "devDependencies": {
+        "cssnano": "^6.0.1",
+        "postcss-cli": "^10.1.0",
+        "uglify-js": "^3.13.4"
+    }
+}

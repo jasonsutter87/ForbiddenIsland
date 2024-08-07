@@ -1,0 +1,62 @@
+
+{{- $related := .Site.RegularPages.Related . -}}
+{{- with $related -}}
+
+
+
+<section id="blog-post-related-section" class="pb-5">
+  <div class="site-container-1340">
+    <div class="row">
+      <div class="col-12 pb-3">
+        <h2>Related</h2>
+      </div>
+
+      {{- range .| first 3 -}}
+      <div class="d-lg-none">
+        {{ .Render "tile-card" }}
+      </div>
+    
+
+      <div class="col-12 col-lg-4 blog-post-card-wrapper d-none d-lg-block">
+        <div class="blog-post-card">
+    
+          <a href="{{ .RelPermalink }}">
+            <img src="{{ .Params.image }}" alt="{{ .Params.alt }}" class="w-100">
+          </a>
+          <div class="blog-post-content">
+            <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-between">
+              {{- with .Params.tags -}}
+              <div class="tags">
+                {{- range . -}}
+                <a class="primary-link-alt" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
+                  {{ . }}
+                </a>
+                {{- end -}}
+              </div>
+              {{- end -}}
+    
+              <span class="mid-text">{{ .Date.Format "January 2, 2006" }}</span>
+            </div>
+            <h4 class="h4-heading secondary-text mt-4">
+              <a href="{{ .RelPermalink }}" class="secondary-link-alt">
+                {{ .Title }}
+              </a>
+            </h4>
+    
+    
+            <div class="card-text mid-black-text mt-4">
+              {{ .Summary | htmlUnescape | chomp }}
+            </div>
+    
+          </div>
+        </div>
+      </div>
+      {{- end -}}
+
+    </div>
+  </div>
+</section>
+
+
+
+{{- end -}}

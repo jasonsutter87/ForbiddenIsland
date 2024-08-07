@@ -1,0 +1,14 @@
+baseURL = 'https://mandatedreportertraining.com/'
+languageCode = 'en-us'
+title = ''
+enableRobotsTXT = true
+summaryLength = 30
+# disableKinds = ["taxonomy", "taxonomyTerm"]
+
+[taxonomies]
+  tag = "tags"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

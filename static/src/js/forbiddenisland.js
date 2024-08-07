@@ -81,6 +81,7 @@ FLOOD_CARDS;
 let flood_level = 0;
 //starting game board temp starting position
 game_board;
+let flood_discard = [];
 ////Set up functions
 
 //normal Shuffle
@@ -111,6 +112,34 @@ let placeTilesOnBoard = (gameBoard, floodDeck) => {
     }
   }
 }
+// flood_discard
+let floodSix = (gameBoard) => {
+  gameBoard.forEach((val, ind) => {
+    if(ind < 6) {
+       let tile = selectObjectById(game_board, val.id)
+       tile.flooded = true 
+       moveCardNewPile(flood_discard, gameBoard)
+    }
+  });
+};
+
+
+let moveCardNewPile = (inbound, outbound) => {
+  if (outbound.length > 0) {
+    inbound.push(outbound.shift());
+  }
+};
+
+let selectObjectById = (board, id) => {
+  for (let row of board) {
+    for (let tile of row) {
+      if (typeof tile === 'object' && tile.id === id) {
+        return tile;
+      }
+    }
+  }
+  return null;
+};
 
 
 //////////////////
@@ -128,9 +157,12 @@ let shuffled_actions_cards = ACTION_CARDS;
 let shuffled_player_cards = PLAYER_CARDS;
 let shuffled_flood_cards = FLOOD_CARDS.slice();
 let starting_flood_cards = shuffled_flood_cards.slice();
+shuffle(starting_flood_cards);
 
 setDifficulty(DIFFICULTY.novice)
 placeTilesOnBoard(game_board, shuffled_flood_cards)
+floodSix(starting_flood_cards)
+
 
 
 

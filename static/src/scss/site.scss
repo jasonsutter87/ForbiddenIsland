@@ -1,0 +1,71 @@
+// Functions first
+// Import Bootstrap SCSS
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+
+
+
+// Variable overrides second
+@import "variables";
+@import "utilities";
+
+
+
+// Required Bootstrap imports
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/variables-dark";
+@import "../../../node_modules/bootstrap/scss/maps";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/root";
+
+// Optional components
+@import "../../../node_modules/bootstrap/scss/utilities";
+@import "../../../node_modules/bootstrap/scss/reboot";
+@import "../../../node_modules/bootstrap/scss/containers";
+@import "../../../node_modules/bootstrap/scss/grid";
+@import "../../../node_modules/bootstrap/scss/helpers";
+@import "../../../node_modules/bootstrap/scss/utilities/api";
+
+
+html {
+    height: 100%;
+    width: 100%;
+  }
+  
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(6, 150px);
+    grid-template-rows: repeat(6, 150px);
+    gap: 5px;
+  }
+  
+  .tile {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    padding: 0;
+  }
+  
+  .blocked {
+    visibility: hidden;
+  }
+  
+  .flooded {
+    background-color: lightblue;
+  }
+  
+  .sunk {
+    background-color: darkblue;
+  }
+  
+  
+  .normal img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .flooded img {
+    object-fit: cover;
+    width: 100%;
+  }
+  

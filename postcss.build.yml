@@ -1,0 +1,12 @@
+input: static/src/scss/site.css
+output: public/src/css/
+plugins:
+  - postcss-import
+  - postcss-nested
+  - postcss-custom-properties
+  - postcss-calc
+  - postcss-preset-env
+  - postcss-discard-comments
+  - postcss-merge-rules
+  - postcss-sorting
+  - cssnano
