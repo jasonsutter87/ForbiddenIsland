@@ -79,4 +79,61 @@ html {
     object-fit: cover;
     width: 100%;
   }
+
+
+  .btn-primary {
+    transition: 0.5s !important;
+    cursor: pointer !important;
+    background-color: #000033 !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    border: 2px solid #000033 !important;
+    color: #ffffff !important;
+    line-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    text-transform: capitalize;
+    text-decoration: none !important;
+}
+.btn-size-lg {
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-size: calc(1rem * 1.111) !important;
+    line-height: calc(24px * 1.166) !important;
+}
   
+
+  #statingModal {
+
+    .modal-backdrop {
+      background-color: transparentize($color: #000000, $amount: .7);
+      
+      .modal-body {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: center;
+      }
+
+      .modal-inner {
+        width: 100%;
+        max-width: 300px;
+        background-color: greenyellow;
+        padding: 1.25rem;
+      }
+
+      .modal-exit {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+          background-color: transparent;
+          border: 0;
+          box-shadow: none;
+        }
+      }
+
+    }
+  }
