@@ -3,7 +3,7 @@
 {{ range $dir := $directories }}
   {{ range readDir (print "static/" $dir) }}
     {{ if eq (path.Ext .Name) ".js" }}
-      <script defer src="{{ $dir | relURL }}{{ .Name }}"></script>
+      <script defer type="module" src="{{ $dir | relURL }}{{ .Name }}"></script>
     {{ end }}
   {{ end }}
 {{ end }}
