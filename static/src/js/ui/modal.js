@@ -13,4 +13,7 @@ export let StartGameModal = $('#StartGame-Form').on('submit', (e) => {
     // console.log('gameboard', game_board)
     // console.log('flood_level', flood_level)
     // console.log('player_count', player_count)
-  })
+})
+
+
+export let PlayerFloodTileAction = $('')

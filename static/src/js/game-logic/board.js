@@ -71,7 +71,8 @@ export let game_details = {
   current_player: null,
   current_player_turns_left: null,
   gameBoard: game_board,
-  status: game_status.notStarted
+  status: game_status.notStarted,
+  current_flood_level: 0
 }
 
 

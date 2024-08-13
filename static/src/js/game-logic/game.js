@@ -1,44 +1,5 @@
 // //This file will serve as the main entry point for your game, where you initialize the game board, set up players, and start the game loop.
 
-// // Difficultys
-// DIFFICULTY;
-// // Treasures
-// TREASURES;
-// // action Cards
-// ACTION_CARDS;
-// // Player Cards
-// PLAYER_CARDS;
-// // Flood Cards
-// FLOOD_CARDS;
-// // Set intial flood level
-// let flood_level = 0;
-// let flood_draw_count = 2;
-// //starting game board temp starting position
-// game_board;
-// let player_count = 1;
-// let flood_discard = [];
-// ////Set up functions
-
-
-
-
-// //////////////////
-// //  Game Start  //
-// //////////////////
-
-// //shuffle flood Cards
-// shuffle(FLOOD_CARDS);
-// //shuffle action Cards
-// shuffle(ACTION_CARDS);
-// //shuffle player Cards
-// shuffle(PLAYER_CARDS);
-
-// let shuffled_actions_cards = ACTION_CARDS;
-// let shuffled_player_cards = PLAYER_CARDS;
-// let shuffled_flood_cards = FLOOD_CARDS.slice();
-// let starting_flood_cards = shuffled_flood_cards.slice();
-
-
 /*
 //Runner
  - Set up
@@ -63,51 +24,70 @@
         - Draw Action Cards
         - Draw Flood Cards
 
-
-
-
-
 */
 
 
 
 //This file will serve as the main entry point for your game, where you initialize the game board, set up players, and start the game loop.
 
-
 // runner
+import { floodSix, game_board, game_details } from '/src/js/game-logic/board.js';
 import { StartGameModal } from '/src/js/ui/modal.js';
+import { createBoardUI } from '/src/js/ui/ui.js'
+import { ACTION_CARDS , FLOOD_CARDS } from '/src/js/game-logic/tile.js';
+import { shuffle , dividedShuffle } from '/src/js/game-machanics/shuffling.js';
 
 let game_runner = () =>  {
-    game_setup();
+    //Game Set up
+    let StartGameModalResults = StartGameModal;
+    game_setup(game_board, shuffle(ACTION_CARDS), StartGameModalResults.playerDifficuly);
+    //////////////////
+    //  Game Start  //
+    //////////////////
 
-    StartGameModal;
+    floodSix()
+    placePlayersOnBoard
+    
 
     let game_lost = false;
     let game_won = false;
 
     // // Main game loop
-    // while (!game_lost && !game_won) { 
-    //     // Game logic goes here
+    while (!game_lost || !game_won) { 
+        // Game logic goes here
 
-    //     if(game_won){
-    //         return true;
-    //     }
-    //     if(game_lost){
-    //         return false;
-    //     }
-
-
+        if(game_won){
+            return true;
+        }
+        if(game_lost){
+            return false;
+        }
 
 
-    // }
+
+
+        //temp not to break the game, 
+        game_lost = true;
+        return game_lost;
+    }
     
 
 }
 
 
-let game_setup = () => {
-    console.log('gmae runner: game_setup')
-    //
+let game_setup = (cardDeck, actionCard, playerDifficuly) => {
+    console.log('game runner: game_setup')
+    
+    //set difficuulty via that flood level 
+    game_details.current_flood_level = playerDifficuly
+    // shuffle action cards
+
+    //shuffle floodDeck
+    
+    //duplicate new flood deck for Flood Cards
+
+    // call the ui to set the deck with the shufflec deck
+    createBoardUI(cardDeck)
 }
 
     

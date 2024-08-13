@@ -38,3 +38,10 @@ export const PLAYER_CARDS = [
       Action: "Move another player up to 2 adjacent tiles for 1 action."
     }
   ]
+
+export const DIFFICULTY = {
+  novice: 1,
+  normal: 2,
+  elite: 3,
+  legendary: 4
+}
