@@ -36,7 +36,7 @@ export let floodByWaterLevel = (floodDeck, waterLevel) => {
           moveCardNewPile(flood_discard, [val]);
         }
       }
-    }``
+    }
     console.log('gameboard', game_board)
 };
 
