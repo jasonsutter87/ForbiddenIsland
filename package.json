@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "build:js": "uglifyjs static/src/js/site.js -o public/src/js/site.js"
+        "build:js": "uglifyjs static/src/js/*  -o public/src/js/*"
     },
     "devDependencies": {
         "cssnano": "^6.0.1",
