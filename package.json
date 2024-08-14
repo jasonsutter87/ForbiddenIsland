@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "build:js": "uglifyjs static/src/js/game-logic/board.js  -o public/src/js/game-logic/board.js"
+        "build:js": ""
     },
     "devDependencies": {
         "cssnano": "^6.0.1",
