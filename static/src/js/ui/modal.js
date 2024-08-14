@@ -1,18 +1,16 @@
 //Manages modals or popups that appear during the game, such as victory/defeat screens, instructions, or settings.
+import { game_details } from "../game-logic/board.js";
+
 
 export let StartGameModal = $('#StartGame-Form').on('submit', (e) => {
     e.preventDefault()
+    game_details.current_flood_level = parseInt($('#difficultySlider').val())
+    game_details.number_of_players = parseInt($('#numberOfPlayersSlider').val())
 
-    console.log('starting start game modal')
-    let flood_level = $('#difficultySlider').val();
-    let player_count = $('#numberOfPlayersSlider').val()
   
     $('#statingModal').addClass('d-none')
-  
-  
-    // console.log('gameboard', game_board)
-    // console.log('flood_level', flood_level)
-    // console.log('player_count', player_count)
+
+    return game_details;
 })
 
 

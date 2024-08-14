@@ -1,4 +1,6 @@
 // Handles the setup of the game board, including placing tiles, managing the board state, and updating the board as the game progresses.
+import { selectObjectById } from "../utilities/utils.js";
+import { moveCardNewPile } from "../game-machanics/cards.js" 
 
 export let game_board = [
     ['x', 'x', 'c', 'c', 'x', 'x'],
@@ -37,16 +39,26 @@ export let floodByWaterLevel = (floodDeck, waterLevel) => {
         }
       }
     }
-    console.log('gameboard', game_board)
 };
 
+
+export let placeTilesOnBoard = (gameBoard, floodDeck) => {
+  for (let i = 0; i < gameBoard.length; i++) {
+    for (let j = 0; j < gameBoard[i].length; j++) {
+      if (gameBoard[i][j] === 'c') {
+        gameBoard[i][j] = floodDeck.shift();
+      }
+    }
+  }
+}
+
 export let floodSix = (gameBoard) => {
+  game_details.flood_deck.unused = gameBoard
   gameBoard.forEach((val, ind) => {
       if(ind < 6) {
       let tile = selectObjectById(game_board, val.id)
       tile.flooded = true 
-      console.log(val)
-      moveCardNewPile(flood_discard, gameBoard);
+      moveCardNewPile(game_details.flood_deck.discard,  game_details.flood_deck.unused );
       }
   });
 };

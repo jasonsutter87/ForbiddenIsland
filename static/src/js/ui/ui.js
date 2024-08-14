@@ -12,7 +12,7 @@ export function createBoardUI(board) {
         const tileData = board[row][col];
         const tile = document.createElement('div');
         tile.className = 'tile'; // Basic styling for each tile
-        console.log(board[row])
+        // console.log(board[row])
         // Handle different tile data cases
         if (tileData === 'x') {
           tile.classList.add('blocked');
@@ -44,3 +44,7 @@ export function createBoardUI(board) {
     }
  }
   
+
+ export let redrawBoardUI = (board) => {
+    createBoardUI(board)
+ } 
