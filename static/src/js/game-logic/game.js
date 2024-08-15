@@ -141,10 +141,10 @@ function game_runner() {
             // Game logic goes here
 
             if(game_details.status === game_status.won ){
-                resolve(true);
+                resolve(game_status.won);
             }
             if(game_details.status === game_status.lost ){
-                resolve(false);
+                resolve(game_status.lost);
             }
 
             // temp not to break the game
