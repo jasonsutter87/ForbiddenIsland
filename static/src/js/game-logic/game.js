@@ -1,9 +1,5 @@
-// //This file will serve as the main entry point for your game, where you initialize the game board, set up players, and start the game loop.
-
 /*
-//Runner
- - Set up
- - Set up Gameplay
+TODO:
 
     ////Game Loop
         //Win Condition
@@ -26,169 +22,144 @@
 
 */
 
+//This file will serve as the main entry point for the game
 
-
-//This file will serve as the main entry point for your game, where you initialize the game board, set up players, and start the game loop.
-
-// runner
-import { floodSix, game_board, game_details, placeTilesOnBoard } from '/src/js/game-logic/board.js';
+import { floodSix, game_board, game_details, game_status, placeTilesOnBoard } from '/src/js/game-logic/board.js';
 import { StartGameModal } from '/src/js/ui/modal.js';
-import { createBoardUI, redrawBoardUI } from '/src/js/ui/ui.js'
-import { ACTION_CARDS , FLOOD_CARDS } from '/src/js/game-logic/tile.js';
-import { shuffle , dividedShuffle } from '/src/js/game-machanics/shuffling.js';
-import { PLAYER_CARDS } from '/src/js/game-logic/player.js'
+import { createBoardUI, redrawBoardUI } from '/src/js/ui/ui.js';
+import { ACTION_CARDS, FLOOD_CARDS } from '/src/js/game-logic/tile.js';
+import { shuffle, dividedShuffle } from '/src/js/game-machanics/shuffling.js';
+import { PLAYER_CARDS } from '/src/js/game-logic/player.js';
+
+let gameQueue = [];
+let isProcessing = false;
+
+// Queue management functions
+function addToQueue(fn, ...args) {
+    gameQueue.push(() => fn(...args));
+    processQueue();
+}
+
+async function processQueue() {
+    if (isProcessing || gameQueue.length === 0) return;
+
+    isProcessing = true;
+    const fn = gameQueue.shift();
+
+    await fn();  // Wait for the function to finish
+
+    isProcessing = false;
+    processQueue();  // Process the next function
+}
 
 
-// let game_runner = () =>  {
-//     //Game Set up
-//     let StartGameModalResults = StartGameModal;
-//     game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS,  StartGameModalResults.playerDifficuly);
+function setDifficulty(playerDifficuly) {
+    return new Promise(resolve => {
+        console.log('setDifficulty')
+        game_details.current_flood_level = playerDifficuly;
+        resolve();
+    });
+}
 
-//     //////////////////
-//     //  Game Start  //
-//     //////////////////
+function shuffleActionCards(ACTION_CARDS) {
+    return new Promise(resolve => {
+        console.log('shuffle action')
+        shuffle(ACTION_CARDS);
+        game_details.action_deck.unused = ACTION_CARDS;
+        resolve();
+    });
+}
 
-//     //flood six cards
-//     floodSix(FLOOD_CARDS)
-//     //redraw UI
-//     redrawBoardUI(game_board)
+function shuffleFloodCards(FLOOD_CARDS) {
+    return new Promise(resolve => {
+        console.log('shuffle flood')
+        shuffle(FLOOD_CARDS);
+        resolve();
+    });
+}
 
-//     // placePlayersOnBoard
+function shufflePlayerCards(PLAYER_CARDS) {
+    return new Promise(resolve => {
+        console.log('shuffle player')
+        shuffle(PLAYER_CARDS);
+        resolve();
+    });
+}
 
-//     console.log(game_details)
+function placeTiles(game_board, FLOOD_CARDS) {
+    return new Promise(resolve => {
+        console.log('placeTiles')
+        let duplicateFloodDeck = FLOOD_CARDS.slice();
+        placeTilesOnBoard(game_board, duplicateFloodDeck);
+        resolve();
+    });
+}
 
-    
+function initializeBoardUI(game_board) {
+    return new Promise(resolve => {
+        console.log('initializeBoardUI')
+        createBoardUI(game_board);
+        resolve();
+    });
+}
 
-//     let game_lost = false;
-//     let game_won = false;
-
-//     // // Main game loop
-//     while (!game_lost || !game_won) { 
-//         // Game logic goes here
-
-//         if(game_won){
-//             return true;
-//         }
-//         if(game_lost){
-//             return false;
-//         }
-
-
-
-
-//         //temp not to break the game, 
-//         game_lost = true;
-//         return game_lost;
-//     }
-    
-
-// }
+function game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerDifficuly) {
+    addToQueue(setDifficulty, playerDifficuly);
+    addToQueue(shuffleActionCards, ACTION_CARDS);
+    addToQueue(shuffleFloodCards, FLOOD_CARDS);
+    addToQueue(shufflePlayerCards, PLAYER_CARDS);
+    addToQueue(placeTiles, game_board, FLOOD_CARDS);
+    addToQueue(initializeBoardUI, game_board);
+}
 
 
-// let game_setup = (game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerDifficuly) => {
-
-//     //set difficulty via that flood level 
-//     game_details.current_flood_level = playerDifficuly
-
-//     // shuffle action cards
-//     shuffle(ACTION_CARDS)
-
-//     //setting action Cards
-//     game_details.action_deck.unused = ACTION_CARDS
-
-//     //shuffle floodDeck
-//     shuffle(FLOOD_CARDS)
-
-//     //shuffle Player Cards
-//     shuffle(PLAYER_CARDS)
-
-//     // //duplicate new flood deck for Flood Cards
-//     let duplicateFloodDeck = FLOOD_CARDS.slice()
-
-//     //place tiles on the board
-//     placeTilesOnBoard(game_board, duplicateFloodDeck)
-
-//     // call the ui to set the deck with the shufflec deck
-//     createBoardUI(game_board)
-// }
-
-    
-// //runner
-// game_runner()
-
-// Main game runner function
-async function gameRunner() {
-    try {
+// Game runner function
+function game_runner() {
+    return new Promise(async (resolve) => {
         // Game Set up
-        let StartGameModalResults = StartGameModal; // Assuming StartGameModal is async
-        await gameSetup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, StartGameModalResults.playerDifficulty);
+        let StartGameModalResults = StartGameModal;
+        game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, StartGameModalResults.playerDifficuly);
+        addToQueue(StartGameModalResults);
 
         //////////////////
         //  Game Start  //
         //////////////////
 
         // Flood six cards
-        await floodSix(FLOOD_CARDS);
+        addToQueue(floodSix, FLOOD_CARDS);
 
         // Redraw UI
-        await redrawBoardUI(game_board);
+        addToQueue(redrawBoardUI, game_board);
 
-        // Place players on board (if there's a function for this)
-        // await placePlayersOnBoard(game_board);
-
+        // Log game details
         console.log(game_details);
 
-        let game_lost = false;
-        let game_won = false;
+      
 
         // Main game loop
-        while (!game_lost && !game_won) {
+        while (game_details.status !== game_status.lost || game_details.status !== game_status.won  ) { 
             // Game logic goes here
-            
-            // Placeholder: Implement actual game-winning and losing logic
-            if (game_won) {
-                return true;
+
+            if(game_details.status === game_status.won ){
+                resolve(true);
             }
-            if (game_lost) {
-                return false;
+            if(game_details.status === game_status.lost ){
+                resolve(false);
             }
 
-            // Temporary exit to prevent infinite loop during development
-            game_lost = true;
+            // temp not to break the game
+            game_details.status === game_status.lost
+            resolve(game_status.won);
+            return;
         }
-
-        return game_lost; // Return the game result
-
-    } catch (error) {
-        console.error("An error occurred during the game:", error);
-    }
-}
-
-// Game setup function
-async function gameSetup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerDifficulty) {
-    try {
-        // Set difficulty via the flood level
-        game_details.current_flood_level = playerDifficulty;
-
-        // Shuffle decks
-        shuffle(ACTION_CARDS);
-        shuffle(FLOOD_CARDS);
-        shuffle(PLAYER_CARDS);
-
-        // Setting up the action deck
-        game_details.action_deck.unused = ACTION_CARDS;
-
-        // Duplicate and place tiles on the board
-        let duplicateFloodDeck = FLOOD_CARDS.slice();
-        await placeTilesOnBoard(game_board, duplicateFloodDeck);
-
-        // Create the board UI with the shuffled deck
-        await createBoardUI(game_board);
-
-    } catch (error) {
-        console.error("An error occurred during the game setup:", error);
-    }
+    });
 }
 
 // Runner
-gameRunner();
+game_runner().then(result => {
+    if(result === game_status.won ) {
+        console.log('Game Won!');
+    } else {
+        console.log('Game Lost.');
+    }
+});
