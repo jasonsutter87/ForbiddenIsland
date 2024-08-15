@@ -1,7 +1,7 @@
 ---
-title: 'Alexia Clayborne'
+title: 'Forbidden Island'
 description: ''
-image:  /images/assets/brand/alexiaClayborne-share.jpg
+image:  ''
 priority: 1.0
 cta: true
 js: ['site.js']
