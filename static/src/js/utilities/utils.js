@@ -2,8 +2,6 @@
 
 
 export let selectObjectById = (board, id) => {
-  console.log('board', board)
-  console.log('id', id)
     for (let row of board) {
       for (let tile of row) {
         if (typeof tile === 'object' && tile.id === id) {

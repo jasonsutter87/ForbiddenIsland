@@ -1,6 +1,7 @@
 //Handles user interface interactions, updating the display, managing the HUD, and responding to player input.
 
 export function createBoardUI(board) {
+  return new Promise(resolve => {
     const boardElement = document.getElementById('board');
     boardElement.innerHTML = ''; // Clear any existing content
   
@@ -42,9 +43,13 @@ export function createBoardUI(board) {
       }
       boardElement.appendChild(rowElement);
     }
+    resolve();
+  });
  }
   
-
  export let redrawBoardUI = (board) => {
+  return new Promise(resolve => {
     createBoardUI(board)
+    resolve();
+  });
  } 

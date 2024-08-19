@@ -560,3 +560,26 @@ export const FLOOD_CARDS = [
     slug: "twilight-hollow"
   }
 ];
+
+export const TREASURES_PIECES = [
+  {
+    id: 1,
+    name: TREASURES.wind_treasure,
+    color: "Yellow"
+  },
+  {
+    id: 2,
+    name: TREASURES.fire_treasure,
+    color: "Red"
+  },
+  {
+    id: 3,
+    name: TREASURES.water_treasure,
+    color: "Blue"
+  },
+  {
+    id: 4,
+    name: TREASURES.earth_treasure,
+    color: "Purple"
+  }
+]

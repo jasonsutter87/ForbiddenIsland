@@ -1,4 +1,5 @@
 //Implements the Fisher-Yates shuffle algorithm and any other shuffling or randomization mechanics needed for the game.
+import { game_details } from '/src/js/game-logic/board.js';
 
 /*
     Normal Shuffle.
@@ -19,4 +20,29 @@ export let shuffle = array => {
 export let dividedShuffle = (topCards, bottomCards) => {
     shuffle(topCards)
     return topCards + ',' + bottomCards
+}
+
+export function shuffleActionCards(ACTION_CARDS) {
+    return new Promise(resolve => {
+        console.log('shuffle action')
+        shuffle(ACTION_CARDS);
+        game_details.action_deck.unused = ACTION_CARDS;
+        resolve();
+    });
+}
+
+export function shuffleFloodCards(FLOOD_CARDS) {
+    return new Promise(resolve => {
+        console.log('shuffle flood')
+        shuffle(FLOOD_CARDS);
+        resolve();
+    });
+}
+
+export function shufflePlayerCards(PLAYER_CARDS) {
+    return new Promise(resolve => {
+        console.log('shuffle player')
+        shuffle(PLAYER_CARDS);
+        resolve();
+    });
 }

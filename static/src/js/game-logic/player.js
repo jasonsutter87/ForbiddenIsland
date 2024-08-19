@@ -1,4 +1,6 @@
 //Manages player-related functionality, such as movement, interactions with tiles, and inventory management.
+import { game_details } from '/src/js/game-logic/board.js';
+
 export const PLAYER_CARDS = [
     {
       id: 1,
@@ -45,3 +47,20 @@ export const DIFFICULTY = {
   elite: 3,
   legendary: 4
 }
+
+
+export function setDifficulty(playerDifficuly) {
+  return new Promise(resolve => {
+      console.log('setDifficulty')
+      game_details.current_flood_level = playerDifficuly;
+      resolve();
+  });
+}
+
+
+
+
+//set player on board.
+
+// -- use FLOOD_CARDS to get the tile that matchs players name 
+// use the players starting tile ID, place player on the tile that matchs
