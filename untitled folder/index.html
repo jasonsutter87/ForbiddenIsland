@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,10 +12,109 @@
 <body>
   <div class="board" id="board"></div>
 
-  <!-- Import your JavaScript files here -->
+  
   <script type="module" src="./forbiddenisland.js"></script>
   <script type="module" src="./game.js"></script>
   <script type="module" src="./lookups.js"></script>
 </body>
 
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Board</title>
+    <style>
+        #board {
+            display: grid;
+            grid-template-columns: repeat(2, 100px);
+            grid-gap: 10px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            position: relative;
+        }
+        #player {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="board">
+        <div class="row">
+            <div id="a" class="cell"></div>
+            <div id="b" class="cell"></div>
+        </div>
+        <div class="row">
+            <div id="c" class="cell"><div id="player"></div></div>
+            <div id="d"  class="cell"></div>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for the JavaScript) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function movePlayer(fromId, toId) {
+                var $player = $('#player');
+                var $fromCell = $('#' + fromId);
+                var $toCell = $('#' + toId);
+
+                // Clone player
+                var $clone = $player.clone().appendTo($('body'));
+                $clone.css({
+                    top: $player.offset().top,
+                    left: $player.offset().left,
+                    zIndex: 1000
+                });
+
+                // Calculate target position
+                var targetOffset = $toCell.offset();
+
+                // Animate the clone to the new position
+                $clone.animate({
+                    top: targetOffset.top,
+                    left: targetOffset.left
+                }, 500, function() {
+                    // After animation completes, move the real player and remove the clone
+                    $clone.remove();
+                    $player.appendTo($toCell);
+                });
+            }
+
+            for (let i = 1; i < 30; i++) {
+    const baseDelay = i * 4000; // 4 moves, each taking 1 second
+
+    setTimeout(function() {
+        movePlayer('c', 'd');
+    }, baseDelay);
+
+    setTimeout(function() {
+        movePlayer('d', 'b');
+    }, baseDelay + 1000);
+
+    setTimeout(function() {
+        movePlayer('b', 'a');
+    }, baseDelay + 2000);
+
+    setTimeout(function() {
+        movePlayer('a', 'c');
+    }, baseDelay + 3000);
+}
+
+
+
+        });
+    </script>
+
+</body>
 </html>
+
