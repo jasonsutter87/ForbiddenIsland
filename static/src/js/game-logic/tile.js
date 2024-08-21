@@ -1,7 +1,6 @@
 //Contains the logic related to individual tiles, such as their properties (id, name, flooded, sunk, etc.) and actions that can be performed on them.
 import { PLAYER_CARDS } from '/src/js/game-logic/player.js'
 
-
 export const TREASURES = {
   wind_treasure: "The Statue of The Wind",
   fire_treasure: "The Crystal of Fire",
@@ -405,7 +404,7 @@ export const FLOOD_CARDS = [
     flooded: false,
     sunk: false,
     can_end_game: false,
-    starting_position: null,
+    starting_position: PLAYER_CARDS[1].name,
     treasure: null,
     slug: "fools-landing"
   },
@@ -415,7 +414,7 @@ export const FLOOD_CARDS = [
     flooded: false,
     sunk: false,
     can_end_game: false,
-    starting_position: PLAYER_CARDS[0].name,
+    starting_position: PLAYER_CARDS[4].name,
     treasure: null,
     slug: "bronze-gate"
   },
@@ -425,7 +424,7 @@ export const FLOOD_CARDS = [
     flooded: false,
     sunk: false,
     can_end_game: false,
-    starting_position: PLAYER_CARDS[1].name,
+    starting_position: PLAYER_CARDS[5].name,
     treasure: null,
     slug: "gold-gate"
   },
@@ -455,7 +454,7 @@ export const FLOOD_CARDS = [
     flooded: false,
     sunk: false,
     can_end_game: false,
-    starting_position: PLAYER_CARDS[4].name,
+    starting_position: PLAYER_CARDS[0].name,
     treasure: null,
     slug: "iron-gate"
   },

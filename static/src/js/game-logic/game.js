@@ -19,7 +19,7 @@ import { StartGameModal } from '/src/js/ui/modal.js';
 import { createBoardUI, redrawBoardUI } from '/src/js/ui/ui.js';
 import { ACTION_CARDS, FLOOD_CARDS } from '/src/js/game-logic/tile.js';
 import { shuffle, dividedShuffle, shuffleActionCards, shuffleFloodCards, shufflePlayerCards  } from '/src/js/game-machanics/shuffling.js';
-import { PLAYER_CARDS, setDifficulty } from '/src/js/game-logic/player.js';
+import { PLAYER_CARDS, setDifficulty, setPlayerOnTheBoard } from '/src/js/game-logic/player.js';
 
 let gameQueue = [];
 let isProcessing = false;
@@ -111,8 +111,11 @@ let game_runner = () => {
         // Redraw UI
         addToQueue(redrawBoardUI, game_board);
 
+  
         // Log game details
         addToQueue(showDetails)
+       
+
 
         // // Main game loop
         addToQueue(gameloop)

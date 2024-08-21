@@ -43,7 +43,6 @@ export let floodByWaterLevel = (floodDeck, waterLevel) => {
     }
 };
 
-
 export let placeTilesOnBoard = (gameBoard, FLOOD_CARDS) => {
   return new Promise(( resolve ) => {
     console.log('placeTiles')
@@ -91,7 +90,9 @@ export let game_details = {
   action_deck: {
     discard: [],
     unused: [],
+    player1_cards: []
   },
+  players: [],
   number_of_players: null,
   current_player: null,
   current_player_turns_left: null,

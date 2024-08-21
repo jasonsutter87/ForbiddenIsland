@@ -18880,6 +18880,7 @@ html {
   height: 14vh;
   border: 1px solid black;
   padding: 0;
+  position: relative;
 }
 
 .blocked {
@@ -18960,4 +18961,12 @@ html {
   background-color: transparent;
   border: 0;
   box-shadow: none;
+}
+
+.player-piece {
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  z-index: 10;
+  width: 25px !important;
 }/*# sourceMappingURL=styles.css.map */

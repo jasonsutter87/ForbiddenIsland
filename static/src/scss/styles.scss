@@ -48,6 +48,7 @@ html {
     height: 14vh;
     border: 1px solid black;
     padding: 0;
+    position: relative;
   }
   
   .blocked {
@@ -136,4 +137,12 @@ html {
       }
 
     }
+  }
+
+  .player-piece {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    z-index: 10;
+    width: 25px !important;
   }
