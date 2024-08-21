@@ -18969,4 +18969,6 @@ html {
   left: 20%;
   z-index: 10;
   width: 25px !important;
+  box-shadow: 0 8px 3px 0px rgba(0, 0, 0, 0.7098039216);
+  border-radius: 35%;
 }/*# sourceMappingURL=styles.css.map */
