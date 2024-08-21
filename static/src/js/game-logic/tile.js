@@ -464,7 +464,7 @@ export const FLOOD_CARDS = [
     flooded: false,
     sunk: false,
     can_end_game: false,
-    starting_position: PLAYER_CARDS[5].name,
+    starting_position: null,
     treasure: null,
     slug: "cliffs-of-abandon"
   },
