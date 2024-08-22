@@ -87,6 +87,8 @@ export let setPlayerOnTheBoard = (playerCount) => {
         $(`.tile[cardid="${result.id}"]`).append(`
           <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' >
         `)
+
+        $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${playerName}`)
       })
 
     })
