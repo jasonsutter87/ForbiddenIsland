@@ -73,25 +73,31 @@ export let setPlayerOnTheBoard = (playerCount) => {
     }
 
     game_details.current_player = game_details.players[0].name
-
+    
+    
     // set player on board.
     game_details.players.forEach((val, int) => {
       let playerName = val.name
-
+      
       let flattenBoard = game_details.gameBoard.flat();
       // -- use FLOOD_CARDS to get the tile that matchs players name 
       let result = flattenBoard.find(item => item && item.starting_position === playerName);
 
       $(() =>  {    
+    
+        if(result.starting_position == game_details.current_player) {
+          $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${game_details.current_player}`)
+        }
+        
         // use the players starting tile ID, place player on the tile that matchs
         $(`.tile[cardid="${result.id}"]`).append(`
           <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' >
         `)
-
-        $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${playerName}`)
       })
 
     })
+
+
  
 }
 
