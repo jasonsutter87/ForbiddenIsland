@@ -14,8 +14,8 @@ TODO:
 
 //This file will serve as the main entry point for the game
 
-import { floodSix, game_board, game_details, game_status, placeTilesOnBoard, checkForPlayerLost } from '/src/js/game-logic/board.js';
-import { StartGameModal } from '/src/js/ui/modal.js';
+import { floodSix, game_board, game_details, game_status, placeTilesOnBoard, checkForPlayerLost, checkForPlayerWon } from '/src/js/game-logic/board.js';
+import { StartGameModal, playerMoveOrActionModal } from '/src/js/ui/modal.js';
 import { createBoardUI, redrawBoardUI } from '/src/js/ui/ui.js';
 import { ACTION_CARDS, FLOOD_CARDS } from '/src/js/game-logic/tile.js';
 import { shuffle, dividedShuffle, shuffleActionCards, shuffleFloodCards, shufflePlayerCards  } from '/src/js/game-machanics/shuffling.js';
@@ -64,8 +64,7 @@ let gameloop = () => {
         let count = 0 ;
 
         while (game_details.status !== game_status.lost || game_details.status !== game_status.won  ) { 
-            // Game logic goes here
-
+            // breakpoints to stop game loops
             if(game_details.status === game_status.won ){
                 resolve(game_status.won);
             }
@@ -73,11 +72,19 @@ let gameloop = () => {
                 resolve(game_status.lost);
             }
 
-
+            //check if player lost
             addToQueue(checkForPlayerLost, 5, count);
-            
 
-            if(count >= 100) {
+            // check if player won 
+            addToQueue(checkForPlayerWon);
+
+            //player Action or Move
+            addToQueue(playerMoveOrActionModal);
+
+
+
+            //Todo  
+            if(count >= 2) {
                 
                 // temp not to break the game
                 game_details.status === game_status.lost

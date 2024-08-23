@@ -160,3 +160,17 @@ export let checkForPlayerLost = (cardId, count) => {
     resolve(false);
 });
 }
+
+
+export let checkForPlayerWon = () => {
+  return new Promise((resolve) => {
+    
+    //if all 4 treasure are captured
+
+    //if all player are located on fools landing
+
+    //if a player last discard was helicopter
+
+    resolve()
+  })
+}

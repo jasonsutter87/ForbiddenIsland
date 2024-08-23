@@ -22,4 +22,10 @@ export let StartGameModal = () => {
   });
 };
 
-export let PlayerFloodTileAction = $('')
+export let playerMoveOrActionModal = () => {
+  return new Promise((resolve) => {
+    console.log("playerMoveOrActionModal TODO")
+
+    resolve();
+  })
+}
