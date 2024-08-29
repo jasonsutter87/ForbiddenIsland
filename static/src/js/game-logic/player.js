@@ -63,17 +63,25 @@ export function setDifficulty(playerDifficuly) {
   });
 }
 
+
+export let setCurrentPlayer = (player) => {
+  return new Promise((resolve) => { 
+    game_details.current_player = player
+    resolve()
+  })
+}
+
 export let setPlayerOnTheBoard = (playerCount) => {
   //set player on the backend
     shuffle(PLAYER_CARDS)
-
     shuffle(PLAYER_CARDS)
+
     for(var i = 0; i < playerCount; i++) {
       game_details.players.push(PLAYER_CARDS[i])
     }
 
-    game_details.current_player = game_details.players[0].name
-    
+    //setting current player
+    setCurrentPlayer(game_details.players[0])
     
     // set player on board.
     game_details.players.forEach((val, int) => {
@@ -85,20 +93,17 @@ export let setPlayerOnTheBoard = (playerCount) => {
 
       $(() =>  {    
     
-        if(result.starting_position == game_details.current_player) {
-          $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${game_details.current_player}`)
+        if(result.starting_position == game_details.current_player.name) {
+          $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${game_details.current_player.name}`)
         }
         
         // use the players starting tile ID, place player on the tile that matchs
         $(`.tile[cardid="${result.id}"]`).append(`
-          <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' >
+          <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${game_details.current_player.id}' >
         `)
       })
 
     })
-
-
- 
 }
 
 

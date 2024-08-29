@@ -14,12 +14,22 @@ TODO:
 
 //This file will serve as the main entry point for the game
 
-import { floodSix, game_board, game_details, game_status, placeTilesOnBoard, checkForPlayerLost, checkForPlayerWon } from '/src/js/game-logic/board.js';
+import { floodSix,
+        game_board,
+        game_details,
+        game_status,
+        placeTilesOnBoard,
+        checkForPlayerLost,
+        checkForPlayerWon 
+    } from '/src/js/game-logic/board.js';
 import { StartGameModal, playerMoveOrActionModal } from '/src/js/ui/modal.js';
 import { createBoardUI, redrawBoardUI } from '/src/js/ui/ui.js';
 import { ACTION_CARDS, FLOOD_CARDS } from '/src/js/game-logic/tile.js';
-import { shuffle, dividedShuffle, shuffleActionCards, shuffleFloodCards, shufflePlayerCards  } from '/src/js/game-machanics/shuffling.js';
-import { PLAYER_CARDS, setDifficulty, setPlayerOnTheBoard } from '/src/js/game-logic/player.js';
+import { 
+        shuffleActionCards,
+        shuffleFloodCards, 
+        shufflePlayerCards  } from '/src/js/game-machanics/shuffling.js';
+import { PLAYER_CARDS, setDifficulty } from '/src/js/game-logic/player.js';
 
 let gameQueue = [];
 let isProcessing = false;

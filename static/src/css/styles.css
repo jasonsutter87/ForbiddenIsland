@@ -18938,25 +18938,30 @@ html {
   line-height: 27.984px !important;
 }
 
+#moveOrActionModal .modal-backdrop,
 #statingModal .modal-backdrop {
   background-color: rgba(0, 0, 0, 0.3);
 }
+#moveOrActionModal .modal-backdrop .modal-body,
 #statingModal .modal-backdrop .modal-body {
   display: flex;
   align-items: center;
   height: 100%;
   justify-content: center;
 }
+#moveOrActionModal .modal-backdrop .modal-inner,
 #statingModal .modal-backdrop .modal-inner {
   width: 100%;
   max-width: 300px;
   background-color: greenyellow;
   padding: 1.25rem;
 }
+#moveOrActionModal .modal-backdrop .modal-exit,
 #statingModal .modal-backdrop .modal-exit {
   display: flex;
   justify-content: flex-end;
 }
+#moveOrActionModal .modal-backdrop .modal-exit button,
 #statingModal .modal-backdrop .modal-exit button {
   background-color: transparent;
   border: 0;

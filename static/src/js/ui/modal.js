@@ -24,7 +24,8 @@ export let StartGameModal = () => {
 
 export let playerMoveOrActionModal = (toId) => {
   return new Promise((resolve) => {
-    let fromId = $(`.player-active-${game_details.current_player}`).attr('cardid')
+    
+    let fromId = $(`.player-active-${game_details.current_player.name}`).attr('cardid')
 
     if(fromId != toId ) {
       movePlayer(fromId, toId)
@@ -34,9 +35,23 @@ export let playerMoveOrActionModal = (toId) => {
 }
 
 
+
+
+//refacfor.
+/*
+current bug, if you click fast enough, the wrong player will start moving,
+
+solution: update
+ if($(val).hasClass('player-piece')){
+        $player = $(val);   
+      }
+
+      to include a check of the players Id 
+
+*/
 export let movePlayer = (fromId, toId) => {
   return new Promise((resolve) => {
-    var $clickedtitle = $(`.player-active-${game_details.current_player}`).children()
+    var $clickedtitle = $(`.player-active-${game_details.current_player.name}`).children()
     var $player; 
 
     $clickedtitle.each((ind, val) => {
@@ -66,8 +81,8 @@ export let movePlayer = (fromId, toId) => {
     var targetOffset = $toCell.offset();
 
 
-    $($fromCell).removeClass(`player-active-${game_details.current_player}`)
-    $($toCell).addClass(`player-active-${game_details.current_player}`)
+    $($fromCell).removeClass(`player-active-${game_details.current_player.name}`)
+    $($toCell).addClass(`player-active-${game_details.current_player.name}`)
 
 
     // Animate the clone to the new position
