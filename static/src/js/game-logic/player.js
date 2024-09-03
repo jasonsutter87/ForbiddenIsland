@@ -57,7 +57,6 @@ export const DIFFICULTY = {
 
 export function setDifficulty(playerDifficuly) {
   return new Promise(resolve => {
-      console.log('setDifficulty')
       game_details.current_flood_level = playerDifficuly;
       resolve();
   });

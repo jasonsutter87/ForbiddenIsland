@@ -1,24 +1,27 @@
 //Manages modals or popups that appear during the game, such as victory/defeat screens, instructions, or settings.
 import { game_details } from "../game-logic/board.js";
 import { setPlayerOnTheBoard } from '/src/js/game-logic/player.js';
+import { getAdjacentTileIds, findPlayerCoordinates } from '/src/js/ui/ui.js'
 
 export let StartGameModal = () => {
   return new Promise((resolve) => {
-      $('#StartGame-Form').on('submit', (e) => {
-          e.preventDefault();
-          console.log('StartGameModal')
-          // Set game details based on form input
-          game_details.current_flood_level = parseInt($('#difficultySlider').val());
-          game_details.number_of_players = parseInt($('#numberOfPlayersSlider').val());
+    console.log('Ready to Start The Game')
 
-          setPlayerOnTheBoard(game_details.number_of_players)
+    $('#StartGame-Form').on('submit', (e) => {
+        e.preventDefault();
+        console.log('StartGameModal')
+        // Set game details based on form input
+        game_details.current_flood_level = parseInt($('#difficultySlider').val());
+        game_details.number_of_players = parseInt($('#numberOfPlayersSlider').val());
 
-          // Hide the modal
-          $('#statingModal').addClass('d-none');
+        setPlayerOnTheBoard(game_details.number_of_players)
 
-          // Resolve the promise with game details
-          resolve(game_details);
-      });
+        // Hide the modal
+        $('#statingModal').addClass('d-none');
+
+        // Resolve the promise with game details
+        resolve(game_details);
+    });
   });
 };
 
@@ -27,9 +30,16 @@ export let playerMoveOrActionModal = (toId) => {
     
     let fromId = $(`.player-active-${game_details.current_player.name}`).attr('cardid')
 
-    if(fromId != toId ) {
-      movePlayer(fromId, toId)
+    let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
+    let adjacentTileIds = getAdjacentTileIds(game_details.gameBoard, currentPlayersLocation)
+    let result = adjacentTileIds.find(x => x == toId)
+    
+    if(result) {  
+      if(fromId != toId ) {
+        movePlayer(fromId, toId)
+      }
     }
+
     resolve();
   })
 }

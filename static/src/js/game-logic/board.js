@@ -45,7 +45,6 @@ export let floodByWaterLevel = (floodDeck, waterLevel) => {
 
 export let placeTilesOnBoard = (gameBoard, FLOOD_CARDS) => {
   return new Promise(( resolve ) => {
-    console.log('placeTiles')
     let duplicateFloodDeck = FLOOD_CARDS.slice();
 
     for (let i = 0; i < gameBoard.length; i++) {
@@ -61,7 +60,6 @@ export let placeTilesOnBoard = (gameBoard, FLOOD_CARDS) => {
 }
 
 export let floodSix = (game_board) => {
-  console.log('flooding tiles')
   shuffle(game_board)
 
   game_details.flood_deck.unused = game_board
@@ -160,7 +158,6 @@ export let checkForPlayerLost = (cardId, count) => {
     resolve(false);
 });
 }
-
 
 export let checkForPlayerWon = () => {
   return new Promise((resolve) => {

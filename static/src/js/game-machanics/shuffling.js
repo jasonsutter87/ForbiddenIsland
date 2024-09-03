@@ -24,7 +24,6 @@ export let dividedShuffle = (topCards, bottomCards) => {
 
 export function shuffleActionCards(ACTION_CARDS) {
     return new Promise(resolve => {
-        console.log('shuffle action')
         shuffle(ACTION_CARDS);
         game_details.action_deck.unused = ACTION_CARDS;
         resolve();
@@ -33,7 +32,6 @@ export function shuffleActionCards(ACTION_CARDS) {
 
 export function shuffleFloodCards(FLOOD_CARDS) {
     return new Promise(resolve => {
-        console.log('shuffle flood')
         shuffle(FLOOD_CARDS);
         resolve();
     });
@@ -41,7 +39,6 @@ export function shuffleFloodCards(FLOOD_CARDS) {
 
 export function shufflePlayerCards(PLAYER_CARDS) {
     return new Promise(resolve => {
-        console.log('shuffle player')
         shuffle(PLAYER_CARDS);
         resolve();
     });
