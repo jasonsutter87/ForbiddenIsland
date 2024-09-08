@@ -1,0 +1,13 @@
+baseURL = 'https://dev-mandatedreportertraining.netlify.app/'
+languageCode = 'en-us'
+title = ''
+enableRobotsTXT = true
+summaryLength = 30
+# disableKinds = ["taxonomy", "taxonomyTerm"]
+
+
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

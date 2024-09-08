@@ -1,0 +1,181 @@
+// #main-container {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-between;
+// }
+
+// .sr-only {
+//     border: 0;
+//     clip: rect(0,0,0,0);
+//     height: 1px;
+//     margin: -1px;
+//     overflow: hidden;
+//     padding: 0;
+//     position: absolute;
+//     width: 1px;
+// }
+
+// html, body {
+//     font-size: 16px;
+//     font-family: 'Montserrat', sans-serif !important;
+//     margin: 0;
+//     font-weight: $font-weight-400;
+//     line-height: $line-height;
+//     color: $black;
+//     text-align: left;
+//     height: 100%;
+//     transition: $transition-speed;
+//     scroll-behavior: smooth;
+// }
+
+// .site-container-1340 {
+//   padding-right: 12px;
+//   padding-left: 12px;
+
+
+//     margin: auto;
+//     position: relative;
+//     max-width: 1340px;
+//     width: 100%;
+// }
+
+// .site-container-992 {
+//     padding-left: $gutter-size;
+//     padding-right: $gutter-size;
+//     margin: auto;
+//     position: relative;
+//     max-width: 992px;
+//     width: 100%;
+// }
+
+// .container-fluid {
+//   width: 100%;
+//   padding-right: 15px !important;
+//   padding-left: 15px !important;
+
+//   @media (min-width: 992px) {
+//     padding-right: 50px !important;
+//     padding-left: 50px !important;
+//   }
+//   margin-right: auto;
+//   margin-left: auto;
+// }
+
+
+// .ul-reset {
+//     margin: 0;
+//     padding: 0;
+//     list-style-type: none;
+// }
+
+// ul li {
+//     font-size: $font-size;
+//     font-weight: $font-weight-400;
+//     line-height: 30px;
+//     font-family: 'Montserrat', sans-serif !important;
+// }
+
+// ol li {
+//     font-size: $font-size;
+//     font-weight: $font-weight-400;
+//     line-height: $line-height;
+//     font-family: 'Montserrat', sans-serif !important;
+// }
+
+
+// //////////////////////////////////////////////////////////////
+// //                                                          ||
+// //                        Text Colors                       ||
+// //                                                          ||
+// //////////////////////////////////////////////////////////////
+
+
+// .white-text {
+//     color: $white !important;
+// }
+
+// .mid-text {
+//   color: $mid-black !important;
+// }
+
+// span.SubHead,
+// .primary-text {
+//   color: $deepBlue !important;
+// }
+
+// .midBlack-text {
+//   color: $mid-black !important;
+// }
+
+
+
+
+// //////////////////////////////////////////////////////////////
+// //                                                          ||
+// //                         Links                            ||
+// //                                                          ||
+// //////////////////////////////////////////////////////////////
+// .primary-link {
+//     color: $green !important;
+//     text-decoration: underline;
+//     transition: $transition-speed !important;
+//     font-weight: $font-weight-700;
+
+//     &:hover,
+//     &:active {
+//         color: $deepBlue !important;
+//     }
+// }
+
+// .primary-link-alt {
+//     color: $green !important;
+//     text-decoration: none;
+//     transition: $transition-speed !important;
+//     font-weight: $font-weight-700;
+
+//     &:hover,
+//     &:active {
+//         color: $deepBlue !important;
+//     }
+// }
+
+// .secondary-link {
+//     color: $deepBlue !important;
+//     text-decoration: underline;
+//     transition: $transition-speed !important;
+//     font-weight: $font-weight-700;
+
+//     &:hover,
+//     &:active {
+//         color: $green !important;
+//     }
+// }
+
+// .secondary-link-alt {
+//     color: $deepBlue !important;
+//     transition: $transition-speed !important;
+//     font-weight: $font-weight-700;
+//     text-decoration: none;
+
+//     &:hover,
+//     &:active {
+//         color: $green !important;
+//     }
+// }
+
+// .white-link {
+//     color: $white !important;
+//     text-decoration: none;
+//     transition: $transition-speed !important;
+//     font-weight: $font-weight-400;
+//     text-transform: uppercase;
+
+//     &:hover,
+//     &:active {
+//         color: $green !important;
+//     }
+// }
+
+// .bold {
+//   font-weight: $font-weight-700 !important;
+// }
