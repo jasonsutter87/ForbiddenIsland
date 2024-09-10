@@ -1,12 +1,15 @@
 // server/app.js
 const express = require('express');
 const http = require('http');
+const cors = require('cors');
 const socketIo = require('socket.io');
 const gameRoutes = require('./routes/gameRoutes');
 const gameSocket = require('./socket/gameSocket');
 
 // Initialize Express
 const app = express();
+
+app.use(cors());
 
 // Middleware (e.g., for parsing JSON)
 app.use(express.json());
@@ -16,7 +19,12 @@ app.use('/api/game', gameRoutes);
 
 // Create HTTP server and initialize Socket.io
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server, {
+    cors: {
+        origin: '*',  // Allow all origins (or specify your frontend URL if needed)
+        methods: ['GET', 'POST'],
+      },
+});
 
 // Set up the socket.io events
 gameSocket(io);
