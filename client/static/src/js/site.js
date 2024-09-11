@@ -1,7 +1,7 @@
 // 1. Connect to Socket.io server
 const serverUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000' 
-    : 'https://forbidden-island.netlify.app/';
+    : 'https://forbiddenisland.onrender.com';
 
 // Connect to the Socket.io server
 const socket = io(serverUrl);
