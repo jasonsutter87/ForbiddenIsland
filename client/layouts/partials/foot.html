@@ -1,4 +1,4 @@
-{{ $directories := slice "src/js/game-logic/" "src/js/game-machanics/" "src/js/ui/" "src/js/utilities/" }}
+<!-- {{ $directories := slice "src/js/game-logic/" "src/js/game-machanics/" "src/js/ui/" "src/js/utilities/" }}
 
 {{ range $dir := $directories }}
   {{ range readDir (print "static/" $dir) }}
@@ -6,8 +6,11 @@
       <script defer type="module" src="{{ $dir | relURL }}{{ .Name }}"></script>
     {{ end }}
   {{ end }}
-{{ end }}
+{{ end }} -->
 
   
+
+<script src="src/js/site.js"></script>
+
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script> -->

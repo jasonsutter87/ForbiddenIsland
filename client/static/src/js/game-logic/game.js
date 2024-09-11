@@ -1,17 +1,3 @@
-/*
-TODO:
-
-    ////Game Loop
-        //Win Condition
-        - Check for win condition
-
-        //Player Turn
-        - 3 Actions
-        - Draw Action Cards
-        - Draw Flood Cards
-
-*/
-
 //This file will serve as the main entry point for the game
 
 import { floodSix,
