@@ -1,10 +1,11 @@
 // 1. Connect to Socket.io server
 const serverUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000' 
-    : 'https://forbidden-island.netlify.app';
+    : 'https://forbidden-island.netlify.app/';
 
 // Connect to the Socket.io server
 const socket = io(serverUrl);
+
 
 // 2. Listen for 'move' events from the server
 socket.on('move', (data) => {
