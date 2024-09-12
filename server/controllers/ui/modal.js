@@ -1,32 +1,22 @@
 //Manages modals or popups that appear during the game, such as victory/defeat screens, instructions, or settings.
-import { game_details, game_status } from "../game-logic/board.js";
-import { setPlayerOnTheBoard } from '/src/js/game-logic/player.js';
-import { getAdjacentTileIds, findPlayerCoordinates } from '/src/js/ui/ui.js'
+const { game_details, game_status } = require('../../models/models'); // Relative path
+const { GAME_STATUS } = require('../../Enums/enums');
+const { setPlayerOnTheBoard } = require('../game-logic/player'); // Relative path
+const { getAdjacentTileIds, findPlayerCoordinates } = require('../ui/ui'); // Relative path
 
-export let StartGameModal = () => {
+let StartGameModal = () => {
   return new Promise((resolve) => {
     console.log('Ready to Start The Game')
+    game_details.current_flood_level = 1;
+    game_details.number_of_players = 4;
+    setPlayerOnTheBoard(game_details.number_of_players)
+    game_details.status = GAME_STATUS.inProgress;
 
-    $('#StartGame-Form').on('submit', (e) => {
-        e.preventDefault();
-        console.log('StartGameModal')
-        // Set game details based on form input
-        game_details.current_flood_level = parseInt($('#difficultySlider').val());
-        game_details.number_of_players = parseInt($('#numberOfPlayersSlider').val());
-        game_details.status = game_status.inProgress;
-
-        setPlayerOnTheBoard(game_details.number_of_players)
-
-        // Hide the modal
-        $('#statingModal').addClass('d-none');
-
-        // Resolve the promise with game details
-        resolve(game_details);
-    });
+    resolve(game_details);
   });
 };
 
-export let playerMoveOrActionModal = (toId) => {
+let playerMoveOrActionModal = (toId) => {
   return new Promise((resolve) => {
     
     let fromId = $(`.player-active-${game_details.current_player.name}`).attr('cardid')
@@ -60,7 +50,7 @@ solution: update
       to include a check of the players Id 
 
 */
-export let movePlayer = (fromId, toId) => {
+let movePlayer = (fromId, toId) => {
   return new Promise((resolve) => {
     var $clickedtitle = $(`.player-active-${game_details.current_player.name}`).children()
     var $player; 
@@ -110,4 +100,11 @@ export let movePlayer = (fromId, toId) => {
     }
 
   })
+}
+
+
+module.exports = {
+  StartGameModal,
+  playerMoveOrActionModal,
+  movePlayer
 }

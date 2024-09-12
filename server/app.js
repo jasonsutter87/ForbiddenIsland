@@ -20,7 +20,8 @@ app.use('/api/game', gameRoutes);
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-        origin: ['http://localhost:3000', 'https://forbidden-island.netlify.app'],  // Allow localhost and your Netlify URL
+        origin: ['http://localhost:3000', 'https://forbidden-island.netlify.app'],
+        // origin: '*',
         methods: ['GET', 'POST'],
     },
 });

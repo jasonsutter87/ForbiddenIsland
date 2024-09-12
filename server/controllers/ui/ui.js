@@ -1,8 +1,9 @@
 //Handles user interface interactions, updating the display, managing the HUD, and responding to player input.
-import { game_details } from '/src/js/game-logic/board.js';
-import { playerMoveOrActionModal } from '/src/js/ui/modal.js'
+const { game_details } = require('../game-logic/board'); // Relative path
+const { playerMoveOrActionModal } = require('../ui/modal'); // Relative path
 
-export function createBoardUI(board) {
+
+function createBoardUI(board) {
   return new Promise(resolve => {
     const boardElement = document.getElementById('board');
     boardElement.innerHTML = ''; // Clear any existing content
@@ -50,7 +51,7 @@ export function createBoardUI(board) {
   });
  }
   
-export let redrawBoardUI = (board) => {
+let redrawBoardUI = (board) => {
   return new Promise(resolve => {
     createBoardUI(board)
 
@@ -102,7 +103,7 @@ export let redrawBoardUI = (board) => {
  } 
 
 
-export const findPlayerCoordinates = (playerName) => {
+const findPlayerCoordinates = (playerName) => {
   // Get all rows in the board
   const rows = document.querySelectorAll('#board .row');
 
@@ -128,7 +129,7 @@ export const findPlayerCoordinates = (playerName) => {
 }
 
 
-export let getAdjacentTileIds = (board, playerPosition) => {
+let getAdjacentTileIds = (board, playerPosition) => {
   let directions;
   if(game_details.current_player.name == "Explorer"){
     directions = [
@@ -162,4 +163,12 @@ export let getAdjacentTileIds = (board, playerPosition) => {
       typeof board[tile.row][tile.col] === 'object'
   )
   .map(tile => board[tile.row][tile.col].id);
+}
+
+
+module.exports = {
+  createBoardUI,
+  redrawBoardUI,
+  findPlayerCoordinates,
+  getAdjacentTileIds
 }
