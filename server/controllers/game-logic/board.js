@@ -2,8 +2,8 @@
 const { selectObjectById } = require("../utilities/utils.js");
 const { moveCardNewPile } = require("../game-machanics/cards.js");
 const { shuffle } = require("../game-machanics/shuffling.js");
-const { TREASURES } = require("../../Enums/enums.js");
-const { game_details } = require("../../models/models.js");
+const { TREASURES, GAME_STATUS } = require("../../Enums/enums.js");
+let { game_details } = require("../../models/models.js");
 
 let raiseTheWaterLevel = () => { 
     flood_level++
@@ -144,6 +144,41 @@ let setDifficulty = (playerDifficuly) => {
     });
 }
 
+
+// Function to reset the game state
+let resetGame = () => {
+  // Reset game_board and game_details to their initial states
+  game_board = [
+    ['x', 'x', 'c', 'c', 'x', 'x'],
+    ['x', 'c', 'c', 'c', 'c', 'x'],
+    ['c', 'c', 'c', 'c', 'c', 'c'],
+    ['c', 'c', 'c', 'c', 'c', 'c'],
+    ['x', 'c', 'c', 'c', 'c', 'x'],
+    ['x', 'x', 'c', 'c', 'x', 'x'],
+]
+
+  game_details = {
+    flood_deck: {
+        discard: [],
+        unused: [],
+        removed: []
+    },
+    action_deck: {
+        discard: [],
+        unused: []
+    },
+    players: [],
+    number_of_players: null,
+    current_player: null,
+    current_player_turns_left: null,
+    gameBoard: game_board,
+    status: GAME_STATUS.notStarted,
+    current_flood_level: 0
+}; 
+
+ 
+}
+
 // Exported functions to be used in routes and sockets
 module.exports = {
     raiseTheWaterLevel,
@@ -153,5 +188,6 @@ module.exports = {
     checkTreasureSunk,
     checkForPlayerLost,
     checkForPlayerWon,
-    setDifficulty
+    setDifficulty,
+    resetGame
 };

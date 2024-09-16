@@ -12042,7 +12042,7 @@ textarea.form-control-lg {
   --bs-light-border-subtle: #e9ecef;
   --bs-dark-border-subtle: #adb5bd;
   --bs-white-rgb: 255, 255, 255;
-  --bs-black-rgb: 0, 0, 0;
+  --bs-black-rgb: 23, 23, 23;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
@@ -12175,7 +12175,7 @@ body {
   text-align: var(--bs-body-text-align);
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(23, 23, 23, 0);
 }
 
 hr {
@@ -18938,36 +18938,6 @@ html {
   line-height: 27.984px !important;
 }
 
-#moveOrActionModal .modal-backdrop,
-#statingModal .modal-backdrop {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-#moveOrActionModal .modal-backdrop .modal-body,
-#statingModal .modal-backdrop .modal-body {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  justify-content: center;
-}
-#moveOrActionModal .modal-backdrop .modal-inner,
-#statingModal .modal-backdrop .modal-inner {
-  width: 100%;
-  max-width: 300px;
-  background-color: greenyellow;
-  padding: 1.25rem;
-}
-#moveOrActionModal .modal-backdrop .modal-exit,
-#statingModal .modal-backdrop .modal-exit {
-  display: flex;
-  justify-content: flex-end;
-}
-#moveOrActionModal .modal-backdrop .modal-exit button,
-#statingModal .modal-backdrop .modal-exit button {
-  background-color: transparent;
-  border: 0;
-  box-shadow: none;
-}
-
 .player-piece {
   position: absolute;
   top: 15%;
@@ -19000,4 +18970,68 @@ html {
 
 .player-active-Navigator {
   border: 5px solid #ffff00;
+}
+
+.startingModal-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background-color: #11121a;
+}
+
+#startingModal {
+  position: relative;
+  background-image: url("/assets/images/intro-screen-s.webp");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0;
+  transition: 0.3s;
+  visibility: hidden;
+}
+#startingModal.active {
+  opacity: 1;
+  visibility: visible;
+}
+@media (min-width: 768px) {
+  #startingModal {
+    background-image: url("/assets/images/intro-screen.webp");
+    position: fixed;
+    top: 25%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 365px;
+    width: 100%;
+  }
+}
+#startingModal button {
+  position: absolute;
+  bottom: 37%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 10px 25px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: 0.3s;
+  background-color: #ffffff;
+  border: 2px solid #C1C1C1;
+  color: #171717;
+}
+#startingModal button:hover, #startingModal button:active {
+  border: 2px solid #ffffff;
+  background-color: #11121a;
+  color: #ffffff;
+}
+@media (min-width: 768px) {
+  #startingModal button {
+    bottom: 27%;
+  }
 }/*# sourceMappingURL=styles.css.map */

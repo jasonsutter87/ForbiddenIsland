@@ -1,26 +1,18 @@
-// 1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// // 1. Connect to Socket.io server
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
 
-// const socket = io('http://localhost:3000');
-
-// 2. Listen for 'move' events from the server
-socket.on('move', (data) => {
-    console.log('Move received:', data);
-    // Handle move received from other players
-    alert(`Other player moved: ${JSON.stringify(data)}`);
-});
-
+const socket = io('http://localhost:3000');
 
 
 
 // Define createBoardUI as a separate function
-function createBoardUI(board) {
+function createBoardUI_todo(board) {
     return new Promise(resolve => {
         const boardElement = document.getElementById('board');
         boardElement.innerHTML = ''; // Clear any existing content
@@ -79,8 +71,6 @@ socket.on('createBoardUI', (board) => {
         });
 });
 
-
-
 socket.on('setPlayersOnBoard', (game_details) => {
 
         // set player on board.
@@ -133,3 +123,74 @@ socket.on('connect', () => {
 socket.on('disconnect', () => {
     console.log('Disconnected from server');
 });
+
+
+// socket.on('move', (data) => {
+
+// });
+
+///////////
+
+
+//SOCKETS TODOS
+
+
+////////// intro screen
+//PLAY GAME
+// - have the player move from the loading screen to the game room chat waiting rooom
+
+
+
+
+
+
+
+//////////// game waiting room
+//Player is Ready - game room
+// - set the player as ready to let the other player player they are ready
+
+
+
+//game room - send message
+// - send a string message to the game room
+
+
+//game room - receive message
+//- receieve a message from the game room
+socket.on('incomeGameMessage', data => {
+    console.log('Received message:', data); // Debugging step to check if message is received
+    $('#ChatContentArea').append(`<li>${data}</li>`); 
+})
+
+//game rome - set  player name
+// - set the name of the user who is playing
+
+
+
+/////////////////////game play
+
+//move player
+//flood tile
+//sink tile
+
+//deal action card
+//deal flood card
+
+//raise the water
+
+//sandbag Tile
+//helicopter Tile
+//helicopter takeoff
+
+
+//capture Earth Stone
+//capture Wind Statue
+//capture Fire Statue
+//capture Water Statue
+
+
+
+
+
+
+

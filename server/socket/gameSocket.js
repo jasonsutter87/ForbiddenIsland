@@ -5,6 +5,7 @@ module.exports = (io) => {
   // Track rooms and player counts
   const rooms = {};
   const { game_runner, initialize } =  require('../controllers/game-logic/game')
+  const {game_board, game_details } = require('../models/models')
 
 
 
@@ -18,27 +19,32 @@ module.exports = (io) => {
     socket.join(roomName);
     console.log(`Player ${socket.id} joined room: ${roomName}`);
 
+    socket.on('gameMessage', data => {
+      console.log('Received message:', data); // Debugging step to check if message is received
+      socket.to(roomName).emit('incomeGameMessage', data);
+  })
+
     // Add player to room's player count
     if (!rooms[roomName]) {
       rooms[roomName] = [];
     }
     rooms[roomName].push(socket.id);
 
-    console.log(`Room ${roomName} now has ${rooms[roomName].length} players.`);
+    // console.log(`Room ${roomName} now has ${rooms[roomName].length} players.`);
 
-    // Check if the room is full (4 players)
-    if (rooms[roomName].length === 4) {
-      console.log(`Room ${roomName} is full. Starting game.`);
-      io.to(roomName).emit('startGame'); // Notify players to start game loop
-      startGameLoop(roomName);
-    } else {
-      console.log(`Room ${roomName} is not full yet.`);
-    }
+    // // Check if the room is full (4 players)
+    // if (rooms[roomName].length === 4) {
+    //   console.log(`Room ${roomName} is full. Starting game.`);
+    //   io.to(roomName).emit('startGame'); // Notify players to start game loop
+    //   startGameLoop(roomName);
+    // } else {
+    //   console.log(`Room ${roomName} is not full yet.`);
+    // }
 
    
 
     // Handle player move
-    socket.on('move', (data) => {
+    socket.on('resetGame', (data) => {
       console.log('Move made:', data);
       socket.to(roomName).emit('move', data);
     });
@@ -89,6 +95,8 @@ module.exports = (io) => {
       io.to(roomName).emit('gameUpdate', { message: 'Game update...' });
     }, 1000); // Send updates every second
   };
+
+
   
 
 };

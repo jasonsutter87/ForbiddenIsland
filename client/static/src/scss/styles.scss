@@ -105,39 +105,39 @@ html {
     line-height: calc(24px * 1.166) !important;
 }
   
-  #moveOrActionModal,
-  #statingModal {
+  // #moveOrActionModal,
+  // #statingModal {
 
-    .modal-backdrop {
-      background-color: transparentize($color: #000000, $amount: .7);
+  //   .modal-backdrop {
+  //     background-color: transparentize($color: #000000, $amount: .7);
       
-      .modal-body {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        justify-content: center;
-      }
+  //     .modal-body {
+  //       display: flex;
+  //       align-items: center;
+  //       height: 100%;
+  //       justify-content: center;
+  //     }
 
-      .modal-inner {
-        width: 100%;
-        max-width: 300px;
-        background-color: greenyellow;
-        padding: 1.25rem;
-      }
+  //     .modal-inner {
+  //       width: 100%;
+  //       max-width: 300px;
+  //       background-color: greenyellow;
+  //       padding: 1.25rem;
+  //     }
 
-      .modal-exit {
-        display: flex;
-        justify-content: flex-end;
+  //     .modal-exit {
+  //       display: flex;
+  //       justify-content: flex-end;
 
-        button {
-          background-color: transparent;
-          border: 0;
-          box-shadow: none;
-        }
-      }
+  //       button {
+  //         background-color: transparent;
+  //         border: 0;
+  //         box-shadow: none;
+  //       }
+  //     }
 
-    }
-  }
+  //   }
+  // }
 
 
   
@@ -152,21 +152,89 @@ html {
   }
 
   .player-active-Diver {
-    border: 5px solid #000000
+    border: 5px solid #000000;
   }
   .player-active-Pilot {
-    border: 5px solid #0000ff
+    border: 5px solid #0000ff;
   }
   .player-active-Messenger {
-    border: 5px solid #c0c0c0
+    border: 5px solid #c0c0c0;
   }
   .player-active-Explorer {
-    border: 5px solid #008000
+    border: 5px solid #008000;
   }
   .player-active-Engineer {
-    border: 5px solid #ff0000
+    border: 5px solid #ff0000;
   }
   .player-active-Navigator {
-    border: 5px solid #ffff00
+    border: 5px solid #ffff00;
   }
   
+.startingModal-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background-color: #11121a;
+}
+
+#startingModal {
+  position: relative;
+  background-image: url("/assets/images/intro-screen-s.webp");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0;
+  transition: 0.3s;
+  visibility: hidden;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  @media(min-width: 768px) {
+    background-image: url("/assets/images/intro-screen.webp");
+    position: fixed;
+    top: 25%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 365px;
+    width: 100%;
+    
+  }
+
+  button {
+    position: absolute;
+    bottom: 37%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    width: fit-content;
+    padding: 10px 25px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: 0.3s;
+
+    background-color: $white;
+    border: 2px solid $mid;
+    color: $black;
+
+    &:hover,
+    &:active{
+      border: 2px solid $white;
+      background-color: #11121a;
+      color: $white;
+    }
+
+    @media(min-width: 768px) {
+      bottom: 27%;
+      
+    }
+  }
+}

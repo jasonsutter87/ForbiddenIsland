@@ -60,20 +60,29 @@ function game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerD
     addToQueue(shuffleCards, FLOOD_CARDS);
     addToQueue(shuffleCards, PLAYER_CARDS);
     addToQueue(placeTilesOnBoard, game_board, FLOOD_CARDS);
+    
     addToQueue(() => {
         return new Promise(resolve => {
-            // Emit the event to the client
-            socket.emit('setPlayersOnBoard', game_details);
+            console.log('*****game_details******')
+            console.log(game_details)
             resolve();
         });
     });
-    addToQueue(() => {
-        return new Promise(resolve => {
-            // Emit the event to the client
-            socket.emit('createBoardUI', game_board);
-            resolve();
-        });
-    });
+    // addToQueue(() => {
+    //     return new Promise(resolve => {
+    //         // Emit the event to the client
+    //         console.log(game_details)
+    //         socket.emit('setPlayersOnBoard', game_details);
+    //         resolve();
+    //     });
+    // });
+    // addToQueue(() => {
+    //     return new Promise(resolve => {
+    //         // Emit the event to the client
+    //         socket.emit('createBoardUI', game_board);
+    //         resolve();
+    //     });
+    // });
 }
 
 
