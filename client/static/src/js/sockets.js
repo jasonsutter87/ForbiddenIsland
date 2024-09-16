@@ -1,13 +1,13 @@
-// // 1. Connect to Socket.io server
-// const serverUrl = window.location.hostname === 'localhost' 
-//     ? 'http://localhost:3000' 
-//     : 'https://forbiddenisland.onrender.com';
+// 1. Connect to Socket.io server
+const serverUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : 'https://forbiddenisland.onrender.com';
 
-// // Connect to the Socket.io server
-// const socket = io(serverUrl);
+// Connect to the Socket.io server
+const socket = io(serverUrl);
 
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
 
 
 
@@ -157,9 +157,9 @@ socket.on('disconnect', () => {
 
 //game room - receive message
 //- receieve a message from the game room
-socket.on('incomeGameMessage', data => {
-    console.log('Received message:', data); // Debugging step to check if message is received
-    $('#ChatContentArea').append(`<li>${data}</li>`); 
+socket.on('incomingGameMessage', (data, id) => {
+    console.log('Received message:', data, id); // Debugging step to check if message is received
+    $('#ChatContentArea').append(`<li>${data} - User: ${id}</li>`); 
 })
 
 //game rome - set  player name

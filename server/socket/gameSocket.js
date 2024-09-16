@@ -19,10 +19,7 @@ module.exports = (io) => {
     socket.join(roomName);
     console.log(`Player ${socket.id} joined room: ${roomName}`);
 
-    socket.on('gameMessage', data => {
-      console.log('Received message:', data); // Debugging step to check if message is received
-      socket.to(roomName).emit('incomeGameMessage', data);
-  })
+
 
     // Add player to room's player count
     if (!rooms[roomName]) {
@@ -48,6 +45,11 @@ module.exports = (io) => {
       console.log('Move made:', data);
       socket.to(roomName).emit('move', data);
     });
+
+    socket.on('gameMessage', (data) => {
+      console.log('Received message:', {data: data, id: socket.id}); // Debugging step to check if message is received
+      socket.to(roomName).emit('incomingGameMessage', data, socket.id);
+  })
 
     // Handle player disconnect
     socket.on('disconnect', () => {
