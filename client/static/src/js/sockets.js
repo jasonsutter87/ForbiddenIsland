@@ -159,7 +159,14 @@ socket.on('disconnect', () => {
 //- receieve a message from the game room
 socket.on('incomingGameMessage', (data, id) => {
     console.log('Received message:', data, id); // Debugging step to check if message is received
-    $('#ChatContentArea').append(`<li>${data} - User: ${id}</li>`); 
+    $('#ChatContentArea').append(`<li>
+        <span>
+            <img src="https://robohash.org/${id}">
+        </span>
+        <span>
+            ${data}
+        </span>
+    </li>`); 
 })
 
 //game rome - set  player name

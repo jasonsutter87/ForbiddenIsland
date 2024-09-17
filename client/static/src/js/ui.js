@@ -30,13 +30,23 @@ const socket = io(serverUrl);
 
     $('#sendGameRoomMessage').on('click', e => {
         e.preventDefault();
-
-        console.log('in sendGameRoomMessage')
-
         let message = $('#gameRoomMessageInput').val(); 
-        socket.emit('gameMessage', message)
-        console.log(message)
+
+        if(message.length >= 1) {
+            socket.emit('gameMessage', message)
+            console.log(message)
+            $('#gameRoomMessageInput').val('');
+        } else {
+            $('.error').addClass('active')
+            setTimeout(() => {
+                $('.error').removeClass('active')
+            }, 3000)
+        }
     })
+
+
+
+    
 })
 
 

@@ -19034,4 +19034,78 @@ html {
   #startingModal button {
     bottom: 27%;
   }
+}
+
+#joinRoomModal {
+  background-color: #11121a;
+  padding: 24px;
+  padding-top: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+#joinRoomModal img {
+  width: 100%;
+  max-width: 125px;
+  padding: 10px 0;
+}
+#joinRoomModal #ChatContentArea {
+  padding: 0;
+  margin: 0;
+}
+#joinRoomModal #ChatContentArea li {
+  list-style: none;
+}
+#joinRoomModal .joinRoomModal-content {
+  background: #ffffff;
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  border-radius: 10px;
+}
+#joinRoomModal .joinRoomModal-content .form-wrapper {
+  padding: 1rem;
+  background-color: rgba(17, 18, 26, 0.3);
+}
+#joinRoomModal .joinRoomModal-content input {
+  width: 100%;
+  height: 45px;
+  border-radius: 10px;
+  border: 2px solid #C1C1C1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+}
+#joinRoomModal .joinRoomModal-content .error {
+  color: red;
+  visibility: hidden;
+}
+#joinRoomModal .joinRoomModal-content .error.active {
+  visibility: visible;
+}
+#joinRoomModal .joinRoomModal-content select {
+  width: 75px;
+  height: 35px;
+  border-radius: 10px;
+  border: 2px solid #C1C1C1;
+}
+#joinRoomModal .joinRoomModal-content button {
+  height: 45px;
+  padding: 0 25px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  transition: 0.3s;
+  background-color: #ffffff;
+  border: 2px solid #C1C1C1;
+  color: #171717;
+}
+#joinRoomModal .joinRoomModal-content button:hover, #joinRoomModal .joinRoomModal-content button:active {
+  border: 2px solid #ffffff;
+  background-color: #11121a;
+  color: #ffffff;
 }/*# sourceMappingURL=styles.css.map */

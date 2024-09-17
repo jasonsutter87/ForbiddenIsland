@@ -238,3 +238,95 @@ html {
     }
   }
 }
+
+#joinRoomModal {
+  background-color: #11121a;
+  padding: 24px;
+  padding-top: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+
+
+  img {
+    width: 100%;
+    max-width: 125px;
+    padding: 10px 0;
+  }
+
+  #ChatContentArea {
+    padding: 0;
+    margin: 0;
+
+    li{
+      list-style: none;
+    }
+  }
+
+  .joinRoomModal-content{
+    background: $white;
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 10px;
+
+    .form-wrapper {
+      padding: 1rem;
+      background-color: transparentize($color: #11121a, $amount: .7);
+    }
+
+    input {
+      width: 100%;
+      height: 45px;
+      border-radius: 10px;
+      border: 2px solid $mid;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: 0;
+    }
+
+    .error {
+      color: red;
+      visibility: hidden;
+      
+      &.active {
+        visibility: visible;
+      }
+    }
+
+    select {
+      width: 75px;
+      height: 35px;
+      border-radius: 10px;
+      border: 2px solid $mid;
+    }
+
+    button {
+      height: 45px;
+      padding: 0 25px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      border-radius: 10px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      transition: 0.3s;
+  
+      background-color: $white;
+      border: 2px solid $mid;
+      color: $black;
+  
+      &:hover,
+      &:active{
+        border: 2px solid $white;
+        background-color: #11121a;
+        color: $white;
+      }
+  
+  
+    }
+
+    
+  }
+}
