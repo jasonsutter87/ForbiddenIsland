@@ -23,7 +23,9 @@ const socket = io(serverUrl);
 
         setTimeout(()=>{
             $('.startingModal-wrapper').remove()
-        }, 2000)
+            $('.joinRoomModal-wrapper').removeClass('d-none')
+        }, 1000)
+        
     })
 
 
