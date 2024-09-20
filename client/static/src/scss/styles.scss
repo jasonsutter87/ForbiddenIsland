@@ -249,11 +249,18 @@ html {
   flex-direction: column;
 
 
-  img {
+  .header-logo {
+    width: 100%;
+    max-width: 125px;
+    padding: 10px 0;
+  }
+
+  .userimage {
     width: 100%;
     max-width: 65px;
     padding: 10px 0;
   }
+  
 
   .ChatContentArea-wrapper {
     .userName {

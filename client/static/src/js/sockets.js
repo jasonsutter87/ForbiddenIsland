@@ -163,7 +163,7 @@ socket.on('incomingGameMessage', (data, id) => {
     console.log('Received message:', data, id); // Debugging step to check if message is received
     $('#ChatContentArea').append(`<li>
         <span>
-            <img src="https://robohash.org/${id}">
+            <img class="userimage" src="https://robohash.org/${id}">
         </span>
         <span>
             ${data}

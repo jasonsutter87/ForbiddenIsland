@@ -19045,7 +19045,12 @@ html {
   display: flex;
   flex-direction: column;
 }
-#joinRoomModal img {
+#joinRoomModal .header-logo {
+  width: 100%;
+  max-width: 125px;
+  padding: 10px 0;
+}
+#joinRoomModal .userimage {
   width: 100%;
   max-width: 65px;
   padding: 10px 0;
