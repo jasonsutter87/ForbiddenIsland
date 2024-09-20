@@ -1,13 +1,9 @@
 {{ define "main" }}
+  <div class="startingModal-wrapper">
+    {{ partial "modals/startingModal.html" . }}
+  </div>
 
-<div class="startingModal-wrapper">
-  {{ partial "modals/startingModal.html" . }}
-</div>
-
-<div class="joinRoomModal-wrapper d-none">
-  {{ partial "modals/joinRoomModal.html" . }}
-</div>
-
-
-
+  <div class="joinRoomModal-wrapper d-none">
+    {{ partial "modals/joinRoomModal.html" . }}
+  </div>
 {{ end }}

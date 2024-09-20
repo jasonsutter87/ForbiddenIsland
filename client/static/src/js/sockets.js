@@ -1,3 +1,6 @@
+
+
+
 // 1. Connect to Socket.io server
 const serverUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000' 
@@ -5,7 +8,6 @@ const serverUrl = window.location.hostname === 'localhost'
 
 // Connect to the Socket.io server
 const socket = io(serverUrl);
-
 
 // const socket = io('http://localhost:3000');
 

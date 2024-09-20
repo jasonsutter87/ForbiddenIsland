@@ -255,14 +255,30 @@ html {
     padding: 10px 0;
   }
 
-  #ChatContentArea {
-    padding: 0;
-    margin: 0;
+  .ChatContentArea-wrapper {
+    .userName {
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem;
 
-    li{
-      list-style: none;
+      .name {
+        font-weight: 600;
+        padding-left: 4px;
+      }
+    }
+
+    #ChatContentArea {
+      padding: 0;
+      margin: 0;
+    
+    
+    
+      li{
+        list-style: none;
+      }
     }
   }
+
 
   .joinRoomModal-content{
     background: $white;
@@ -328,5 +344,65 @@ html {
     }
 
     
+  }
+}
+
+#inputNameModal {
+  background-color: transparentize($color: #000000, $amount: .7);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .modal-body {
+    background: $white;
+    width: 100%;
+    max-width: 500px;
+    padding: 1rem;
+
+    .button-wrapper {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        background-color: transparent;
+        border: 0;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: 600;
+        color: $black;
+        
+        i, svg {
+          font-size: 1.25rem;
+          padding-left: 4px;
+        }
+
+        &:hover,
+        &:active{
+          color: $blue;
+        }
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-weight: 600;
+        font-size: 1.25rem;
+      }
+
+      input {
+        border-radius: 10px;
+        height: 45px;
+        border: 2px solid $mid; 
+      }
+    }
   }
 }

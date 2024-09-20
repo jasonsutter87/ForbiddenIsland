@@ -19050,11 +19050,20 @@ html {
   max-width: 125px;
   padding: 10px 0;
 }
-#joinRoomModal #ChatContentArea {
+#joinRoomModal .ChatContentArea-wrapper .userName {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+#joinRoomModal .ChatContentArea-wrapper .userName .name {
+  font-weight: 600;
+  padding-left: 4px;
+}
+#joinRoomModal .ChatContentArea-wrapper #ChatContentArea {
   padding: 0;
   margin: 0;
 }
-#joinRoomModal #ChatContentArea li {
+#joinRoomModal .ChatContentArea-wrapper #ChatContentArea li {
   list-style: none;
 }
 #joinRoomModal .joinRoomModal-content {
@@ -19108,4 +19117,55 @@ html {
   border: 2px solid #ffffff;
   background-color: #11121a;
   color: #ffffff;
+}
+
+#inputNameModal {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#inputNameModal .modal-body {
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  padding: 1rem;
+}
+#inputNameModal .modal-body .button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+#inputNameModal .modal-body .button-wrapper button {
+  background-color: transparent;
+  border: 0;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #171717;
+}
+#inputNameModal .modal-body .button-wrapper button i, #inputNameModal .modal-body .button-wrapper button svg {
+  font-size: 1.25rem;
+  padding-left: 4px;
+}
+#inputNameModal .modal-body .button-wrapper button:hover, #inputNameModal .modal-body .button-wrapper button:active {
+  color: #2c6e69;
+}
+#inputNameModal .modal-body .form-group {
+  display: flex;
+  flex-direction: column;
+}
+#inputNameModal .modal-body .form-group label {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+#inputNameModal .modal-body .form-group input {
+  border-radius: 10px;
+  height: 45px;
+  border: 2px solid #C1C1C1;
 }/*# sourceMappingURL=styles.css.map */
