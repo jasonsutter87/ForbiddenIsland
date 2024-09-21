@@ -1,4 +1,4 @@
-
+import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 
 
 // 1. Connect to Socket.io server
@@ -150,20 +150,15 @@ socket.on('disconnect', () => {
 //////////// game waiting room
 //Player is Ready - game room
 // - set the player as ready to let the other player player they are ready
-
-
-
-//game room - send message
-// - send a string message to the game room
+// update the current player count in the Room
 
 
 //game room - receive message
-//- receieve a message from the game room
 socket.on('incomingGameMessage', (data, id) => {
     console.log('Received message:', data, id); // Debugging step to check if message is received
     $('#ChatContentArea').append(`<li>
         <span>
-            <img class="userimage" src="https://robohash.org/${id}">
+            <img class="userimage" src="https://robohash.org/${id}"> 
         </span>
         <span>
             ${data}
@@ -171,8 +166,22 @@ socket.on('incomingGameMessage', (data, id) => {
     </li>`); 
 })
 
-//game rome - set  player name
-// - set the name of the user who is playing
+//game room - set incoming player name
+socket.on('incomingNewPlayer', (data) => {
+
+    console.log('new clinet player:', data)
+    $('.ChatContentArea-wrapper').prepend(`
+            <div class="toast success">
+             <p class="mb-0"><span id="incomingUser" class="bold">${data}</span> <span>has entered the room</span></p>
+         </div>
+        `)
+
+        setTimeout(() => {
+            $('.toast').remove();
+        }, 3000)
+})
+
+
 
 
 
@@ -196,6 +205,10 @@ socket.on('incomingGameMessage', (data, id) => {
 //capture Wind Statue
 //capture Fire Statue
 //capture Water Statue
+
+module.export = {
+    socket
+}
 
 
 

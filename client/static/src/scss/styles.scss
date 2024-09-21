@@ -263,6 +263,8 @@ html {
   
 
   .ChatContentArea-wrapper {
+    position: relative;
+
     .userName {
       display: flex;
       justify-content: flex-end;
@@ -286,6 +288,8 @@ html {
     }
   }
 
+
+  
 
   .joinRoomModal-content{
     background: $white;
@@ -411,5 +415,23 @@ html {
         border: 2px solid $mid; 
       }
     }
+  }
+}
+
+.toast {
+  display: flex !important;
+  position: absolute;
+  top: 1rem;
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  align-items: center;
+  padding: 12px 24px;
+  
+  &.success {
+    background: transparentize($color: greenyellow, $amount: .3);
+
   }
 }

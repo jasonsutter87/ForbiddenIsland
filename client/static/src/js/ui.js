@@ -1,22 +1,7 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
+import { socket } from './sockets.js'
 
 $(() => {
-
-
-    console.log('ready')
-
-    // 1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
-
-// Connect to the Socket.io server
-const socket = io(serverUrl);
-
-
-// const socket = io('http://localhost:3000');
-
-
     $('#btn-play-game').on('click', e => {
         e.preventDefault();
         console.log('clicking play gmae')
@@ -62,7 +47,6 @@ const socket = io(serverUrl);
         }
     })
 
-
     $('#exitInputNameModal').on('click', e => {
         e.preventDefault();   
         const inputVal = $(e.target).find('input').val(); // Find the input element and get its value
@@ -84,6 +68,19 @@ const socket = io(serverUrl);
                 <span class="name">${socket.name}</span>
             </div>
         `)
+
+        $('.ChatContentArea-wrapper').prepend(`
+        <div class="toast success">
+            <p class="mb-0"><span id="incomingUser" class="bold">${socket.name}</span> <span>has entered the room</span></p>
+        </div>
+        `)
+
+
+        setTimeout(() => {
+            $('.toast').remove();
+        }, 3000)
+
+        socket.emit('incomingPlayer', socket.name)
        $('#inputNameModal').remove();
     })
 
@@ -107,12 +104,23 @@ const socket = io(serverUrl);
                 <span class="name">${socket.name}</span>
             </div>
         `)
+
+
+
+        $('.ChatContentArea-wrapper').prepend(`
+            <div class="toast success">
+             <p class="mb-0"><span id="incomingUser" class="bold">${socket.name}</span> <span>has entered the room</span></p>
+         </div>
+        `)
+
+        setTimeout(() => {
+            $('.toast').remove();
+        }, 3000)
+
+        socket.emit('incomingPlayer', socket.name)
+  
        $('#inputNameModal').remove();
     })
-
-
-
-    
 })
 
 

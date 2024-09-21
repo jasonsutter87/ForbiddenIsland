@@ -11976,6 +11976,21 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.bold {
+  font-weight: 600 !important;
+}
+
 :root,
 [data-bs-theme=light] {
   --bs-blue: #0d6efd;
@@ -19055,6 +19070,9 @@ html {
   max-width: 65px;
   padding: 10px 0;
 }
+#joinRoomModal .ChatContentArea-wrapper {
+  position: relative;
+}
 #joinRoomModal .ChatContentArea-wrapper .userName {
   display: flex;
   justify-content: flex-end;
@@ -19173,4 +19191,20 @@ html {
   border-radius: 10px;
   height: 45px;
   border: 2px solid #C1C1C1;
+}
+
+.toast {
+  display: flex !important;
+  position: absolute;
+  top: 1rem;
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  align-items: center;
+  padding: 12px 24px;
+}
+.toast.success {
+  background: rgba(173, 255, 47, 0.7);
 }/*# sourceMappingURL=styles.css.map */
