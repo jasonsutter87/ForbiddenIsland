@@ -9,6 +9,7 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 // // Connect to the Socket.io server
 // const socket = io(serverUrl);
 
+
 const socket = io('http://localhost:3000');
 
 

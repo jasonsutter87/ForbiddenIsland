@@ -8,7 +8,8 @@ module.exports = (io) => {
   const {game_board, game_details } = require('../models/models')
 
   io.on('connection', (socket) => {
-    console.log('New player connected:', socket.id);
+    //check the status of incoming players
+    // console.log('New player connected:', socket.id);
     initialize(socket);
   
     // Assign player to a room with space or create a new room
@@ -18,24 +19,31 @@ module.exports = (io) => {
     socket.roomName = roomName;
   
     socket.join(roomName);
-    console.log(`Player ${socket.id} joined room: ${roomName}`);
+
+    //check the status of incoming players
+    // console.log(`Player ${socket.id} joined room: ${roomName}`);
   
     // Add player to room's player count
     if (!rooms[roomName]) {
       rooms[roomName] = [];
     }
     rooms[roomName].push(socket.id);
-    
-    console.log('Room', rooms);
-    console.log(`Room ${roomName} now has ${rooms[roomName].length} players.`);
+  
+    //console log for data tracking... todo remove later
+    // console.log('Room', rooms);
+    // console.log(`Room ${roomName} now has ${rooms[roomName].length} players.`);
   
     // Check if the room is full (4 players)
     if (rooms[roomName].length === 4) {
-      console.log(`Room ${roomName} is full. Starting game.`);
+      //the game room is now full
+      // console.log(`Room ${roomName} is full. Starting game.`);
+
       // io.to(roomName).emit('startGame'); // Notify players to start game loop
       // startGameLoop(roomName);
     } else {
-      console.log(`Room ${roomName} is not full yet.`);
+
+      //the romm is not full yet
+      // console.log(`Room ${roomName} is not full yet.`);
     }
 
   
@@ -45,23 +53,23 @@ module.exports = (io) => {
       socket.to(roomName).emit('move', data);
     });
 
+    //Emits a message to everyone in a room including the sender
     socket.on('gameMessage', (data) => {
-      console.log('Received message:', {data: data, id: socket.id}); // Debugging step to check if message is received
-      socket.to(roomName).emit('incomingGameMessage', data, socket.id);
-  })
+      io.to(roomName).emit('incomingGameMessage',  data, socket.id );
+    })
   
 
-  socket.on('incomingPlayer', (data) => {
-    console.log('Received incomingPlayer:', {data: data})
-    socket.to(roomName).emit('incomingNewPlayer', data);
-  })
+    //receving incoming messages from the page
+    socket.on('incomingPlayer', (data) => {
+     socket.to(roomName).emit('incomingNewPlayer', data);
+    })
 
 
  
 
 
   socket.on('disconnect', () => {
-    console.log('Player disconnected:', socket.id);
+    // console.log('Player disconnected:', socket.id);
 
     // Get the player's room from the stored socket information
     const playerRoom = socket.roomName;
@@ -73,9 +81,9 @@ module.exports = (io) => {
       // If the room is empty, delete it
       if (rooms[playerRoom].length === 0) {
         delete rooms[playerRoom];
-        console.log(`Room ${playerRoom} deleted.`);
+        // console.log(`Room ${playerRoom} deleted.`);
       } else {
-        console.log(`Room ${playerRoom} now has ${rooms[playerRoom].length} players.`);
+        // console.log(`Room ${playerRoom} now has ${rooms[playerRoom].length} players.`);
       }
     }
   });
@@ -91,7 +99,7 @@ module.exports = (io) => {
     }
     // If no room has space, create a new one
     const newRoomName = `room-${Object.keys(rooms).length + 1}`;
-    console.log(`Creating new room: ${newRoomName}`);
+    // console.log(`Creating new room: ${newRoomName}`);
     return newRoomName;
   };
 
