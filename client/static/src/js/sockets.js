@@ -206,10 +206,7 @@ socket.on('incomingNewPlayer', (data) => {
 //capture Fire Statue
 //capture Water Statue
 
-module.export = {
-    socket
-}
-
+export { socket };
 
 
 
