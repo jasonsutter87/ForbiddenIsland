@@ -4,8 +4,10 @@
 module.exports = (io) => {
   // Track rooms and player counts
   const rooms = {};
-  const { game_runner, initialize } =  require('../controllers/game-logic/game')
-  const {game_board, game_details } = require('../models/models')
+  const { game_runner, initialize, game_setup } =  require('../controllers/game-logic/game')
+  const { setDifficulty } =  require('../controllers/game-logic/board')
+  const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS  } = require('../models/models')
+
 
   io.on('connection', (socket) => {
     //check the status of incoming players
@@ -28,10 +30,14 @@ module.exports = (io) => {
       rooms[roomName] = [];
     }
     rooms[roomName].players.push(socket.id);
+    rooms[roomName].gameDetails.number_of_players = rooms[roomName].players.length
+
   
     //console log for data tracking... todo remove later
     console.log('Room', rooms);
     console.log(`Room ${roomName} now has ${rooms[roomName].players.length} players.`);
+
+
   
     // Check if the room is full (4 players)
     if (rooms[roomName].players.length === 4) {
@@ -64,10 +70,16 @@ module.exports = (io) => {
 
     //increase the player ready for starting a new game
     socket.on('increaseReadyPlayers', (roomName) => {
+      console.log('increaseReadyPlayers', roomName)
       rooms[roomName].readyCount++;
 
       if(rooms[roomName].readyCount == rooms[roomName].players.length  && rooms[roomName].players.length  > 1) {
         io.to(roomName).emit('startGame'); 
+
+
+      
+
+        game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, 1)
         startGameLoop(roomName);
       }
     })
@@ -77,13 +89,13 @@ module.exports = (io) => {
 
       // Get the player's room from the stored socket information
       const playerRoom = socket.roomName;
-
+  
       // Filter out the disconnected player
       if (rooms[playerRoom]) {
-        rooms[playerRoom] = rooms[playerRoom].players.filter(playerId => playerId !== socket.id);
+        rooms[playerRoom].players = rooms[playerRoom].players.filter(playerId => playerId !== socket.id);
     
         // If the room is empty, delete it
-        if (rooms[playerRoom].length === 0) {
+        if (rooms[playerRoom].players.length === 0) {
           delete rooms[playerRoom];
           // console.log(`Room ${playerRoom} deleted.`);
         } else {
@@ -104,8 +116,13 @@ module.exports = (io) => {
     }
     // If no room has space, create a new one
     const newRoomName = `room-${Object.keys(rooms).length + 1}`;
-    rooms[newRoomName] = { name: newRoomName, players: [], readyCount: 0 };
-    // console.log(`Creating new room: ${newRoomName}`);
+    rooms[newRoomName] = {
+      name: newRoomName,
+      players: [],
+      readyCount: 0,
+      gameDetails: game_details
+    };
+    console.log(`Creating new room: ${newRoomName}`);
     return newRoomName;
   };
 

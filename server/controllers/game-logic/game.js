@@ -20,6 +20,7 @@ const { StartGameModal } = require('../ui/modal');
 const { shuffleCards } = require('../game-machanics/shuffling');
 const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS } = require('../../models/models');
 
+
 let gameQueue = [];
 let isProcessing = false;
     
@@ -60,29 +61,6 @@ function game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerD
     addToQueue(shuffleCards, FLOOD_CARDS);
     addToQueue(shuffleCards, PLAYER_CARDS);
     addToQueue(placeTilesOnBoard, game_board, FLOOD_CARDS);
-    
-    addToQueue(() => {
-        return new Promise(resolve => {
-            console.log('*****game_details******')
-            console.log(game_details)
-            resolve();
-        });
-    });
-    // addToQueue(() => {
-    //     return new Promise(resolve => {
-    //         // Emit the event to the client
-    //         console.log(game_details)
-    //         socket.emit('setPlayersOnBoard', game_details);
-    //         resolve();
-    //     });
-    // });
-    // addToQueue(() => {
-    //     return new Promise(resolve => {
-    //         // Emit the event to the client
-    //         socket.emit('createBoardUI', game_board);
-    //         resolve();
-    //     });
-    // });
 }
 
 
@@ -128,13 +106,13 @@ function game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerD
 // }
 
 // // Game runner function
+
 let game_runner = () => {
     return new Promise(async (resolve) => {
         console.log('new game');
         // // Game Set up
-        StartGameModal()
-        game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, 1);
-    
+        // StartGameModal()
+
 
         // //////////////////
         // //  Game Start  //

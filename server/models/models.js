@@ -34,28 +34,32 @@ const PLAYER_CARDS = [
       name: "Diver",
       color: "Black",
       actionCards: [],
-      Action: "Move through flooded or sunk areas as 1 turn, must land on land."
+      Action: "Move through flooded or sunk areas as 1 turn, must land on land.",
+      socketId: null
     },
     {
       id: 2,
       name: "Pilot",
       color: "Blue",
       actionCards: [],
-      Action: "Once per turn, fly to any tile on the island for 1 action."
+      Action: "Once per turn, fly to any tile on the island for 1 action.",
+      socketId: null
     },
     {
       id: 3,
       name: "Messenger",
       color: "Silver",
       actionCards: [],
-      Action: "Give Treasure cards to a player anyer on the island for 1 action."
+      Action: "Give Treasure cards to a player anyer on the island for 1 action.",
+      socketId: null
     },
     {
       id: 4,
       name: "Explorer",
       color: "Green",
       actionCards: [],
-      Action: "Move and/or shore up diagonally."
+      Action: "Move and/or shore up diagonally.",
+      socketId: null
     },
     {
       id: 5,
@@ -70,7 +74,8 @@ const PLAYER_CARDS = [
       name: "Navigator",
       color: "Yellow",
       actionCards: [],
-      Action: "Move another player up to 2 adjacent tiles for 1 action."
+      Action: "Move another player up to 2 adjacent tiles for 1 action.",
+      socketId: null
     }
 ]
 
