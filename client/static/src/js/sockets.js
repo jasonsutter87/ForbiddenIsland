@@ -101,6 +101,11 @@ socket.on('setPlayersOnBoard', (game_details) => {
 })
 
 
+socket.on('settingRoomName', (data) => {
+    socket.roomName = data
+})
+
+
 // // 3. Make a move when the button is clicked
 // document.getElementById('makeMove').addEventListener('click', () => {
 //     const moveData = { playerId: socket.id, action: 'moved' }; // Example data

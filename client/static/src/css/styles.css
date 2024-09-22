@@ -19060,7 +19060,10 @@ html {
   display: flex;
   flex-direction: column;
 }
-#joinRoomModal .header-logo {
+#joinRoomModal .header {
+  height: 10vh;
+}
+#joinRoomModal .header .header-logo {
   width: 100%;
   max-width: 125px;
   padding: 10px 0;
@@ -19072,6 +19075,8 @@ html {
 }
 #joinRoomModal .ChatContentArea-wrapper {
   position: relative;
+  height: 60vh;
+  overflow-y: scroll;
 }
 #joinRoomModal .ChatContentArea-wrapper .userName {
   display: flex;
@@ -19140,6 +19145,9 @@ html {
   border: 2px solid #ffffff;
   background-color: #11121a;
   color: #ffffff;
+}
+#joinRoomModal .form-wrapper {
+  height: calc(30vh - 25px);
 }
 
 #inputNameModal {

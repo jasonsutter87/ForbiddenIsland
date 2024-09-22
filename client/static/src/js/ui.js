@@ -121,6 +121,15 @@ $(() => {
   
        $('#inputNameModal').remove();
     })
+
+    $('#areYouReady').on('change', e => {
+        e.preventDefault();
+        if(e.target.value == 'yes') {
+            console.log(socket)
+            socket.emit('increaseReadyPlayers', socket.roomName) 
+            $('#areYouReady').attr('disabled', true)
+        }
+    })
 })
 
 

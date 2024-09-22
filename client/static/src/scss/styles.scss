@@ -248,12 +248,18 @@ html {
   display: flex;
   flex-direction: column;
 
+  .header{
+    height: 10vh;
 
-  .header-logo {
-    width: 100%;
-    max-width: 125px;
-    padding: 10px 0;
+    .header-logo {
+      width: 100%;
+      max-width: 125px;
+      padding: 10px 0;
+    }
+
   }
+
+
 
   .userimage {
     width: 100%;
@@ -261,9 +267,10 @@ html {
     padding: 10px 0;
   }
   
-
   .ChatContentArea-wrapper {
     position: relative;
+    height: 60vh;
+    overflow-y: scroll;
 
     .userName {
       display: flex;
@@ -287,9 +294,6 @@ html {
       }
     }
   }
-
-
-  
 
   .joinRoomModal-content{
     background: $white;
@@ -355,6 +359,10 @@ html {
     }
 
     
+  }
+
+  .form-wrapper {
+    height: calc(30vh - 25px);
   }
 }
 
