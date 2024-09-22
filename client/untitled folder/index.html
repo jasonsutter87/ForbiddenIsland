@@ -18,7 +18,7 @@
 
         // 2. Listen for 'move' events from the server
         socket.on('move', (data) => {
-            console.log('Move received:', data);
+            // console.log(('Move received:', data);
             // Handle move received from other players
             alert(`Other player moved: ${JSON.stringify(data)}`);
         });
@@ -26,7 +26,7 @@
         // 3. Make a move when the button is clicked
         document.getElementById('makeMove').addEventListener('click', () => {
             const moveData = { playerId: socket.id, action: 'moved' }; // Example data
-            console.log('Move made:', moveData);
+            // console.log(('Move made:', moveData);
 
             // Emit the move event to the server
             socket.emit('move', moveData);
@@ -42,11 +42,11 @@
 
         // 5. Handle connection and disconnection events
         socket.on('connect', () => {
-            console.log('Connected to server with ID:', socket.id);
+            // console.log(('Connected to server with ID:', socket.id);
         });
 
         socket.on('disconnect', () => {
-            console.log('Disconnected from server');
+            // console.log(('Disconnected from server');
         });
     </script>
 </body>

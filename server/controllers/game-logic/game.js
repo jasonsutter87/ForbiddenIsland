@@ -48,19 +48,24 @@ function initialize(sock) {
     socket = sock; // Store the socket instance
 }
 
-let showDetails = () => {
+let showDetails = (socket) => {
     return new Promise( resolve => {
-            console.log('game_details', game_details)
-        resolve();
+            // console.log(('game_details', game_details)
+            socket = game_details
+        resolve(socket);
     })
 }
 
-function game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerDifficuly) {
-    addToQueue(setDifficulty, playerDifficuly);
-    addToQueue(shuffleCards, ACTION_CARDS, game_details.action_deck);
-    addToQueue(shuffleCards, FLOOD_CARDS);
-    addToQueue(shuffleCards, PLAYER_CARDS);
-    addToQueue(placeTilesOnBoard, game_board, FLOOD_CARDS);
+function game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerDifficuly, socket) {
+    return new Promise((resolve) => {
+        addToQueue(setDifficulty, playerDifficuly);
+        addToQueue(shuffleCards, ACTION_CARDS, game_details.action_deck);
+        addToQueue(shuffleCards, FLOOD_CARDS);
+        addToQueue(shuffleCards, PLAYER_CARDS);
+        addToQueue(placeTilesOnBoard, game_board, FLOOD_CARDS);
+        addToQueue(showDetails, socket);
+        resolve(game_details);
+    });
 }
 
 
@@ -109,7 +114,7 @@ function game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerD
 
 let game_runner = () => {
     return new Promise(async (resolve) => {
-        console.log('new game');
+        // console.log(('new game');
         // // Game Set up
         // StartGameModal()
 
@@ -126,7 +131,7 @@ let game_runner = () => {
 
   
         // // Log game details
-        addToQueue(showDetails)
+        // addToQueue(showDetails)
        
 
 

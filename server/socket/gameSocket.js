@@ -11,7 +11,7 @@ module.exports = (io) => {
 
   io.on('connection', (socket) => {
     //check the status of incoming players
-    // console.log('New player connected:', socket.id);
+    // // console.log(('New player connected:', socket.id);
     initialize(socket);
   
     // Assign player to a room with space or create a new room
@@ -23,7 +23,7 @@ module.exports = (io) => {
     io.to(roomName).emit('settingRoomName', roomName);
 
     //check the status of incoming players
-    console.log(`Player ${socket.id} joined room: ${roomName}`);
+    // console.log((`Player ${socket.id} joined room: ${roomName}`);
 
 
   
@@ -37,27 +37,30 @@ module.exports = (io) => {
 
   
     //console log for data tracking... todo remove later
-    console.log('Room', rooms);
-    console.log(`Room ${roomName} now has ${rooms[roomName].players.length} players.`);
+    // console.log(('Room', rooms);
+    // console.log((`Room ${roomName} now has ${rooms[roomName].players.length} players.`);
 
 
   
     // Check if the room is full (4 players)
     if (rooms[roomName].players.length === 4) {
       //the game room is now full
-      console.log(`Room ${roomName} is full. Starting game.`);
-
-      io.to(roomName).emit('startGame');
-      startGameLoop(roomName);
+      // console.log((`Room ${roomName} is full. Starting game.`);
+      game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, 1)
+      setTimeout(()=> {
+        rooms[roomName].gameDetails.gameBoard = game_board
+        io.to(roomName).emit('startGame', rooms[roomName].gameDetails.gameBoard); 
+        startGameLoop(roomName);
+      }, 250)
     } else {
 
       //the romm is not full yet
-      console.log(`Room ${roomName} is not full yet.`);
+      // console.log((`Room ${roomName} is not full yet.`);
     }
 
     // Handle player move
     socket.on('resetGame', (data) => {
-      console.log('Move made:', data);
+      // console.log(('Move made:', data);
       socket.to(roomName).emit('move', data);
     });
 
@@ -68,28 +71,26 @@ module.exports = (io) => {
   
     //receving incoming messages from the page
     socket.on('incomingPlayer', (data) => {
-      console.log(data)
+      // console.log((data)
      socket.to(roomName).emit('incomingNewPlayer', data);
     })
 
     //increase the player ready for starting a new game
     socket.on('increaseReadyPlayers', (roomName) => {
-      console.log('increaseReadyPlayers', roomName)
       rooms[roomName].readyCount++;
 
       if(rooms[roomName].readyCount == rooms[roomName].players.length  && rooms[roomName].players.length  > 1) {
-        io.to(roomName).emit('startGame', rooms[roomName].gameDetails.gameBoard); 
-
-
-      
-
         game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, 1)
-        startGameLoop(roomName);
+        setTimeout(()=> {
+          rooms[roomName].gameDetails.gameBoard = game_board
+          io.to(roomName).emit('startGame', rooms[roomName].gameDetails.gameBoard); 
+          startGameLoop(roomName);
+        }, 250)
       }
     })
 
     socket.on('disconnect', () => {
-      console.log('Player disconnected:', socket.id);
+      // console.log(('Player disconnected:', socket.id);
       
       // Get the player's room from the stored socket information
       const playerRoom = socket.roomName;
@@ -103,9 +104,9 @@ module.exports = (io) => {
         // If the room is empty, delete it
         if (rooms[playerRoom].players.length === 0) {
           delete rooms[playerRoom];
-          // console.log(`Room ${playerRoom} deleted.`);
+          // // console.log((`Room ${playerRoom} deleted.`);
         } else {
-          // console.log(`Room ${playerRoom} now has ${rooms[playerRoom].length} players.`);
+          // // console.log((`Room ${playerRoom} now has ${rooms[playerRoom].length} players.`);
         }
       }
     });
@@ -128,13 +129,13 @@ module.exports = (io) => {
       readyCount: 0,
       gameDetails: game_details
     };
-    console.log(`Creating new room: ${newRoomName}`);
+    // console.log((`Creating new room: ${newRoomName}`);
     return newRoomName;
   };
 
   // Start the game loop (example)
   const startGameLoop = (roomName) => {
-    console.log(`Starting game loop for room: ${roomName}`);
+    // console.log((`Starting game loop for room: ${roomName}`);
     
     game_runner()
     

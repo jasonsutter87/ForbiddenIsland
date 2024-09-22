@@ -4,7 +4,6 @@ import { socket } from './sockets.js'
 $(() => {
     $('#btn-play-game').on('click', e => {
         e.preventDefault();
-        console.log('clicking play gmae')
         socket.emit('joinRoom')
         $('#startingModal').removeClass('active')
 
@@ -21,7 +20,6 @@ $(() => {
 
         if(message.length >= 1) {
             socket.emit('gameMessage', message)
-            console.log(message)
             $('#gameRoomMessageInput').val('');
         } else {
             $('.error').addClass('active')
@@ -37,7 +35,6 @@ $(() => {
 
         if(message.length >= 1) {
             socket.emit('gameMessage', message)
-            console.log(message)
             $('#gameRoomMessageInput').val('');
         } else {
             $('.error').addClass('active')
@@ -126,7 +123,7 @@ $(() => {
     $('#areYouReady').on('change', e => {
         e.preventDefault();
         if(e.target.value == 'yes') {
-            console.log(socket)
+            // console.log((socket.roomName)
             socket.emit('increaseReadyPlayers', socket.roomName) 
             $('#areYouReady').attr('disabled', true)
         }

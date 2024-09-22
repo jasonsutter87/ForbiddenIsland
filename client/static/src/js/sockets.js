@@ -93,14 +93,7 @@ socket.on('settingRoomName', (data) => {
     socket.roomName = data
 })
 
-// // 3. Make a move when the button is clicked
-// document.getElementById('makeMove').addEventListener('click', () => {
-//     const moveData = { playerId: socket.id, action: 'moved' }; // Example data
-//     console.log('Move made:', moveData);
 
-//     // Emit the move event to the server
-//     socket.emit('move', moveData);
-// });
 
 // 4. Fetch game state from REST API
 fetch('http://localhost:3000/api/game/state')
@@ -112,11 +105,11 @@ fetch('http://localhost:3000/api/game/state')
 
 // 5. Handle connection and disconnection events
 socket.on('connect', () => {
-    console.log('Connected to server with ID:', socket.id);
+    // // console.log(('Connected to server with ID:', socket.id);
 });
 
 socket.on('disconnect', () => {
-    console.log('Disconnected from server');
+    // // console.log(('Disconnected from server');
 });
 
 
@@ -128,7 +121,7 @@ socket.on('disconnect', () => {
 
 //game room - receive message
 socket.on('incomingGameMessage', (data, id) => {
-    console.log('Received message:', data, id); // Debugging step to check if message is received
+    // // console.log(('Received message:', data, id); // Debugging step to check if message is received
     $('#ChatContentArea').append(`<li>
         <span>
             <img class="userimage" src="https://robohash.org/${id}"> 
@@ -166,6 +159,10 @@ socket.on('number_of_players_in_room', data => {
 })
 
 socket.on('startGame', (board) => {
+    // console.log(('startGame', board)
+
+
+
     $('#joinRoomModal').remove()
     $('.joinRoomModal-wrapper').remove()
     $('main').append('<div id="board"></div>')

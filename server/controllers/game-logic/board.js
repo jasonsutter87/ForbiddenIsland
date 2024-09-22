@@ -37,6 +37,7 @@ let floodByWaterLevel = (floodDeck, waterLevel) => {
 
 let placeTilesOnBoard = (gameBoard, FLOOD_CARDS) => {
   return new Promise(( resolve ) => {
+    // // console.log(('gameBoard', gameBoard)
     let duplicateFloodDeck = FLOOD_CARDS.slice();
 
     for (let i = 0; i < gameBoard.length; i++) {
@@ -83,7 +84,7 @@ let checkTreasureSunk = (board, treasure) => {
 let checkForPlayerLost = (cardId, count) => {
   return new Promise(resolve => {
 
-    console.log('checking if Player Lost Attempt:' +  count)
+    // console.log(('checking if Player Lost Attempt:' +  count)
     //- check water level < 10
     if(game_details.current_flood_level >= 10 ) {
       resolve(true);
