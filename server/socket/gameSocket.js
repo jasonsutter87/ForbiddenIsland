@@ -78,7 +78,7 @@ module.exports = (io) => {
       rooms[roomName].readyCount++;
 
       if(rooms[roomName].readyCount == rooms[roomName].players.length  && rooms[roomName].players.length  > 1) {
-        io.to(roomName).emit('startGame'); 
+        io.to(roomName).emit('startGame', rooms[roomName].gameDetails.gameBoard); 
 
 
       

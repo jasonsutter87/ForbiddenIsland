@@ -15,7 +15,7 @@ const socket = io('http://localhost:3000');
 
 
 // Define createBoardUI as a separate function
-function createBoardUI_todo(board) {
+function createBoardUI(board) {
     return new Promise(resolve => {
         const boardElement = document.getElementById('board');
         boardElement.innerHTML = ''; // Clear any existing content
@@ -63,17 +63,6 @@ function createBoardUI_todo(board) {
     });
 }
 
-// Use Socket.io to listen for 'createBoardUI' event
-socket.on('createBoardUI', (board) => {
-    createBoardUI(board)
-        .then(() => {
-            console.log('Board UI created successfully');
-        })
-        .catch(error => {
-            console.error('Error creating board UI:', error);
-        });
-});
-
 socket.on('setPlayersOnBoard', (game_details) => {
 
         // set player on board.
@@ -100,11 +89,9 @@ socket.on('setPlayersOnBoard', (game_details) => {
           
 })
 
-
 socket.on('settingRoomName', (data) => {
     socket.roomName = data
 })
-
 
 // // 3. Make a move when the button is clicked
 // document.getElementById('makeMove').addEventListener('click', () => {
@@ -133,30 +120,10 @@ socket.on('disconnect', () => {
 });
 
 
-// socket.on('move', (data) => {
-
-// });
-
 ///////////
 
 
 //SOCKETS TODOS
-
-
-////////// intro screen
-//PLAY GAME
-// - have the player move from the loading screen to the game room chat waiting rooom
-
-
-
-
-
-
-
-//////////// game waiting room
-//Player is Ready - game room
-// - set the player as ready to let the other player player they are ready
-// update the current player count in the Room
 
 
 //game room - receive message
@@ -185,7 +152,6 @@ socket.on('incomingNewPlayer', (data) => {
         }, 3000)
 })
 
-
 socket.on('number_of_players_in_room', data => {
     $('#playersInTheRoomNumber').empty();
     if(data == 1) {
@@ -199,9 +165,12 @@ socket.on('number_of_players_in_room', data => {
     }
 })
 
-
-
-
+socket.on('startGame', (board) => {
+    $('#joinRoomModal').remove()
+    $('.joinRoomModal-wrapper').remove()
+    $('main').append('<div id="board"></div>')
+    createBoardUI(board)
+})
 
 /////////////////////game play
 
