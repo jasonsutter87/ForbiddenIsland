@@ -24,6 +24,8 @@ module.exports = (io) => {
 
     //check the status of incoming players
     console.log(`Player ${socket.id} joined room: ${roomName}`);
+
+
   
     // Add player to room's player count
     if (!rooms[roomName]) {
@@ -31,6 +33,7 @@ module.exports = (io) => {
     }
     rooms[roomName].players.push(socket.id);
     rooms[roomName].gameDetails.number_of_players = rooms[roomName].players.length
+    io.to(roomName).emit('number_of_players_in_room', rooms[roomName].gameDetails.number_of_players);
 
   
     //console log for data tracking... todo remove later
@@ -65,6 +68,7 @@ module.exports = (io) => {
   
     //receving incoming messages from the page
     socket.on('incomingPlayer', (data) => {
+      console.log(data)
      socket.to(roomName).emit('incomingNewPlayer', data);
     })
 
@@ -85,14 +89,16 @@ module.exports = (io) => {
     })
 
     socket.on('disconnect', () => {
-      // console.log('Player disconnected:', socket.id);
-
+      console.log('Player disconnected:', socket.id);
+      
       // Get the player's room from the stored socket information
       const playerRoom = socket.roomName;
-  
+      
       // Filter out the disconnected player
       if (rooms[playerRoom]) {
         rooms[playerRoom].players = rooms[playerRoom].players.filter(playerId => playerId !== socket.id);
+        rooms[playerRoom].gameDetails.number_of_players--
+        io.to(playerRoom).emit('number_of_players_in_room', rooms[playerRoom].gameDetails.number_of_players);
     
         // If the room is empty, delete it
         if (rooms[playerRoom].players.length === 0) {

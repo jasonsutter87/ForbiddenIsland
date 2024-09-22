@@ -98,6 +98,7 @@ $(() => {
         } else {
             socket.name = inputVal 
         }
+
         $('.ChatContentArea-wrapper').prepend(`
             <div class="userName">
                 <span>Username: </span>

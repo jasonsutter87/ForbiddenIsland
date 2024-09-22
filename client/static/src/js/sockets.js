@@ -173,9 +173,7 @@ socket.on('incomingGameMessage', (data, id) => {
 })
 
 //game room - set incoming player name
-socket.on('incomingNewPlayer', (data) => {
-
-    console.log('new clinet player:', data)
+socket.on('incomingNewPlayer', (data) => {    
     $('.ChatContentArea-wrapper').prepend(`
             <div class="toast success">
              <p class="mb-0"><span id="incomingUser" class="bold">${data}</span> <span>has entered the room</span></p>
@@ -185,6 +183,20 @@ socket.on('incomingNewPlayer', (data) => {
         setTimeout(() => {
             $('.toast').remove();
         }, 3000)
+})
+
+
+socket.on('number_of_players_in_room', data => {
+    $('#playersInTheRoomNumber').empty();
+    if(data == 1) {
+        $('#playersInTheRoomNumber').append(`
+            <p class="mb-0">${data} player is in the room</p>
+        `)
+    } else {
+        $('#playersInTheRoomNumber').append(`
+             <p class="mb-0">${data} players are in the room</p>
+        `)
+    }
 })
 
 
