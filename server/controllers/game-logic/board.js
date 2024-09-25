@@ -35,19 +35,23 @@ let floodByWaterLevel = (floodDeck, waterLevel) => {
     }
 };
 
-let placeTilesOnBoard = (gameBoard, FLOOD_CARDS) => {
+let placeTilesOnBoard = (gameBoard, cards) => {
   return new Promise(( resolve ) => {
-    // // console.log(('gameBoard', gameBoard)
-    let duplicateFloodDeck = FLOOD_CARDS.slice();
+    let duplicateFloodDeck = [...cards];
+    let finalGameBoard = JSON.parse(JSON.stringify(gameBoard)); 
+  
+    let cardCount = 0;
 
-    for (let i = 0; i < gameBoard.length; i++) {
-      for (let j = 0; j < gameBoard[i].length; j++) {
-        if (gameBoard[i][j] === 'c') {
-          gameBoard[i][j] = duplicateFloodDeck.shift();
+    for (let i = 0; i < finalGameBoard.length; i++) {
+      for (let j = 0; j < finalGameBoard[i].length; j++) {
+        if (finalGameBoard[i][j] === 'c') {
+          finalGameBoard[i][j] = duplicateFloodDeck[cardCount]
+
+          cardCount++
         }
       }
     }
-    resolve()
+    resolve(finalGameBoard) 
   })
   
 }
@@ -144,8 +148,6 @@ let setDifficulty = (playerDifficuly) => {
         resolve();
     });
 }
-
-
 // Function to reset the game state
 let resetGame = () => {
   // Reset game_board and game_details to their initial states

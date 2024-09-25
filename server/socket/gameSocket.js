@@ -1,17 +1,22 @@
 // Import the game setup function
 
+const { shuffle } = require('../controllers/game-machanics/shuffling');
+
 
 module.exports = (io) => {
   // Track rooms and player counts
   const rooms = {};
-  const { game_runner, initialize, game_setup } =  require('../controllers/game-logic/game')
-  const { setDifficulty } =  require('../controllers/game-logic/board')
+  const { initialize } =  require('../controllers/game-logic/game')
+  const { setDifficulty, placeTilesOnBoard } =  require('../controllers/game-logic/board')
+  const { shuffleCards, shuffle } = require('../controllers/game-machanics/shuffling')
   const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS  } = require('../models/models')
+  const { GAME_STATUS } = require("../Enums/enums.js");
+
+
 
 
   io.on('connection', (socket) => {
     //check the status of incoming players
-    // // console.log(('New player connected:', socket.id);
     initialize(socket);
   
     // Assign player to a room with space or create a new room
@@ -22,11 +27,7 @@ module.exports = (io) => {
     socket.join(roomName);
     io.to(roomName).emit('settingRoomName', roomName);
 
-    //check the status of incoming players
-    // console.log((`Player ${socket.id} joined room: ${roomName}`);
 
-
-  
     // Add player to room's player count
     if (!rooms[roomName]) {
       rooms[roomName] = [];
@@ -35,34 +36,6 @@ module.exports = (io) => {
     rooms[roomName].gameDetails.number_of_players = rooms[roomName].players.length
     io.to(roomName).emit('number_of_players_in_room', rooms[roomName].gameDetails.number_of_players);
 
-  
-    //console log for data tracking... todo remove later
-    // console.log(('Room', rooms);
-    // console.log((`Room ${roomName} now has ${rooms[roomName].players.length} players.`);
-
-
-  
-    // Check if the room is full (4 players)
-    if (rooms[roomName].players.length === 4) {
-      //the game room is now full
-      // console.log((`Room ${roomName} is full. Starting game.`);
-      game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, 1)
-      setTimeout(()=> {
-        rooms[roomName].gameDetails.gameBoard = game_board
-        io.to(roomName).emit('startGame', rooms[roomName].gameDetails.gameBoard); 
-        startGameLoop(roomName);
-      }, 250)
-    } else {
-
-      //the romm is not full yet
-      // console.log((`Room ${roomName} is not full yet.`);
-    }
-
-    // Handle player move
-    socket.on('resetGame', (data) => {
-      // console.log(('Move made:', data);
-      socket.to(roomName).emit('move', data);
-    });
 
     //Emits a message to everyone in a room including the sender
     socket.on('gameMessage', (data) => {
@@ -71,7 +44,6 @@ module.exports = (io) => {
   
     //receving incoming messages from the page
     socket.on('incomingPlayer', (data) => {
-      // console.log((data)
      socket.to(roomName).emit('incomingNewPlayer', data);
     })
 
@@ -80,12 +52,51 @@ module.exports = (io) => {
       rooms[roomName].readyCount++;
 
       if(rooms[roomName].readyCount == rooms[roomName].players.length  && rooms[roomName].players.length  > 1) {
-        game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, 1)
-        setTimeout(()=> {
-          rooms[roomName].gameDetails.gameBoard = game_board
-          io.to(roomName).emit('startGame', rooms[roomName].gameDetails.gameBoard); 
+        rooms[roomName].gameDetails =  {
+          flood_deck: {
+              discard: [],
+              unused: [],
+              removed: []
+          },
+          action_deck: {
+              discard: [],
+              unused: []
+          },
+          players: [],
+          number_of_players: rooms[roomName].players.length,
+          current_player: null,
+          current_player_turns_left: null,
+          gameBoard: game_board,
+          status: GAME_STATUS.notStarted,
+          current_flood_level: 0
+        }; 
+  
+        let newActionCards = [...ACTION_CARDS];
+        let newFloodCards = [...FLOOD_CARDS];
+        let newPlayerCards = [...PLAYER_CARDS];
+
+        shuffleCards(newActionCards);
+        shuffleCards(newFloodCards);
+        shuffleCards(newPlayerCards);
+  
+        let shuffleFlood = [...newFloodCards];
+        shuffleCards(shuffleFlood)
+
+        rooms[roomName].gameDetails.action_deck.unused = newActionCards
+        rooms[roomName].gameDetails.flood_deck.unused = newFloodCards
+
+        for(var i = 0; i < rooms[roomName].gameDetails.number_of_players; i++) {
+          rooms[roomName].gameDetails.players.push(newPlayerCards[i])
+        }
+    
+        shuffle(newFloodCards)
+        
+        
+        placeTilesOnBoard(rooms[roomName].gameDetails.gameBoard, newFloodCards).then(result => {
+          rooms[roomName].status = GAME_STATUS.inProgress;
+          io.to(roomName).emit('startGame', result); 
           startGameLoop(roomName);
-        }, 250)
+        })
       }
     })
 
@@ -117,7 +128,7 @@ module.exports = (io) => {
   // Find a room with less than 4 players or create a new one
   const findRoomWithSpace = (rooms) => {
     for (const room in rooms) {
-      if (rooms[room].players.length < 4) {
+      if (rooms[room].players.length < 4 && rooms[room].status === GAME_STATUS.notStarted) {
         return room;
       }
     }
@@ -127,7 +138,8 @@ module.exports = (io) => {
       name: newRoomName,
       players: [],
       readyCount: 0,
-      gameDetails: game_details
+      gameDetails: game_details,
+      status: GAME_STATUS.notStarted
     };
     // console.log((`Creating new room: ${newRoomName}`);
     return newRoomName;
@@ -135,21 +147,20 @@ module.exports = (io) => {
 
   // Start the game loop (example)
   const startGameLoop = (roomName) => {
-    // console.log((`Starting game loop for room: ${roomName}`);
+    console.log(`Starting game loop for room: ${roomName}`);
     
-    game_runner()
-    
-    // Notify players that the game has started
-    io.to(roomName).emit('gameUpdate', { message: 'Game started!' });
 
-    // Example game loop logic
-    let gameRunning = true;
-    let intervalId = setInterval(() => {
-      if (!gameRunning) {
-        clearInterval(intervalId);
-      }
-      io.to(roomName).emit('gameUpdate', { message: 'Game update...' });
-    }, 1000); // Send updates every second
+    // // Notify players that the game has started
+    // io.to(roomName).emit('gameUpdate', { message: 'Game started!' });
+
+    // // Example game loop logic
+    // let gameRunning = true;
+    // let intervalId = setInterval(() => {
+    //   if (!gameRunning) {
+    //     clearInterval(intervalId);
+    //   }
+    //   io.to(roomName).emit('gameUpdate', { message: 'Game update...' });
+    // }, 1000); // Send updates every second
   };
 
 };

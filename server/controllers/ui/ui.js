@@ -4,6 +4,8 @@ const { playerMoveOrActionModal } = require('../ui/modal'); // Relative path
 
 
 function createBoardUI(board) {
+console.log(board)
+
   return new Promise(resolve => {
     const boardElement = document.getElementById('board');
     boardElement.innerHTML = ''; // Clear any existing content

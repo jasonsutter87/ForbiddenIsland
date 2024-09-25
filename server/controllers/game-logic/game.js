@@ -1,26 +1,3 @@
-/*
-TODO:
-
-    ////Game Loop
-        //Win Condition
-        - Check for win condition
-
-        //Player Turn
-        - 3 Actions
-        - Draw Action Cards
-        - Draw Flood Cards
-
-*/
-
-//This file will serve as the main entry point for the game
-
-
-const { setDifficulty, placeTilesOnBoard } = require('../game-logic/board');
-const { StartGameModal } = require('../ui/modal');
-const { shuffleCards } = require('../game-machanics/shuffling');
-const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS } = require('../../models/models');
-
-
 let gameQueue = [];
 let isProcessing = false;
     
@@ -48,25 +25,6 @@ function initialize(sock) {
     socket = sock; // Store the socket instance
 }
 
-let showDetails = (socket) => {
-    return new Promise( resolve => {
-            // console.log(('game_details', game_details)
-            socket = game_details
-        resolve(socket);
-    })
-}
-
-function game_setup(game_board, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, playerDifficuly, socket) {
-    return new Promise((resolve) => {
-        addToQueue(setDifficulty, playerDifficuly);
-        addToQueue(shuffleCards, ACTION_CARDS, game_details.action_deck);
-        addToQueue(shuffleCards, FLOOD_CARDS);
-        addToQueue(shuffleCards, PLAYER_CARDS);
-        addToQueue(placeTilesOnBoard, game_board, FLOOD_CARDS);
-        addToQueue(showDetails, socket);
-        resolve(game_details);
-    });
-}
 
 
 // let gameloop = () => {
@@ -142,7 +100,6 @@ let game_runner = () => {
 
 
 module.exports = {
-    game_setup,
     initialize,
     game_runner,
 }

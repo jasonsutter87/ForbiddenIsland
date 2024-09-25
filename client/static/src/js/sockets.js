@@ -1,16 +1,16 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 
 
-// // 1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// // // 1. Connect to Socket.io server
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 
 
 
@@ -159,7 +159,7 @@ socket.on('number_of_players_in_room', data => {
 })
 
 socket.on('startGame', (board) => {
-    // console.log(('startGame', board)
+    // console.log('startGame', board)
 
 
 
