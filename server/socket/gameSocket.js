@@ -100,6 +100,14 @@ module.exports = (io) => {
       }
     })
 
+    socket.on('changeGameLayoutType', (roomName, gameLayoutId) => {
+      console.log('changeGameLayoutType - roomName', roomName)
+      console.log('changeGameLayoutType - gameLayoutId', gameLayoutId)
+
+      //do something with the game type.
+      // set the room[roomName].gameDetails.game_board = GAME_BOARDS[gameLayoutId].layout
+    })
+
     socket.on('disconnect', () => {
       // console.log(('Player disconnected:', socket.id);
       

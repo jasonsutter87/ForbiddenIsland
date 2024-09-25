@@ -102,6 +102,7 @@ fetch('http://localhost:3000/api/game/state')
         document.getElementById('gameState').innerText = `Game state: ${JSON.stringify(data)}`;
     })
     .catch(error => console.error('Error fetching game state:', error));
+   
 
 // 5. Handle connection and disconnection events
 socket.on('connect', () => {
@@ -167,6 +168,14 @@ socket.on('startGame', (board) => {
     $('.joinRoomModal-wrapper').remove()
     $('main').append('<div id="board"></div>')
     createBoardUI(board)
+})
+
+socket.on('setGameLayout', (layout) => {
+    $(()=> {
+        //remove any selected attribues
+        
+        //put selected attribues on incoming layout
+    })
 })
 
 /////////////////////game play

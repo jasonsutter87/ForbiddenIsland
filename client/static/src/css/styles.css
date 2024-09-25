@@ -19127,7 +19127,7 @@ html {
   visibility: visible;
 }
 #joinRoomModal .joinRoomModal-content select {
-  width: 75px;
+  width: auto;
   height: 35px;
   border-radius: 10px;
   border: 2px solid #C1C1C1;
