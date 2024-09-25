@@ -5,6 +5,20 @@ const GAME_STATUS = {
     won: 'Won'
 };
 
+const GAME_VARIANT = {
+    standard: 'Standard',
+    island_of_shadows: 'Island of Shadows',
+    island_of_death: 'Island of Death',
+    bone_island: 'Bone Island',
+    skill_island: 'Skill Island',
+    atoll_of_decisions: 'Atoll of Decisions',
+    volcano_island: 'Volcano Island',
+    bay_of_gulls: 'Bay of Gulls',
+    coral_reef: 'Coral Reef',
+    brigde_of_horrors: 'Brigde of Horrors',
+    arch_of_fate: 'Arch of Fate'
+}
+
 const TREASURES = {
     wind_treasure: "The Statue of The Wind",
     fire_treasure: "The Crystal of Fire",
@@ -23,5 +37,6 @@ legendary: 4
 module.exports = {
     GAME_STATUS,
     TREASURES,
-    DIFFICULTY
+    DIFFICULTY,
+    GAME_VARIANT
 }
