@@ -8,8 +8,6 @@ $(() => {
     //dev
     // let socketURL = 'http://localhost:3000';
 
-
-
     $('#btn-play-game').on('click', e => {
         e.preventDefault();
         socket.emit('joinRoom')
@@ -157,8 +155,8 @@ $(() => {
                     `)
                 } else {
                     $('#selectGameLayout').append(`
-                    <option value="${board.id}">${board.name}</option>
-                `)
+                        <option value="${board.id}">${board.name}</option>
+                    `)
                 }
             });
         },
