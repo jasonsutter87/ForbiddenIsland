@@ -15,7 +15,7 @@ const GAME_VARIANT = {
     volcano_island: 'Volcano Island',
     bay_of_gulls: 'Bay of Gulls',
     coral_reef: 'Coral Reef',
-    brigde_of_horrors: 'Bridge of Horrors',
+    bridge_of_horrors: 'Bridge of Horrors',
     arch_of_fate: 'Arch of Fate'
 }
 
