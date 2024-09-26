@@ -2,6 +2,12 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { socket } from './sockets.js'
 
 $(() => {
+    //master
+    let socketURL = 'https://forbiddenisland.onrender.com';
+
+    //dev
+    // let socketURL = 'http://localhost:3000';
+
     $('#btn-play-game').on('click', e => {
         e.preventDefault();
         socket.emit('joinRoom')
@@ -137,7 +143,7 @@ $(() => {
 
     let appendLayoutsToRoomSelect = () => { 
         $.ajax({
-        url: 'http://localhost:3000/api/game/game-boards',  // The API endpoint for GAME_BOARD
+        url: socketURL + '/api/game/game-boards',  // The API endpoint for GAME_BOARD
         method: 'GET',
         dataType: 'json',  // Expecting JSON response
         success: function(data) {
@@ -149,8 +155,8 @@ $(() => {
                     `)
                 } else {
                     $('#selectGameLayout').append(`
-                    <option value="${board.id}">${board.name}</option>
-                `)
+                        <option value="${board.id}">${board.name}</option>
+                    `)
                 }
             });
         },

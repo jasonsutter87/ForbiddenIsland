@@ -1,15 +1,5 @@
 const { GAME_STATUS, TREASURES, GAME_VARIANT } = require("../Enums/enums")
 
-//deprecated
-let game_board = [
-    ['x', 'x', 'c', 'c', 'x', 'x'],
-    ['x', 'c', 'c', 'c', 'c', 'x'],
-    ['c', 'c', 'c', 'c', 'c', 'c'],
-    ['c', 'c', 'c', 'c', 'c', 'c'],
-    ['x', 'c', 'c', 'c', 'c', 'x'],
-    ['x', 'x', 'c', 'c', 'x', 'x'],
-]
-
 const GAME_BOARDS = [
     {
         id: 1,
@@ -57,7 +47,7 @@ const GAME_BOARDS = [
     },
     {
         id: 5,
-        name: GAME_VARIANT.skill_island,
+        name: GAME_VARIANT.skull_island,
         layout: [
             ['c', 'c', 'c', 'c', 'c', 'c'],
             ['c', 'x', 'c', 'c', 'x', 'c'],
@@ -116,7 +106,7 @@ const GAME_BOARDS = [
     },
     {
         id: 10,
-        name: GAME_VARIANT.brigde_of_horrors,
+        name: GAME_VARIANT.bridge_of_horrors,
         layout: [
             ['c', 'c', 'c', 'x', 'x', 'x', 'c', 'c', 'c', 'c'],
             ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c'],
@@ -151,7 +141,7 @@ let game_details = {
     number_of_players: null,
     current_player: null,
     current_player_turns_left: null,
-    gameBoard: game_board,
+    gameBoard: GAME_BOARDS[0].layout,
     status: GAME_STATUS.notStarted,
     current_flood_level: 0
 };
@@ -809,7 +799,6 @@ const TREASURES_PIECES = [
 
 module.exports = {
     //deprecated
-    game_board,
     game_details,
     PLAYER_CARDS,
     ACTION_CARDS,
