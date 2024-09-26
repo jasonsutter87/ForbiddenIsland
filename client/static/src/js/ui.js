@@ -6,6 +6,7 @@ $(() => {
         e.preventDefault();
         socket.emit('joinRoom')
         $('#startingModal').removeClass('active')
+        appendLayoutsToRoomSelect()
 
         setTimeout(()=>{
             $('.startingModal-wrapper').remove()
@@ -123,11 +124,42 @@ $(() => {
     $('#areYouReady').on('change', e => {
         e.preventDefault();
         if(e.target.value == 'yes') {
-            // console.log((socket.roomName)
             socket.emit('increaseReadyPlayers', socket.roomName) 
             $('#areYouReady').attr('disabled', true)
         }
     })
+
+    $('#selectGameLayout').on('change', e => {
+        e.preventDefault();
+        let layoutId = e.target.value;
+        socket.emit('changeGameLayoutType', socket.roomName, layoutId) 
+    })
+
+    let appendLayoutsToRoomSelect = () => { 
+        $.ajax({
+        url: 'http://localhost:3000/api/game/game-boards',  // The API endpoint for GAME_BOARD
+        method: 'GET',
+        dataType: 'json',  // Expecting JSON response
+        success: function(data) {
+            // Process the GAME_BOARD data here
+            data.forEach(board => {
+                if(board.id == 1) {
+                    $('#selectGameLayout').append(`
+                        <option value="${board.id}" selected>${board.name}</option>
+                    `)
+                } else {
+                    $('#selectGameLayout').append(`
+                    <option value="${board.id}">${board.name}</option>
+                `)
+                }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error fetching GAME_BOARD:', textStatus, errorThrown);
+        }
+        });
+
+    }
 })
 
 

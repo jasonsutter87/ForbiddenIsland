@@ -1,5 +1,6 @@
-const { GAME_STATUS, TREASURES } = require("../Enums/enums")
+const { GAME_STATUS, TREASURES, GAME_VARIANT } = require("../Enums/enums")
 
+//deprecated
 let game_board = [
     ['x', 'x', 'c', 'c', 'x', 'x'],
     ['x', 'c', 'c', 'c', 'c', 'x'],
@@ -7,6 +8,133 @@ let game_board = [
     ['c', 'c', 'c', 'c', 'c', 'c'],
     ['x', 'c', 'c', 'c', 'c', 'x'],
     ['x', 'x', 'c', 'c', 'x', 'x'],
+]
+
+const GAME_BOARDS = [
+    {
+        id: 1,
+        name: GAME_VARIANT.standard,
+        layout: [
+            ['x', 'x', 'c', 'c', 'x', 'x'],
+            ['x', 'c', 'c', 'c', 'c', 'x'],
+            ['c', 'c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c', 'c'],
+            ['x', 'c', 'c', 'c', 'c', 'x'],
+            ['x', 'x', 'c', 'c', 'x', 'x'],
+        ] 
+    },
+    {
+        id: 2,
+        name: GAME_VARIANT.island_of_shadows,
+        layout: [
+            ['c', 'c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c', 'c'],
+        ] 
+    },
+    {
+        id: 3,
+        name: GAME_VARIANT.island_of_death,
+        layout: [
+            ['x', 'x', 'c', 'c', 'c', 'x', 'x'],
+            ['c', 'c', 'c', 'c', 'c', 'c', 'c'],
+            ['x', 'c', 'c', 'c', 'c', 'c', 'x'],
+            ['x', 'x', 'c', 'c', 'c', 'x', 'x'],
+            ['x', 'x', 'c', 'c', 'c', 'x', 'x'],
+            ['x', 'x', 'c', 'c', 'c', 'x', 'x'],
+        ] 
+    },
+    {
+        id: 4,
+        name: GAME_VARIANT.bone_island,
+        layout: [
+            ['x', 'c', 'c', 'x', 'x', 'c', 'c', 'x'],
+            ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c'],
+            ['x', 'c', 'c', 'x', 'x', 'c', 'c', 'x'],
+        ] 
+    },
+    {
+        id: 5,
+        name: GAME_VARIANT.skill_island,
+        layout: [
+            ['c', 'c', 'c', 'c', 'c', 'c'],
+            ['c', 'x', 'c', 'c', 'x', 'c'],
+            ['c', 'c', 'c', 'c', 'c', 'c'],
+            ['x', 'c', 'c', 'c', 'c', 'x'],
+            ['x', 'c', 'c', 'c', 'c', 'x'],
+        ] 
+    },
+    {
+        id: 6,
+        name: GAME_VARIANT.atoll_of_decisions,
+        layout: [
+            ['x', 'x', 'c', 'c', 'c', 'x', 'x'],
+            ['x', 'c', 'c', 'x', 'c', 'c', 'x'],
+            ['c', 'c', 'x', 'x', 'x', 'c', 'c'],
+            ['c', 'x', 'x', 'x', 'x', 'x', 'c'],
+            ['c', 'c', 'x', 'x', 'x', 'c', 'c'],
+            ['x', 'c', 'c', 'x', 'c', 'c', 'x'],
+            ['x', 'x', 'c', 'c', 'c', 'x', 'x'],
+        ] 
+    },
+    {
+        id: 7,
+        name: GAME_VARIANT.volcano_island,
+        layout: [
+            ['c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'x', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c'],
+        ] 
+    },
+    {
+        id: 8,
+        name: GAME_VARIANT.bay_of_gulls,
+        layout: [
+            ['x', 'x', 'x', 'c', 'c', 'x', 'x', 'x'],
+            ['x', 'x', 'x', 'c', 'c', 'x', 'x', 'x'],
+            ['c', 'x', 'x', 'c', 'c', 'x', 'x', 'c'],
+            ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c'],
+            ['x', 'c', 'c', 'c', 'c', 'c', 'c', 'x'],
+            ['x', 'x', 'x', 'c', 'c', 'x', 'x', 'x'],
+        ] 
+    },
+    {
+        id: 9,
+        name: GAME_VARIANT.coral_reef,
+        layout: [
+            ['x', 'c', 'c', 'x', 'x', 'x', 'x'],
+            ['c', 'c', 'c', 'c', 'x', 'x', 'x'],
+            ['c', 'c', 'c', 'c', 'c', 'c', 'x'],
+            ['x', 'c', 'c', 'c', 'c', 'c', 'c'],
+            ['x', 'x', 'x', 'c', 'c', 'c', 'c'],
+            ['x', 'x', 'x', 'x', 'c', 'c', 'x'],
+        ] 
+    },
+    {
+        id: 10,
+        name: GAME_VARIANT.brigde_of_horrors,
+        layout: [
+            ['c', 'c', 'c', 'x', 'x', 'x', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c'],
+            ['c', 'c', 'c', 'c', 'x', 'x', 'x', 'c', 'c', 'c'],
+        ] 
+    },
+    {
+        id: 11,
+        name: GAME_VARIANT.arch_of_fate,
+        layout: [
+            ['x', 'x', 'x', 'c', 'c', 'c', 'x', 'x', 'x'],
+            ['x', 'x', 'c', 'c', 'c', 'c', 'c', 'x', 'x'],
+            ['x', 'c', 'c', 'c', 'x', 'c', 'c', 'c', 'x'],
+            ['c', 'c', 'c', 'x', 'x', 'x', 'c', 'c', 'c'],
+            ['c', 'c', 'x', 'x', 'x', 'x', 'x', 'c', 'c'],
+        ] 
+    },
+
 ]
 
 let game_details = {
@@ -680,10 +808,12 @@ const TREASURES_PIECES = [
 
 
 module.exports = {
+    //deprecated
     game_board,
     game_details,
     PLAYER_CARDS,
     ACTION_CARDS,
     FLOOD_CARDS,
-    TREASURES_PIECES
+    TREASURES_PIECES,
+    GAME_BOARDS
 }
