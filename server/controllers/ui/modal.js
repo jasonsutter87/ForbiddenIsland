@@ -6,7 +6,6 @@ const { getAdjacentTileIds, findPlayerCoordinates } = require('../ui/ui'); // Re
 
 let StartGameModal = () => {
   return new Promise((resolve) => {
-    // console.log(('Ready to Start The Game')
     game_details.current_flood_level = 1;
     game_details.number_of_players = 4;
     setPlayerOnTheBoard(game_details.number_of_players)

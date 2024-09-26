@@ -104,13 +104,12 @@ fetch('http://localhost:3000/api/game/state')
     .catch(error => console.error('Error fetching game state:', error));
    
 
-// 5. Handle connection and disconnection events
+//Handle connection  
 socket.on('connect', () => {
-    // // console.log(('Connected to server with ID:', socket.id);
 });
 
+// Handle disconnection
 socket.on('disconnect', () => {
-    // // console.log(('Disconnected from server');
 });
 
 
@@ -122,7 +121,6 @@ socket.on('disconnect', () => {
 
 //game room - receive message
 socket.on('incomingGameMessage', (data, id) => {
-    // // console.log(('Received message:', data, id); // Debugging step to check if message is received
     $('#ChatContentArea').append(`<li>
         <span>
             <img class="userimage" src="https://robohash.org/${id}"> 
@@ -160,21 +158,16 @@ socket.on('number_of_players_in_room', data => {
 })
 
 socket.on('startGame', (board) => {
-    // console.log('startGame', board)
-
-
-
     $('#joinRoomModal').remove()
     $('.joinRoomModal-wrapper').remove()
     $('main').append('<div id="board"></div>')
     createBoardUI(board)
 })
 
-socket.on('setGameLayout', (layout) => {
+
+socket.on('setGameLayout', (id) => {
     $(()=> {
-        //remove any selected attribues
-        
-        //put selected attribues on incoming layout
+        $('#selectGameLayout').val(id);
     })
 })
 

@@ -9,7 +9,7 @@ module.exports = (io) => {
   const { initialize } =  require('../controllers/game-logic/game')
   const { setDifficulty, placeTilesOnBoard } =  require('../controllers/game-logic/board')
   const { shuffleCards, shuffle } = require('../controllers/game-machanics/shuffling')
-  const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS  } = require('../models/models')
+  const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, GAME_BOARDS  } = require('../models/models')
   const { GAME_STATUS } = require("../Enums/enums.js");
 
 
@@ -66,11 +66,11 @@ module.exports = (io) => {
           number_of_players: rooms[roomName].players.length,
           current_player: null,
           current_player_turns_left: null,
-          gameBoard: game_board,
+          gameBoard: rooms[roomName].gameBoard,
           status: GAME_STATUS.notStarted,
           current_flood_level: 0
         }; 
-  
+
         let newActionCards = [...ACTION_CARDS];
         let newFloodCards = [...FLOOD_CARDS];
         let newPlayerCards = [...PLAYER_CARDS];
@@ -101,16 +101,16 @@ module.exports = (io) => {
     })
 
     socket.on('changeGameLayoutType', (roomName, gameLayoutId) => {
-      console.log('changeGameLayoutType - roomName', roomName)
-      console.log('changeGameLayoutType - gameLayoutId', gameLayoutId)
+      GAME_BOARDS.filter(board => {
+        if(board.id == gameLayoutId) {
+          rooms[roomName].gameBoard = board.layout
 
-      //do something with the game type.
-      // set the room[roomName].gameDetails.game_board = GAME_BOARDS[gameLayoutId].layout
+          io.to(roomName).emit('setGameLayout', gameLayoutId); 
+        }
+      })
     })
 
     socket.on('disconnect', () => {
-      // console.log(('Player disconnected:', socket.id);
-      
       // Get the player's room from the stored socket information
       const playerRoom = socket.roomName;
       
@@ -123,10 +123,7 @@ module.exports = (io) => {
         // If the room is empty, delete it
         if (rooms[playerRoom].players.length === 0) {
           delete rooms[playerRoom];
-          // // console.log((`Room ${playerRoom} deleted.`);
-        } else {
-          // // console.log((`Room ${playerRoom} now has ${rooms[playerRoom].length} players.`);
-        }
+        } 
       }
     });
 
@@ -147,9 +144,9 @@ module.exports = (io) => {
       players: [],
       readyCount: 0,
       gameDetails: game_details,
+      gameBoard: GAME_BOARDS[0].layout,
       status: GAME_STATUS.notStarted
     };
-    // console.log((`Creating new room: ${newRoomName}`);
     return newRoomName;
   };
 

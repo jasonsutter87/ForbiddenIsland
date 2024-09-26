@@ -6,7 +6,7 @@ $(() => {
         e.preventDefault();
         socket.emit('joinRoom')
         $('#startingModal').removeClass('active')
-        renderGameLayouts()
+        appendLayoutsToRoomSelect()
 
         setTimeout(()=>{
             $('.startingModal-wrapper').remove()
@@ -135,14 +135,12 @@ $(() => {
         socket.emit('changeGameLayoutType', socket.roomName, layoutId) 
     })
 
-
-    let renderGameLayouts = () => { 
+    let appendLayoutsToRoomSelect = () => { 
         $.ajax({
         url: 'http://localhost:3000/api/game/game-boards',  // The API endpoint for GAME_BOARD
         method: 'GET',
         dataType: 'json',  // Expecting JSON response
         success: function(data) {
-            console.log('GAME_BOARD data:', data);
             // Process the GAME_BOARD data here
             data.forEach(board => {
                 if(board.id == 1) {
@@ -162,13 +160,6 @@ $(() => {
         });
 
     }
-
-    
-
-
-
-    
-
 })
 
 

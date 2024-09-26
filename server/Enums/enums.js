@@ -10,12 +10,12 @@ const GAME_VARIANT = {
     island_of_shadows: 'Island of Shadows',
     island_of_death: 'Island of Death',
     bone_island: 'Bone Island',
-    skill_island: 'Skill Island',
+    skull_island: 'Skull Island',
     atoll_of_decisions: 'Atoll of Decisions',
     volcano_island: 'Volcano Island',
     bay_of_gulls: 'Bay of Gulls',
     coral_reef: 'Coral Reef',
-    brigde_of_horrors: 'Brigde of Horrors',
+    brigde_of_horrors: 'Bridge of Horrors',
     arch_of_fate: 'Arch of Fate'
 }
 
@@ -33,7 +33,6 @@ elite: 3,
 legendary: 4
 }
   
-
 module.exports = {
     GAME_STATUS,
     TREASURES,
