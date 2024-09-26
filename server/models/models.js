@@ -57,7 +57,7 @@ const GAME_BOARDS = [
     },
     {
         id: 5,
-        name: GAME_VARIANT.skill_island,
+        name: GAME_VARIANT.skull_island,
         layout: [
             ['c', 'c', 'c', 'c', 'c', 'c'],
             ['c', 'x', 'c', 'c', 'x', 'c'],
@@ -116,7 +116,7 @@ const GAME_BOARDS = [
     },
     {
         id: 10,
-        name: GAME_VARIANT.brigde_of_horrors,
+        name: GAME_VARIANT.bridge_of_horrors,
         layout: [
             ['c', 'c', 'c', 'x', 'x', 'x', 'c', 'c', 'c', 'c'],
             ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c'],
