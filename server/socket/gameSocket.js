@@ -2,7 +2,6 @@
 
 const { shuffle } = require('../controllers/game-machanics/shuffling');
 
-
 module.exports = (io) => {
   // Track rooms and player counts
   const rooms = {};
@@ -11,9 +10,6 @@ module.exports = (io) => {
   const { shuffleCards, shuffle } = require('../controllers/game-machanics/shuffling')
   const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, GAME_BOARDS  } = require('../models/models')
   const { GAME_STATUS } = require("../Enums/enums.js");
-
-
-
 
   io.on('connection', (socket) => {
     //check the status of incoming players
