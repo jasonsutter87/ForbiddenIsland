@@ -1,9 +1,171 @@
 {{ define "main" }}
-  <div class="startingModal-wrapper">
+
+<style>
+  .wrapper {
+  display: grid;
+  grid-template-columns: .5fr .5fr .35fr .65fr; /* Three columns: main, and two smaller ones */
+  grid-template-rows: 15vh 1fr; /* Header row and main row */
+  grid-template-areas:
+    "header1 header1 header2 header2"
+    "main-content main-content small-box-1 small-box-2"
+    "main-content main-content sidebar-item-1 sidebar-item-1"
+    "main-content main-content sidebar-item-2 sidebar-item-2"
+    "main-content main-content sidebar-item-3 sidebar-item-3"
+    "footer footer footer footer";
+  gap: 10px; /* Optional spacing between grid items */
+  height: 100vh; /* Full viewport height */
+}
+
+/* Assigning grid areas to each section */
+.header1 {
+  grid-area: header1;
+  background: lightgray;
+}
+
+.header2 {
+  grid-area: header2;
+  background: lightgray;
+  display: flex;
+  justify-content: space-between;
+
+  .captured-treasures {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px; /* Adjust spacing between items as needed */
+    padding: 1px;
+    width: 100%;
+    max-width: 250px;
+
+    .treasure {
+      width: 25px;
+      height: 25px;
+      background-color: green;
+    }
+  }
+
+  .current-player-image-wrapper {
+    aspect-ratio:  1 / 1;
+    border: 1px solid black;
+  }
+}
+
+.footer {
+  grid-area: footer;
+  background: lightgray;
+}
+
+.small-box-1 {
+  grid-area: small-box-1;
+  background: lightpink;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.small-box-2 {
+  grid-area: small-box-2;
+  background: lightblue;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.main-content {
+  grid-area: main-content;
+  background: lightgreen;
+}
+
+.sidebar-item-1 {
+  grid-area: sidebar-item-1;
+  background: lightcoral;
+  flex-grow: 1;
+}
+
+.sidebar-item-2 {
+  grid-area: sidebar-item-2;
+  background: lightgoldenrodyellow;
+  flex-grow: 1;
+}
+
+.sidebar-item-3 {
+  grid-area: sidebar-item-3;
+  background: lightseagreen;
+  flex-grow: 1;
+}
+
+.sidebar-item-4 {
+  grid-area: sidebar-item-3;
+  background: rgb(136, 76, 135);
+  flex-grow: 1;
+}
+
+</style>
+
+  <div id="game-ui">
+    <div class="wrapper">
+      <div class="header1">Flood Level</div>
+      <div class="header2">
+        <div class="captured-treasures">
+          <div class="treasure"></div>
+          <div class="treasure"></div>
+          <div class="treasure"></div>
+          <div class="treasure"></div>
+        </div>
+        <div class="current-player-image-wrapper">
+          Current Player
+        </div>
+      </div>
+
+
+
+
+
+      <div class="small-box-1">
+        <div class="sidebar-item-1 d-flex justify-content-between">
+          <div>
+            Flood Discard
+          </div>
+
+          <div>
+            Flood New
+          </div>
+        </div>
+        <div class="sidebar-item-2 d-flex justify-content-between">
+          <div>
+            Action Discard
+          </div>
+
+          <div>
+            Action New
+          </div>
+        </div>
+      </div>
+
+      <div class="small-box-2">
+        <div class="sidebar-item-1">Sidebar Item 1</div>
+        <div class="sidebar-item-2">Sidebar Item 2</div>
+        <div class="sidebar-item-3">Sidebar Item 3</div>
+        <div class="sidebar-item-4">Sidebar Item 4</div>
+      </div>
+      <div class="main-content">
+
+<div id="board"><div class="row"><div class="tile blocked"></div><div class="tile blocked"></div><div class="tile flooded" cardid="1"><img src="./assets/images/flooded-tiles/whispering-garden.jpeg" alt="Whispering Garden"></div><div class="tile normal" cardid="9"><img src="./assets/images/game-tiles/fools-landing.jpeg" alt="Fools' Landing"></div><div class="tile blocked"></div><div class="tile blocked"></div></div><div class="row"><div class="tile blocked"></div><div class="tile flooded" cardid="16"><img src="./assets/images/flooded-tiles/breakers-bridge.jpeg" alt="Breakers Bridge"></div><div class="tile normal" cardid="23"><img src="./assets/images/game-tiles/phantom-rock.jpeg" alt="Phantom Rock"></div><div class="tile flooded" cardid="12"><img src="./assets/images/flooded-tiles/silver-gate.jpeg" alt="Silver Gate"></div><div class="tile normal" cardid="18"><img src="./assets/images/game-tiles/crimson-forest.jpeg" alt="Crimson Forest"></div><div class="tile blocked"></div></div><div class="row"><div class="tile flooded" cardid="21"><img src="./assets/images/flooded-tiles/lost-lagoon.jpeg" alt="Lost Lagoon"></div><div class="tile normal" cardid="19"><img src="./assets/images/game-tiles/observatory.jpeg" alt="Observatory"></div><div class="tile flooded" cardid="7"><img src="./assets/images/flooded-tiles/cave-of-embers.jpeg" alt="Cave of Embers"></div><div class="tile normal" cardid="2"><img src="./assets/images/game-tiles/howling-garden.jpeg" alt="Howling Garden"></div><div class="tile flooded" cardid="4"><img src="./assets/images/flooded-tiles/temple-of-the-sun.jpeg" alt="Temple of the Sun"></div><div class="tile normal" cardid="5"><img src="./assets/images/game-tiles/coral-palace.jpeg" alt="Coral Palace"></div></div><div class="row"><div class="tile normal" cardid="20"><img src="./assets/images/game-tiles/watchtower.jpeg" alt="Watchtower"></div><div class="tile normal" cardid="24"><img src="./assets/images/game-tiles/twilight-hollow.jpeg" alt="Twilight Hollow"></div><div class="tile normal" cardid="10"><img src="./assets/images/game-tiles/bronze-gate.jpeg" alt="Bronze Gate"></div><div class="tile normal" cardid="3"><img src="./assets/images/game-tiles/temple-of-the-moon.jpeg" alt="Temple of the Moon"></div><div class="tile normal" cardid="6"><img src="./assets/images/game-tiles/tidal-palace.jpeg" alt="Tidal Palace"></div><div class="tile normal" cardid="11"><img src="./assets/images/game-tiles/gold-gate.jpeg" alt="Gold Gate"></div></div><div class="row"><div class="tile blocked"></div><div class="tile normal" cardid="13"><img src="./assets/images/game-tiles/copper-gate.jpeg" alt="Copper Gate"></div><div class="tile normal" cardid="22"><img src="./assets/images/game-tiles/misty-marsh.jpeg" alt="Misty Marsh"></div><div class="tile normal" cardid="8"><img src="./assets/images/game-tiles/cave-of-shadows.jpeg" alt="Cave of Shadows"></div><div class="tile normal" cardid="17"><img src="./assets/images/game-tiles/dunes-of-deception.jpeg" alt="Dunes of Deception"></div><div class="tile blocked"></div></div><div class="row"><div class="tile blocked"></div><div class="tile blocked"></div><div class="tile normal" cardid="15"><img src="./assets/images/game-tiles/cliffs-of-abandon.jpeg" alt="Cliffs of Abandon"></div><div class="tile normal" cardid="14"><img src="./assets/images/game-tiles/iron-gate.jpeg" alt="Iron Gate"></div><div class="tile blocked"></div><div class="tile blocked"></div></div></div>
+
+      </div>
+      <div class="footer">Footer</div>
+    </div>
+    
+  </div>
+
+  <!-- <div class="startingModal-wrapper">
     {{ partial "modals/startingModal.html" . }}
   </div>
 
   <div class="joinRoomModal-wrapper d-none">
     {{ partial "modals/joinRoomModal.html" . }}
-  </div>
+  </div> -->
 {{ end }}
