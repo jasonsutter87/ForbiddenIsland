@@ -217,6 +217,8 @@ socket.on('redrawBoard', (data) => {
 
 socket.on('floodSix', (data)=> {
     floodSix(data)
+
+    console.log('floodSix', data.gameDetails.gameBoard)
     createBoardUI(data.gameDetails.gameBoard)
 })
 
