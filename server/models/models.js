@@ -796,9 +796,7 @@ const TREASURES_PIECES = [
     }
 ]
 
-
 module.exports = {
-    //deprecated
     game_details,
     PLAYER_CARDS,
     ACTION_CARDS,

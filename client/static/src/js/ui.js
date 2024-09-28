@@ -79,7 +79,6 @@ $(() => {
         </div>
         `)
 
-
         setTimeout(() => {
             $('.toast').remove();
         }, 3000)
@@ -109,8 +108,6 @@ $(() => {
                 <span class="name">${socket.name}</span>
             </div>
         `)
-
-
 
         $('.ChatContentArea-wrapper').prepend(`
             <div class="toast success">
