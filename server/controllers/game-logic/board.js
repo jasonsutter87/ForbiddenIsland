@@ -1,7 +1,4 @@
 // Handles the setup of the game board, including placing tiles, managing the board state, and updating the board as the game progresses.
-const { selectObjectById } = require("../utilities/utils.js");
-const { moveCardNewPile } = require("../game-machanics/cards.js");
-const { shuffle } = require("../game-machanics/shuffling.js");
 const { TREASURES, GAME_STATUS } = require("../../Enums/enums.js");
 let { game_details } = require("../../models/models.js");
 
@@ -22,19 +19,6 @@ let raiseTheWaterLevel = () => {
       }
 } 
   
-let floodByWaterLevel = (floodDeck, waterLevel) => {
-    for (let i = 0; i < waterLevel; i++) {
-      if (floodDeck.length > 0) {
-        let val = floodDeck.shift();
-        let tile = selectObjectById(game_board, val.id);
-        if (tile) {
-          tile.flooded = true;
-          moveCardNewPile(flood_discard, [val]);
-        }
-      }
-    }
-};
-
 let placeTilesOnBoard = (gameBoard, cards) => {
   return new Promise(( resolve ) => {
     let duplicateFloodDeck = [...cards];
@@ -55,19 +39,6 @@ let placeTilesOnBoard = (gameBoard, cards) => {
   })
   
 }
-
-let floodSix = (game_board) => {
-  shuffle(game_board)
-
-  game_details.flood_deck.unused = game_board
-  game_details.flood_deck.unused.forEach((val, ind) => {
-      if(ind < 6) {
-      let tile = selectObjectById(game_details.gameBoard, val.id)
-      tile.flooded = true 
-      moveCardNewPile(game_details.flood_deck.discard,  game_details.flood_deck.unused );
-      }
-  });
-};
 
 let checkTreasureSunk = (board, treasure) => {
   // Flatten the board to simplify filtering
@@ -185,9 +156,7 @@ let resetGame = () => {
 // Exported functions to be used in routes and sockets
 module.exports = {
     raiseTheWaterLevel,
-    floodByWaterLevel,
     placeTilesOnBoard,
-    floodSix,
     checkTreasureSunk,
     checkForPlayerLost,
     checkForPlayerWon,

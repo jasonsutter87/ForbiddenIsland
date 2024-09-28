@@ -7,7 +7,7 @@ module.exports = (io) => {
   const rooms = {};
   const { initialize } =  require('../controllers/game-logic/game')
   const { setPlayerOnTheBoard } = require('../controllers/game-logic/player')
-  const { setDifficulty, placeTilesOnBoard } =  require('../controllers/game-logic/board')
+  const { setDifficulty, placeTilesOnBoard, floodSix } =  require('../controllers/game-logic/board')
   const { shuffleCards, shuffle } = require('../controllers/game-machanics/shuffling')
   const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, GAME_BOARDS  } = require('../models/models')
   const { GAME_STATUS } = require("../Enums/enums.js");
@@ -163,9 +163,9 @@ module.exports = (io) => {
 
 
       io.to(roomName).emit('setPlayersOnBoard', rooms[roomName]);
+      io.to(roomName).emit('floodSix', rooms[roomName]);
 
 
-      // io.to(roomName).emit('redrawBoard', rooms[roomName].gameDetails.gameBoard);
       console.log('WE HAVE DONE IT ALL')
 
 

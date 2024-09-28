@@ -1,5 +1,5 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
-
+import { floodSix } from './board.js';
 
 // // 1. Connect to Socket.io server
 // const serverUrl = window.location.hostname === 'localhost' 
@@ -212,6 +212,12 @@ socket.on('redrawBoard', (data) => {
     
     
     //  })
+})
+
+
+socket.on('floodSix', (data)=> {
+    floodSix(data)
+    createBoardUI(data.gameDetails.gameBoard)
 })
 
 
