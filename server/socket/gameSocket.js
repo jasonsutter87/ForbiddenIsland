@@ -154,29 +154,16 @@ module.exports = (io) => {
 
   // Start the game loop (example)
   const startGameLoop = (roomName) => {
-    console.log(`Starting game loop for room: ${roomName}`);
-
       // place players on the board.
       rooms[roomName].gameDetails.players.forEach((player) => {
         setPlayerOnTheBoard(rooms[roomName].gameDetails, player)
       })
-
 
       io.to(roomName).emit('setPlayersOnBoard', rooms[roomName]);
       io.to(roomName).emit('floodSix', rooms[roomName]);
 
 
       console.log('WE HAVE DONE IT ALL')
-
-
-
-
-      // flood cards
-      // io.to(roomName).emit('placePlayersOnBoard', rooms[roomName].gameDetails.players);
-
-
-    // // Notify players that the game has started
-    // io.to(roomName).emit('gameUpdate', { message: 'Game started!' });
 
     // // Example game loop logic
     // let gameRunning = true;

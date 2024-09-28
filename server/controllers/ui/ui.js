@@ -2,10 +2,7 @@
 const { game_details } = require('../game-logic/board'); // Relative path
 const { playerMoveOrActionModal } = require('../ui/modal'); // Relative path
 
-
 function createBoardUI(board) {
-console.log(board)
-
   return new Promise(resolve => {
     const boardElement = document.getElementById('board');
     boardElement.innerHTML = ''; // Clear any existing content
@@ -51,7 +48,7 @@ console.log(board)
     }
     resolve();
   });
- }
+}
   
 let redrawBoardUI = (board) => {
   return new Promise(resolve => {
@@ -60,8 +57,7 @@ let redrawBoardUI = (board) => {
    
     resolve();
   });
- } 
-
+} 
 
 const findPlayerCoordinates = (playerName) => {
   // Get all rows in the board
@@ -87,7 +83,6 @@ const findPlayerCoordinates = (playerName) => {
   // If the player is not found, return null
   return null;
 }
-
 
 let getAdjacentTileIds = (board, playerPosition) => {
   let directions;
@@ -124,7 +119,6 @@ let getAdjacentTileIds = (board, playerPosition) => {
   )
   .map(tile => board[tile.row][tile.col].id);
 }
-
 
 module.exports = {
   createBoardUI,
