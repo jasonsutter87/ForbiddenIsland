@@ -6,6 +6,7 @@ module.exports = (io) => {
   // Track rooms and player counts
   const rooms = {};
   const { initialize } =  require('../controllers/game-logic/game')
+  const { setPlayerOnTheBoard } = require('../controllers/game-logic/player')
   const { setDifficulty, placeTilesOnBoard } =  require('../controllers/game-logic/board')
   const { shuffleCards, shuffle } = require('../controllers/game-machanics/shuffling')
   const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, GAME_BOARDS  } = require('../models/models')
@@ -47,7 +48,8 @@ module.exports = (io) => {
     socket.on('increaseReadyPlayers', (roomName) => {
       rooms[roomName].readyCount++;
 
-      if(rooms[roomName].readyCount == rooms[roomName].players.length  && rooms[roomName].players.length  > 1) {
+      // if(rooms[roomName].readyCount == rooms[roomName].players.length  && rooms[roomName].players.length  > 1) { //// TODO UMCOMMENT THIS!!!!
+        if(rooms[roomName].readyCount == rooms[roomName].players.length  && rooms[roomName].players.length  > 0) {
         rooms[roomName].gameDetails =  {
           flood_deck: {
               discard: [],
@@ -80,15 +82,19 @@ module.exports = (io) => {
 
         rooms[roomName].gameDetails.action_deck.unused = newActionCards
         rooms[roomName].gameDetails.flood_deck.unused = newFloodCards
+        shuffle(newFloodCards)
 
         for(var i = 0; i < rooms[roomName].gameDetails.number_of_players; i++) {
+          newPlayerCards[i].socketId = socket.id
           rooms[roomName].gameDetails.players.push(newPlayerCards[i])
         }
-    
-        shuffle(newFloodCards)
         
+        rooms[roomName].gameDetails.players.forEach((player, ind) => {
+          dealInitialActionCards(rooms[roomName].gameDetails.action_deck.unused, player, 2 )
+        })
         
         placeTilesOnBoard(rooms[roomName].gameDetails.gameBoard, newFloodCards).then(result => {
+          rooms[roomName].gameDetails.gameBoard = result
           rooms[roomName].status = GAME_STATUS.inProgress;
           io.to(roomName).emit('startGame', result); 
           startGameLoop(roomName);
@@ -149,7 +155,25 @@ module.exports = (io) => {
   // Start the game loop (example)
   const startGameLoop = (roomName) => {
     console.log(`Starting game loop for room: ${roomName}`);
-    
+
+      // place players on the board.
+      rooms[roomName].gameDetails.players.forEach((player) => {
+        setPlayerOnTheBoard(rooms[roomName].gameDetails, player)
+      })
+
+
+      io.to(roomName).emit('setPlayersOnBoard', rooms[roomName]);
+
+
+      // io.to(roomName).emit('redrawBoard', rooms[roomName].gameDetails.gameBoard);
+      console.log('WE HAVE DONE IT ALL')
+
+
+
+
+      // flood cards
+      // io.to(roomName).emit('placePlayersOnBoard', rooms[roomName].gameDetails.players);
+
 
     // // Notify players that the game has started
     // io.to(roomName).emit('gameUpdate', { message: 'Game started!' });
@@ -164,4 +188,23 @@ module.exports = (io) => {
     // }, 1000); // Send updates every second
   };
 
+  //deal action cards to a player
+  const dealInitialActionCards = (from, to, dealCount) => {
+    let player = to.actionCards;
+  
+    while (dealCount > 0) {
+      const firstCard = from[0];
+      
+      if (firstCard.name !== "water rises") {
+        player.push(from.shift());
+        dealCount--; 
+      } else {
+        from.shift();
+        const randomIndex = Math.floor(Math.random() * from.length);
+        from.splice(randomIndex, 0, firstCard);
+        dealCount++;
+      }
+    }
+  };
+  
 };
