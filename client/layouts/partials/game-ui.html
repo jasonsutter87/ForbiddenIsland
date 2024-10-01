@@ -1,10 +1,10 @@
 <style>
     .wrapper {
     display: grid;
-    grid-template-columns: .5fr .5fr .35fr .65fr; /* Three columns: main, and two smaller ones */
+    grid-template-columns: .5fr .3fr .35fr .55fr; /* Three columns: main, and two smaller ones */
     grid-template-rows: 15vh 1fr; /* Header row and main row */
     grid-template-areas:
-      "header1 header1 header2 header2"
+      "main-content main-content header2 header2"
       "main-content main-content small-box-1 small-box-2"
       "main-content main-content sidebar-item-1 sidebar-item-1"
       "main-content main-content sidebar-item-2 sidebar-item-2"
@@ -105,7 +105,7 @@
   
     <div id="game-ui">
       <div class="wrapper">
-        <div class="header1">Flood Level</div>
+        <!-- <div class="header1">Flood Level</div> -->
         <div class="header2">
           <div class="captured-treasures">
             <div class="treasure"></div>
