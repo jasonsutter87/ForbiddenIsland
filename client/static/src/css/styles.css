@@ -18879,6 +18879,93 @@ html {
   width: 100%;
 }
 
+#game-ui {
+  /* Assigning grid areas to each section */
+}
+#game-ui .wrapper {
+  display: grid;
+  grid-template-columns: 0.5fr 0.3fr 0.35fr 0.55fr; /* Three columns: main, and two smaller ones */
+  grid-template-rows: 15vh 1fr; /* Header row and main row */
+  grid-template-areas: "main-content main-content header2 header2" "main-content main-content small-box-1 small-box-2" "main-content main-content sidebar-item-1 sidebar-item-1" "main-content main-content sidebar-item-2 sidebar-item-2" "main-content main-content sidebar-item-3 sidebar-item-3" "footer footer footer footer";
+  gap: 10px; /* Optional spacing between grid items */
+  height: 100vh; /* Full viewport height */
+}
+#game-ui .header1 {
+  grid-area: header1;
+  background: lightgray;
+}
+#game-ui .header2 {
+  grid-area: header2;
+  background: lightgray;
+  display: flex;
+  justify-content: space-between;
+}
+#game-ui .header2 .captured-treasures {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px; /* Adjust spacing between items as needed */
+  padding: 1px;
+  width: 100%;
+  max-width: 250px;
+}
+#game-ui .header2 .captured-treasures .treasure {
+  width: 25px;
+  height: 25px;
+  background-color: green;
+}
+#game-ui .header2 .current-player-image-wrapper {
+  aspect-ratio: 1/1;
+  border: 1px solid black;
+}
+#game-ui .footer {
+  grid-area: footer;
+  background: lightgray;
+}
+#game-ui .small-box-1 {
+  grid-area: small-box-1;
+  background: lightpink;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+}
+#game-ui .small-box-2 {
+  grid-area: small-box-2;
+  background: lightblue;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+}
+#game-ui .main-content {
+  grid-area: main-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#game-ui .sidebar-item-1 {
+  grid-area: sidebar-item-1;
+  background: lightcoral;
+  flex-grow: 1;
+}
+#game-ui .sidebar-item-2 {
+  grid-area: sidebar-item-2;
+  background: lightgoldenrodyellow;
+  flex-grow: 1;
+}
+#game-ui .sidebar-item-3 {
+  grid-area: sidebar-item-3;
+  background: lightseagreen;
+  flex-grow: 1;
+}
+#game-ui .sidebar-item-4 {
+  grid-area: sidebar-item-3;
+  background: rgb(136, 76, 135);
+  flex-grow: 1;
+}
+
 #board {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
