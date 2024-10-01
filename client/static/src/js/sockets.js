@@ -85,6 +85,14 @@ socket.on('setPlayersOnBoard', (room) => {
 
             $(() =>  { 
                 console.log('in jquery ready in setPlayersOnBoard')   
+                console.log('result.starting_position', result.starting_position)   
+                console.log('room.gameDetails.current_player.name', room.gameDetails.current_player.name)   
+                console.log('playerName',playerName)   
+                console.log('esult.id',result.id)   
+                console.log('result.current_players.id',result.current_players.id)   
+
+
+
               if(result.starting_position == room.gameDetails.current_player.name) {
                 $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
               }
