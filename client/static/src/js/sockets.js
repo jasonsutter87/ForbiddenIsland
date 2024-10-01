@@ -158,6 +158,7 @@ socket.on('number_of_players_in_room', data => {
 socket.on('startGame', (board) => {
     $('#joinRoomModal').remove()
     $('.joinRoomModal-wrapper').remove()
+    $('.gameUI-wrapper').removeClass('d-none')
     $('main').append('<div id="board"></div>')
     createBoardUI(board)
 })
