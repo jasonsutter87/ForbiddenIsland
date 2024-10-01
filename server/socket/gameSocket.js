@@ -69,9 +69,10 @@ module.exports = (io) => {
           current_flood_level: 0
         }; 
 
-        let newActionCards = [...ACTION_CARDS];
-        let newFloodCards = [...FLOOD_CARDS];
-        let newPlayerCards = [...PLAYER_CARDS];
+        let newActionCards = JSON.parse(JSON.stringify(ACTION_CARDS)); 
+        let newFloodCards = JSON.parse(JSON.stringify(FLOOD_CARDS)); 
+        let newPlayerCards = JSON.parse(JSON.stringify(PLAYER_CARDS)); 
+
 
         shuffleCards(newActionCards);
         shuffleCards(newFloodCards);

@@ -8,6 +8,7 @@ const { game_details, PLAYER_CARDS } = require('../../models/models');
 
 
 let setPlayerOnTheBoard = (gameDetails, player) => {
+  
 
     //setting current player
    gameDetails.current_player = player
