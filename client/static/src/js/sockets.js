@@ -89,7 +89,7 @@ socket.on('setPlayersOnBoard', (room) => {
                 console.log('room.gameDetails.current_player.name', room.gameDetails.current_player.name)   
                 console.log('playerName',playerName)   
                 console.log('esult.id',result.id)   
-                console.log('result.current_players.id',result.current_players.id)   
+                console.log('result.current_players.id',result.current_players[0].id)   
 
 
 
@@ -98,7 +98,7 @@ socket.on('setPlayersOnBoard', (room) => {
               }
               
               $(`.tile[cardid="${result.id}"]`).append(`
-                <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players.id}' >
+                <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
               `)
             })
       
