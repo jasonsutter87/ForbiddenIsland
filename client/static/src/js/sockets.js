@@ -70,14 +70,21 @@ function createBoardUI(board) {
 }
 
 socket.on('setPlayersOnBoard', (room) => {
+    console.log('setPlayersOnBoard', room)
         room.gameDetails.players.forEach((val, int) => {
             let playerName = val.name
+            console.log('playerName', playerName)
             
             let flattenBoard = room.gameDetails.gameBoard.flat();
+
+            console.log('flattenBoard', flattenBoard)
             
             let result = flattenBoard.find(item => item && item.starting_position === playerName);
 
-            $(() =>  {    
+            console.log('result', result)
+
+            $(() =>  { 
+                console.log('in jquery ready in setPlayersOnBoard')   
               if(result.starting_position == room.gameDetails.current_player.name) {
                 $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
               }
