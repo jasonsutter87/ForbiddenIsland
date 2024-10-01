@@ -59,6 +59,12 @@ function createBoardUI(board) {
             }
             boardElement.appendChild(rowElement);
         }
+
+
+
+        // append div#board to .main-content
+        document.querySelector('#game-ui .wrapper .main-content').appendChild(boardElement);
+
         resolve();
     });
 }
