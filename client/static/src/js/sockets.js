@@ -92,14 +92,17 @@ socket.on('setPlayersOnBoard', (room) => {
                 console.log('result.current_players.id',result.current_players[0].id)   
 
 
+               setInterval(() =>{
+                   if(result.starting_position == room.gameDetails.current_player.name) {
+                     $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
+                   }
+                   
+                   $(`.tile[cardid="${result.id}"]`).append(`
+                     <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
+                   `)
 
-              if(result.starting_position == room.gameDetails.current_player.name) {
-                $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
-              }
-              
-              $(`.tile[cardid="${result.id}"]`).append(`
-                <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
-              `)
+               }, 1000) 
+
             })
       
           })
