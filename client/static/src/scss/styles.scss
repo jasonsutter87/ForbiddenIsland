@@ -159,11 +159,22 @@ html {
   #board {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-gap: 10px;
-    padding: 4vh;
+    grid-gap: 2px;
+    padding: 4px;
     max-width: 1200px; // Optional: Limit board width
     margin: auto; // Center the board
     border-radius: 8px; // Optional: Rounded corners
+
+
+    @media(min-width: 586px){
+      grid-gap: 4px;
+      padding: 1rem;
+    }
+
+    @media(min-width: 768px){
+      grid-gap: 10px;
+      padding: 4vh;
+    }
 
 
     .row {

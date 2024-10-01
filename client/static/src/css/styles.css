@@ -18976,11 +18976,23 @@ html {
 #board {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-gap: 10px;
-  padding: 4vh;
+  grid-gap: 2px;
+  padding: 4px;
   max-width: 1200px;
   margin: auto;
   border-radius: 8px;
+}
+@media (min-width: 586px) {
+  #board {
+    grid-gap: 4px;
+    padding: 1rem;
+  }
+}
+@media (min-width: 768px) {
+  #board {
+    grid-gap: 10px;
+    padding: 4vh;
+  }
 }
 #board .row {
   display: contents;
