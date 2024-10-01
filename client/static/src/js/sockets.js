@@ -1,16 +1,16 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { floodSix } from './board.js';
 
-// // 1. Connect to Socket.io server
-// const serverUrl = window.location.hostname === 'localhost' 
-//     ? 'http://localhost:3000' 
-//     : 'https://forbiddenisland.onrender.com';
+// 1. Connect to Socket.io server
+const serverUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : 'https://forbiddenisland.onrender.com';
 
-// // Connect to the Socket.io server
-// const socket = io(serverUrl);
+// Connect to the Socket.io server
+const socket = io(serverUrl);
 
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
 
 
 
@@ -223,8 +223,6 @@ socket.on('redrawBoard', (data) => {
 
 socket.on('floodSix', (data)=> {
     floodSix(data)
-
-    console.log('floodSix', data.gameDetails.gameBoard)
     createBoardUI(data.gameDetails.gameBoard)
 })
 
