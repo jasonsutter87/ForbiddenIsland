@@ -1,0 +1,158 @@
+<style>
+    .wrapper {
+    display: grid;
+    grid-template-columns: .5fr .3fr .35fr .55fr; /* Three columns: main, and two smaller ones */
+    grid-template-rows: 15vh 1fr; /* Header row and main row */
+    grid-template-areas:
+      "main-content main-content header2 header2"
+      "main-content main-content small-box-1 small-box-2"
+      "main-content main-content sidebar-item-1 sidebar-item-1"
+      "main-content main-content sidebar-item-2 sidebar-item-2"
+      "main-content main-content sidebar-item-3 sidebar-item-3"
+      "footer footer footer footer";
+    gap: 10px; /* Optional spacing between grid items */
+    height: 100vh; /* Full viewport height */
+  }
+  
+  /* Assigning grid areas to each section */
+  .header1 {
+    grid-area: header1;
+    background: lightgray;
+  }
+  
+  .header2 {
+    grid-area: header2;
+    background: lightgray;
+    display: flex;
+    justify-content: space-between;
+  
+    .captured-treasures {
+      border: 1px solid black;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px; /* Adjust spacing between items as needed */
+      padding: 1px;
+      width: 100%;
+      max-width: 250px;
+  
+      .treasure {
+        width: 25px;
+        height: 25px;
+        background-color: green;
+      }
+    }
+  
+    .current-player-image-wrapper {
+      aspect-ratio:  1 / 1;
+      border: 1px solid black;
+    }
+  }
+  
+  .footer {
+    grid-area: footer;
+    background: lightgray;
+  }
+  
+  .small-box-1 {
+    grid-area: small-box-1;
+    background: lightpink;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+  }
+  
+  .small-box-2 {
+    grid-area: small-box-2;
+    background: lightblue;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+  }
+  
+  .main-content {
+    grid-area: main-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar-item-1 {
+    grid-area: sidebar-item-1;
+    background: lightcoral;
+    flex-grow: 1;
+  }
+  
+  .sidebar-item-2 {
+    grid-area: sidebar-item-2;
+    background: lightgoldenrodyellow;
+    flex-grow: 1;
+  }
+  
+  .sidebar-item-3 {
+    grid-area: sidebar-item-3;
+    background: lightseagreen;
+    flex-grow: 1;
+  }
+  
+  .sidebar-item-4 {
+    grid-area: sidebar-item-3;
+    background: rgb(136, 76, 135);
+    flex-grow: 1;
+  }
+  
+  </style>
+  
+    <div id="game-ui">
+      <div class="wrapper">
+        <!-- <div class="header1">Flood Level</div> -->
+        <div class="header2">
+          <div class="captured-treasures">
+            <div class="treasure"></div>
+            <div class="treasure"></div>
+            <div class="treasure"></div>
+            <div class="treasure"></div>
+          </div>
+          <div class="current-player-image-wrapper">
+            Current Player
+          </div>
+        </div>
+  
+  
+  
+  
+  
+        <div class="small-box-1">
+          <div class="sidebar-item-1 d-flex justify-content-between">
+            <div>
+              Flood Discard
+            </div>
+  
+            <div>
+              Flood New
+            </div>
+          </div>
+          <div class="sidebar-item-2 d-flex justify-content-between">
+            <div>
+              Action Discard
+            </div>
+  
+            <div>
+              Action New
+            </div>
+          </div>
+        </div>
+  
+        <div class="small-box-2">
+          <div class="sidebar-item-1">Sidebar Item 1</div>
+          <div class="sidebar-item-2">Sidebar Item 2</div>
+          <div class="sidebar-item-3">Sidebar Item 3</div>
+          <div class="sidebar-item-4">Sidebar Item 4</div>
+        </div>
+        <div class="main-content"></div>
+        <div class="footer">Footer</div>
+      </div>
+      
+    </div>

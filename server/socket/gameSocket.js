@@ -161,8 +161,6 @@ module.exports = (io) => {
 
       io.to(roomName).emit('setPlayersOnBoard', rooms[roomName]);
 
-      console.log('emitting floodSix')
-      
       io.to(roomName).emit('floodSix', rooms[roomName]);
 
 

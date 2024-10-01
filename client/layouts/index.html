@@ -1,9 +1,17 @@
 {{ define "main" }}
+
+
+
   <div class="startingModal-wrapper">
     {{ partial "modals/startingModal.html" . }}
   </div>
 
   <div class="joinRoomModal-wrapper d-none">
     {{ partial "modals/joinRoomModal.html" . }}
+  </div>
+
+
+  <div class="gameUI-wrapper d-none">
+    {{ partial "game-ui.html" . }}
   </div>
 {{ end }}

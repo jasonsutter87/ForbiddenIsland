@@ -20,6 +20,7 @@ function createBoardUI(board) {
         const boardElement = document.getElementById('board');
         boardElement.innerHTML = ''; // Clear any existing content
 
+        boardElement.style.gridTemplateColumns = `repeat(${board[0].length}, 1fr)`;
         // Create the grid
         for (let row = 0; row < board.length; row++) {
             const rowElement = document.createElement('div');
@@ -59,6 +60,10 @@ function createBoardUI(board) {
             }
             boardElement.appendChild(rowElement);
         }
+
+        // append div#board to .main-content
+        document.querySelector('#game-ui .wrapper .main-content').appendChild(boardElement);
+      
         resolve();
     });
 }
@@ -152,6 +157,7 @@ socket.on('number_of_players_in_room', data => {
 socket.on('startGame', (board) => {
     $('#joinRoomModal').remove()
     $('.joinRoomModal-wrapper').remove()
+    $('.gameUI-wrapper').removeClass('d-none')
     $('main').append('<div id="board"></div>')
     createBoardUI(board)
 })
@@ -217,8 +223,6 @@ socket.on('redrawBoard', (data) => {
 
 socket.on('floodSix', (data)=> {
     floodSix(data)
-
-    console.log('floodSix', data.gameDetails.gameBoard)
     createBoardUI(data.gameDetails.gameBoard)
 })
 
