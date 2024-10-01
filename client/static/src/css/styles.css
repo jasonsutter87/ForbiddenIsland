@@ -18884,11 +18884,17 @@ html {
 }
 #game-ui .wrapper {
   display: grid;
-  grid-template-columns: 0.5fr 0.3fr 0.35fr 0.55fr; /* Three columns: main, and two smaller ones */
-  grid-template-rows: 15vh 1fr; /* Header row and main row */
-  grid-template-areas: "main-content main-content header2 header2" "main-content main-content small-box-1 small-box-2" "main-content main-content sidebar-item-1 sidebar-item-1" "main-content main-content sidebar-item-2 sidebar-item-2" "main-content main-content sidebar-item-3 sidebar-item-3" "footer footer footer footer";
+  grid-template-columns: 1fr; /* Single column for mobile */
+  grid-template-rows: 15vh 1fr auto; /* Adjust based on content */
+  grid-template-areas: "header2" "main-content" "small-box-1" "small-box-2" "sidebar-item-1" "sidebar-item-2" "sidebar-item-3" "footer";
   gap: 10px; /* Optional spacing between grid items */
   height: 100vh; /* Full viewport height */
+}
+@media (min-width: 992px) {
+  #game-ui .wrapper {
+    grid-template-columns: 0.5fr 0.3fr 0.35fr 0.55fr; /* Three columns: main, and two smaller ones */
+    grid-template-areas: "main-content main-content header2 header2" "main-content main-content small-box-1 small-box-2" "main-content main-content sidebar-item-1 sidebar-item-1" "main-content main-content sidebar-item-2 sidebar-item-2" "main-content main-content sidebar-item-3 sidebar-item-3" "footer footer footer footer";
+  }
 }
 #game-ui .header1 {
   grid-area: header1;
@@ -18944,6 +18950,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: tan;
 }
 #game-ui .sidebar-item-1 {
   grid-area: sidebar-item-1;
@@ -18973,9 +18980,7 @@ html {
   padding: 4vh;
   max-width: 1200px;
   margin: auto;
-  background-color: #e0e0e0;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 #board .row {
   display: contents;
