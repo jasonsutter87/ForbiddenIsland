@@ -16,6 +16,7 @@ const socket = io(serverUrl);
 
 // Define createBoardUI as a separate function
 function createBoardUI(board) {
+    console.log(board)
     return new Promise(resolve => {
         const boardElement = document.getElementById('board');
         boardElement.innerHTML = ''; // Clear any existing content
