@@ -164,6 +164,8 @@ module.exports = (io) => {
 
       io.to(roomName).emit('floodSix', rooms[roomName]);
 
+      io.to(roomName).emit('setFloodDeck', rooms[roomName])
+
 
       console.log('WE HAVE DONE IT ALL')
 

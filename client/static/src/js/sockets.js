@@ -1,7 +1,7 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { floodSix } from './board.js';
 
-// 1. Connect to Socket.io server
+//1. Connect to Socket.io server
 const serverUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000' 
     : 'https://forbiddenisland.onrender.com';
@@ -11,12 +11,11 @@ const socket = io(serverUrl);
 
 
 // const socket = io('http://localhost:3000');
-
+let gameRoom;
 
 
 // Define createBoardUI as a separate function
 function createBoardUI(board) {
-    console.log(board)
     return new Promise(resolve => {
         const boardElement = document.getElementById('board');
         boardElement.innerHTML = ''; // Clear any existing content
@@ -64,32 +63,28 @@ function createBoardUI(board) {
 
         // append div#board to .main-content
         document.querySelector('#game-ui .wrapper .main-content').appendChild(boardElement);
+
+
+
+
+
       
         resolve();
     });
 }
 
 socket.on('setPlayersOnBoard', (room) => {
-    console.log('setPlayersOnBoard', room)
+    gameRoom = room;
         room.gameDetails.players.forEach((val, int) => {
             let playerName = val.name
-            console.log('playerName', playerName)
             
             let flattenBoard = room.gameDetails.gameBoard.flat();
 
-            console.log('flattenBoard', flattenBoard)
-            
             let result = flattenBoard.find(item => item && item.starting_position === playerName);
 
-            console.log('result', result)
 
             $(() =>  { 
-                console.log('in jquery ready in setPlayersOnBoard')   
-                console.log('result.starting_position', result.starting_position)   
-                console.log('room.gameDetails.current_player.name', room.gameDetails.current_player.name)   
-                console.log('playerName',playerName)   
-                console.log('esult.id',result.id)   
-                console.log('result.current_players.id',result.current_players[0].id)   
+  
 
 
                setInterval(() =>{
@@ -114,12 +109,12 @@ socket.on('settingRoomName', (data) => {
 })
 
 // 4. Fetch game state from REST API
-fetch(`${serverUrl}/api/game/state`)
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('gameState').innerText = `Game state: ${JSON.stringify(data)}`;
-    })
-    .catch(error => console.error('Error fetching game state:', error));
+// fetch('http://localhost:3000/api/game/state')
+//     .then(response => response.json())
+//     .then(data => {
+//         document.getElementById('gameState').innerText = `Game state: ${JSON.stringify(data)}`;
+//     })
+//     .catch(error => console.error('Error fetching game state:', error));
    
 
 //Handle connection  
@@ -248,6 +243,7 @@ socket.on('floodSix', (data)=> {
 
 
 
+
 ///////////////////////
 //    GAME_PLAY      //
 ///////////////////////
@@ -271,7 +267,7 @@ socket.on('floodSix', (data)=> {
 //capture Fire Statue
 //capture Water Statue
 
-export { socket };
+export { socket, gameRoom };
 
 
 
