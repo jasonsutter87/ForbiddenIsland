@@ -7,7 +7,7 @@ module.exports = (io) => {
   const rooms = {};
   const { initialize } =  require('../controllers/game-logic/game')
   const { setPlayerOnTheBoard } = require('../controllers/game-logic/player')
-  const { setDifficulty, placeTilesOnBoard, floodSix } =  require('../controllers/game-logic/board')
+  const { setDifficulty, placeTilesOnBoard, floodSix, moveCardNewPile } =  require('../controllers/game-logic/board')
   const { shuffleCards, shuffle } = require('../controllers/game-machanics/shuffling')
   const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, GAME_BOARDS  } = require('../models/models')
   const { GAME_STATUS } = require("../Enums/enums.js");
@@ -111,6 +111,47 @@ module.exports = (io) => {
           io.to(roomName).emit('setGameLayout', gameLayoutId); 
         }
       })
+    })
+
+
+    socket.on('dealFloodCard', (roomName) => {
+        let floodDeckUnusedCount = rooms[roomName].gameDetails.flood_deck.unused.length;
+
+        //check if the user can take flood card
+        //TODO
+
+        if(floodDeckUnusedCount == 0) {
+            rooms[roomName].gameDetails.flood_deck.unused = rooms[roomName].gameDetails.flood_deck.discard
+            rooms[roomName].gameDetails.flood_deck.discard = []
+
+            io.to(roomName).emit('floodDeckUnusedCount0');  
+        } else {
+            moveCardNewPile(rooms[roomName].gameDetails.flood_deck.discard,  rooms[roomName].gameDetails.flood_deck.unused );  
+            io.to(roomName).emit('floodDeckDiscard', rooms[roomName]);  
+
+            if(floodDeckUnusedCount == 0) {
+              io.to(roomName).emit('floodDeckUnusedCount0');  
+            }
+        }
+    })
+
+    socket.on('dealActionCard', (roomName) => {
+
+        let actionDeckUnusedCount = rooms[roomName].gameDetails.action_deck.unused.length;
+
+        if(actionDeckUnusedCount == 0) {
+            rooms[roomName].gameDetails.action_deck.unused = rooms[roomName].gameDetails.action_deck.discard
+            rooms[roomName].gameDetails.action_deck.discard = []
+            io.to(roomName).emit('actionDeckUnusedCount0');  
+        } else {
+            moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard,  rooms[roomName].gameDetails.action_deck.unused );
+            io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
+            
+            if(actionDeckUnusedCount == 0) {
+              io.to(roomName).emit('actionDeckUnusedCount0');  
+            }
+        }
+
     })
 
     socket.on('disconnect', () => {

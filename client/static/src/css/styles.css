@@ -19357,6 +19357,11 @@ html {
   max-width: 150px;
   height: 100%;
   max-height: 200px;
+  transition: transform 0.3s;
+  border-radius: 8px;
+}
+.ui-cards.backs:hover {
+  transform: scale(1.05);
 }
 
 .player-action-cards {

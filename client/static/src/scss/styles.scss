@@ -612,6 +612,14 @@ html {
   max-width: 150px;
   height: 100%;
   max-height: 200px;
+  transition: transform 0.3s;
+  border-radius: 8px;
+
+  &.backs {
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
 }
 
 

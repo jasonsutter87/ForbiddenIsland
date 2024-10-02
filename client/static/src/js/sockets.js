@@ -2,15 +2,15 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { floodSix } from './board.js';
 
 //1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 let gameRoom;
 
 
@@ -242,6 +242,38 @@ socket.on('floodSix', (data)=> {
 
 
 
+socket.on('floodDeckUnusedCount0', ()=> {
+    $('#floodDiscardPile').empty()
+    $('#dealFloodCard').empty()
+    $('#dealFloodCard').append(`
+        <img class="ui-cards backs" src="/assets/images/flood/flood_card-back.jpeg" alt="">
+    `)    
+})
+
+
+socket.on('floodDeckDiscard', (data)=> {
+    $('#floodDiscardPile').empty()
+    $('#floodDiscardPile').append(`
+        <img class="ui-cards" src="/assets/images/flood/${data.gameDetails.flood_deck.discard[data.gameDetails.flood_deck.discard.length -1].slug}.jpeg" alt="${data.gameDetails.flood_deck.discard[data.gameDetails.flood_deck.discard.length -1].name}">
+    `) 
+})
+
+
+socket.on('actionDeckUnusedCount0', () => {
+        $('#actionDiscardPile').empty()
+        $('#dealActionCard').empty()
+        $('#dealActionCard').append(`
+            <img class="ui-cards backs" src="/assets/images/action/action_card-back.jpeg" alt="">
+        `)    
+})
+
+
+socket.on('actionDeckDiscard', (data)=> {
+    $('#actionDiscardPile').empty()
+    $('#actionDiscardPile').append(`
+        <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[data.gameDetails.action_deck.discard.length -1].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[data.gameDetails.action_deck.discard.length -1].name}">
+    `) 
+})
 
 
 ///////////////////////
