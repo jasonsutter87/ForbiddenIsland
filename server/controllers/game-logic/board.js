@@ -40,6 +40,13 @@ let placeTilesOnBoard = (gameBoard, cards) => {
   
 }
 
+let moveCardNewPile = (inbound, outbound) => {
+  if (outbound.length > 0) {
+      inbound.push(outbound.shift());
+  }
+};
+
+
 let checkTreasureSunk = (board, treasure) => {
   // Flatten the board to simplify filtering
   const tiles = board.flat().filter(tile => typeof tile === 'object');
@@ -161,5 +168,6 @@ module.exports = {
     checkForPlayerLost,
     checkForPlayerWon,
     setDifficulty,
-    resetGame
+    resetGame,
+    moveCardNewPile
 };

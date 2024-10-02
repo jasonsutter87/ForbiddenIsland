@@ -4,10 +4,10 @@ import { moveCardNewPile } from './board.js'
 
 $(() => {
     //master
-    let socketURL = 'https://forbiddenisland.onrender.com';
+    // let socketURL = 'https://forbiddenisland.onrender.com';
 
     //dev
-    // let socketURL = 'http://localhost:3000';
+    let socketURL = 'http://localhost:3000';
 
     $('#btn-play-game').on('click', e => {
         e.preventDefault();
@@ -139,100 +139,14 @@ $(() => {
         socket.emit('changeGameLayoutType', socket.roomName, layoutId) 
     })
 
-
     $('#dealFloodCard').on('click', e => {
         e.preventDefault();
-
-        console.log('dealFloodCard')
-        console.log('gameRoom', gameRoom)
-
-        let floodDeckUnusedCount = gameRoom.gameDetails.flood_deck.unused.length;
-        let floodDeckDiscardCount = gameRoom.gameDetails.flood_deck.discard;
-
-
-        //check if the user can take flood card
-
-
-
-
-
-        if(floodDeckUnusedCount == 0) {
-            $('#floodDiscardPile').empty()
-            $('#dealFloodCard').empty()
-            gameRoom.gameDetails.flood_deck.unused = gameRoom.gameDetails.flood_deck.discard
-            gameRoom.gameDetails.flood_deck.discard = []
-            $('#dealFloodCard').append(`
-                <img class="ui-cards card-back" src="/assets/images/flood/flood_card-back.jpeg" alt="">
-            `)    
-
-        } else {
-            $('#floodDiscardPile').empty()
-            moveCardNewPile(gameRoom.gameDetails.flood_deck.discard,  gameRoom.gameDetails.flood_deck.unused );
-    
-            $('#floodDiscardPile').append(`
-                <img class="ui-cards" src="/assets/images/flood/${gameRoom.gameDetails.flood_deck.discard[gameRoom.gameDetails.flood_deck.discard.length -1].slug}.jpeg" alt="${gameRoom.gameDetails.flood_deck.discard[gameRoom.gameDetails.flood_deck.discard.length -1].name}">
-            `) 
-            
-            if(floodDeckUnusedCount == 0) {
-                $('#dealFloodCard').empty()
-            }
-        }
-
-
-
-        // if( tile.flooded ) => sink & remove from deck
-
-        // if( tile.normal ) => flood
-
-        // if wrong user, do nothing. 
+        socket.emit('dealFloodCard', socket.roomName) 
     })
-
 
     $('#dealActionCard').on('click', e => {
         e.preventDefault();
-
-        console.log('dealActionCard')
-        console.log('gameRoom', gameRoom)
-
-        let actionDeckUnusedCount = gameRoom.gameDetails.action_deck.unused.length;
-        let actionDeckDiscardCount = gameRoom.gameDetails.action_deck.discard;
-
-
-        //check if the user can take action card
-
-
-
-
-
-        if(actionDeckUnusedCount == 0) {
-            $('#actionDiscardPile').empty()
-            $('#dealActionCard').empty()
-            gameRoom.gameDetails.action_deck.unused = gameRoom.gameDetails.action_deck.discard
-            gameRoom.gameDetails.action_deck.discard = []
-            $('#dealActionCard').append(`
-                <img class="ui-cards card-back" src="/assets/images/action/action_card-back.jpeg" alt="">
-            `)    
-
-        } else {
-            $('#actionDiscardPile').empty()
-            moveCardNewPile(gameRoom.gameDetails.action_deck.discard,  gameRoom.gameDetails.action_deck.unused );
-    
-            $('#actionDiscardPile').append(`
-                <img class="ui-cards" src="/assets/images/action/action_${gameRoom.gameDetails.action_deck.discard[gameRoom.gameDetails.action_deck.discard.length -1].slug}.jpeg" alt="${gameRoom.gameDetails.action_deck.discard[gameRoom.gameDetails.action_deck.discard.length -1].name}">
-            `) 
-            
-            if(actionDeckUnusedCount == 0) {
-                $('#dealActionCard').empty()
-            }
-        }
-
-
-
-        // if( tile.flooded ) => sink & remove from deck
-
-        // if( tile.normal ) => flood
-
-        // if wrong user, do nothing. 
+        socket.emit('dealActionCard', socket.roomName) 
     })
 
     let appendLayoutsToRoomSelect = () => { 
