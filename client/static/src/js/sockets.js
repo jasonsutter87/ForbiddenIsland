@@ -108,14 +108,7 @@ socket.on('settingRoomName', (data) => {
     socket.roomName = data
 })
 
-// 4. Fetch game state from REST API
-// fetch('http://localhost:3000/api/game/state')
-//     .then(response => response.json())
-//     .then(data => {
-//         document.getElementById('gameState').innerText = `Game state: ${JSON.stringify(data)}`;
-//     })
-//     .catch(error => console.error('Error fetching game state:', error));
-   
+
 
 //Handle connection  
 socket.on('connect', () => {
