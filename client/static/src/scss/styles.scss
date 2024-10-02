@@ -42,9 +42,6 @@ html {
         "main-content"
         "small-box-1"
         "small-box-2"
-        "sidebar-item-1"
-        "sidebar-item-2"
-        "sidebar-item-3"
         "footer";
       gap: 10px; /* Optional spacing between grid items */
       height: 100vh; /* Full viewport height */
@@ -56,9 +53,6 @@ html {
         grid-template-areas:
         "main-content main-content header2 header2"
         "main-content main-content small-box-1 small-box-2"
-        "main-content main-content sidebar-item-1 sidebar-item-1"
-        "main-content main-content sidebar-item-2 sidebar-item-2"
-        "main-content main-content sidebar-item-3 sidebar-item-3"
         "footer footer footer footer";
       }
     }
@@ -105,7 +99,7 @@ html {
     
     .small-box-1 {
       grid-area: small-box-1;
-      background: lightpink;
+      background: tan;
       display: flex;
       flex-direction: column;
       height: 100%;
@@ -114,7 +108,7 @@ html {
     
     .small-box-2 {
       grid-area: small-box-2;
-      background: lightblue;
+      background: tan;
       display: flex;
       flex-direction: column;
       height: 100%;
@@ -131,26 +125,30 @@ html {
     
     .sidebar-item-1 {
       grid-area: sidebar-item-1;
-      background: lightcoral;
+      background: tan;
       flex-grow: 1;
+      padding: 4px 1rem;
     }
     
     .sidebar-item-2 {
       grid-area: sidebar-item-2;
-      background: lightgoldenrodyellow;
+      background: tan;
       flex-grow: 1;
+      padding: 4px 1rem;
     }
     
     .sidebar-item-3 {
       grid-area: sidebar-item-3;
-      background: lightseagreen;
+      background: tan;
       flex-grow: 1;
+      padding: 4px 1rem;
     }
     
     .sidebar-item-4 {
-      grid-area: sidebar-item-3;
-      background: rgb(136, 76, 135);
+      grid-area: sidebar-item-4;
+      background: tan;
       flex-grow: 1;
+      padding: 4px 1rem;
     }
     
   }
@@ -607,4 +605,17 @@ html {
     background: transparentize($color: greenyellow, $amount: .3);
 
   }
+}
+
+.ui-cards{
+  width: 100%;
+  max-width: 150px;
+  height: 100%;
+  max-height: 200px;
+}
+
+
+.player-action-cards{
+  width: 100%;
+  max-width: 75px;
 }

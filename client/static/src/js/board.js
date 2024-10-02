@@ -33,8 +33,6 @@ let moveCardNewPile = (inbound, outbound) => {
 
 
 let floodSix = (room) => {
-  console.log(room)
-  console.log(room.gameDetails)
     room.gameDetails.flood_deck.unused.forEach((val, ind) => {
         if(ind < 6) {
         let tile = selectObjectById(room.gameDetails.gameBoard, val.id)
@@ -45,4 +43,11 @@ let floodSix = (room) => {
 };
 
 
-export { floodSix };
+let setUpFloodCards = (data) => {
+  console.log('setUpFloodCards', data)
+}
+
+
+let refreshFloodCards = () => {}
+
+export { floodSix, setUpFloodCards };

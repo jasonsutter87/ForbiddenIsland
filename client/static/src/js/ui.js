@@ -3,10 +3,10 @@ import { socket } from './sockets.js'
 
 $(() => {
     //master
-    let socketURL = 'https://forbiddenisland.onrender.com';
+    // let socketURL = 'https://forbiddenisland.onrender.com';
 
     //dev
-    // let socketURL = 'http://localhost:3000';
+    let socketURL = 'http://localhost:3000';
 
     $('#btn-play-game').on('click', e => {
         e.preventDefault();
@@ -136,6 +136,20 @@ $(() => {
         e.preventDefault();
         let layoutId = e.target.value;
         socket.emit('changeGameLayoutType', socket.roomName, layoutId) 
+    })
+
+
+    $('#dealFloodCard').on('click', e => {
+        e.preventDefault();
+
+
+        //check if the user can take flood card
+
+        // if( tile.flooded ) => sink & remove from deck
+
+        // if( tile.normal ) => flood
+
+        // if wrong user, do nothing. 
     })
 
     let appendLayoutsToRoomSelect = () => { 
