@@ -19363,6 +19363,9 @@ html {
 .ui-cards.backs:hover {
   transform: scale(1.05);
 }
+.ui-cards.card-back {
+  cursor: pointer;
+}
 
 .player-action-cards {
   width: 100%;
