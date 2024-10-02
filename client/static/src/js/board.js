@@ -43,11 +43,5 @@ let floodSix = (room) => {
 };
 
 
-let setUpFloodCards = (data) => {
-  console.log('setUpFloodCards', data)
-}
 
-
-let refreshFloodCards = () => {}
-
-export { floodSix, setUpFloodCards };
+export { floodSix, moveCardNewPile };

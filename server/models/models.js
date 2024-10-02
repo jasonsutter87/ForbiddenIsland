@@ -202,6 +202,7 @@ const ACTION_CARDS = [
     id: 1,
     type: "element",
     name: TREASURES.fire_treasure,
+    slug: 'crystal-of-fire',
 
     actions: {
     action1: null,
@@ -212,6 +213,7 @@ const ACTION_CARDS = [
     id: 2,
     type: "element",
     name: TREASURES.fire_treasure,
+    slug: 'crystal-of-fire',
 
     actions: {
     action1: null,
@@ -222,6 +224,7 @@ const ACTION_CARDS = [
     id: 3,
     type: "element",
     name: TREASURES.fire_treasure,
+    slug: 'crystal-of-fire',
 
     actions: {
     action1: null,
@@ -232,6 +235,7 @@ const ACTION_CARDS = [
     id: 4,
     type: "element",
     name: TREASURES.fire_treasure,
+    slug: 'crystal-of-fire',
 
     actions: {
     action1: null,
@@ -242,6 +246,7 @@ const ACTION_CARDS = [
     id: 5,
     type: "element",
     name: TREASURES.fire_treasure,
+    slug: 'crystal-of-fire',
 
     actions: {
     action1: null,
@@ -252,6 +257,7 @@ const ACTION_CARDS = [
     id: 6,
     type: "element",
     name: TREASURES.water_treasure,
+    slug: 'ocean-chalice',
 
     actions: {
     action1: null,
@@ -262,6 +268,7 @@ const ACTION_CARDS = [
     id: 7,
     type: "element",
     name: TREASURES.water_treasure,
+    slug: 'ocean-chalice',
 
     actions: {
     action1: null,
@@ -272,6 +279,7 @@ const ACTION_CARDS = [
     id: 8,
     type: "element",
     name: TREASURES.water_treasure,
+    slug: 'ocean-chalice',
 
     actions: {
     action1: null,
@@ -282,6 +290,7 @@ const ACTION_CARDS = [
     id: 9,
     type: "element",
     name: TREASURES.water_treasure,
+    slug: 'ocean-chalice',
 
     actions: {
     action1: null,
@@ -292,6 +301,7 @@ const ACTION_CARDS = [
     id: 10,
     type: "element",
     name: TREASURES.water_treasure,
+    slug: 'ocean-chalice',
 
     actions: {
     action1: null,
@@ -302,6 +312,7 @@ const ACTION_CARDS = [
     id: 11,
     type: "element",
     name: TREASURES.wind_treasure,
+    slug: 'statue-of-the-wind',
 
     actions: {
     action1: null,
@@ -312,6 +323,7 @@ const ACTION_CARDS = [
     id: 12,
     type: "element",
     name: TREASURES.wind_treasure,
+    slug: 'statue-of-the-wind',
 
     actions: {
     action1: null,
@@ -322,6 +334,7 @@ const ACTION_CARDS = [
     id: 13,
     type: "element",
     name: TREASURES.wind_treasure,
+    slug: 'statue-of-the-wind',
 
     actions: {
     action1: null,
@@ -332,6 +345,7 @@ const ACTION_CARDS = [
     id: 14,
     type: "element",
     name: TREASURES.wind_treasure,
+    slug: 'statue-of-the-wind',
 
     actions: {
     action1: null,
@@ -342,6 +356,7 @@ const ACTION_CARDS = [
     id: 15,
     type: "element",
     name: TREASURES.wind_treasure,
+    slug: 'statue-of-the-wind',
 
     actions: {
     action1: null,
@@ -352,7 +367,7 @@ const ACTION_CARDS = [
     id: 16,
     type: "element",
     name: TREASURES.earth_treasure,
-
+    slug: 'earth_stone',
     actions: {
     action1: null,
     action2: null
@@ -362,7 +377,7 @@ const ACTION_CARDS = [
     id: 17,
     type: "element",
     name: TREASURES.earth_treasure,
-
+    slug: 'earth_stone',
     actions: {
     action1: null,
     action2: null
@@ -372,7 +387,7 @@ const ACTION_CARDS = [
     id: 18,
     type: "element",
     name: TREASURES.earth_treasure,
-
+    slug: 'earth_stone',
     actions: {
     action1: null,
     action2: null
@@ -382,7 +397,7 @@ const ACTION_CARDS = [
     id: 19,
     type: "element",
     name: TREASURES.earth_treasure,
-
+    slug: 'earth_stone',
     actions: {
     action1: null,
     action2: null
@@ -392,7 +407,7 @@ const ACTION_CARDS = [
     id: 20,
     type: "element",
     name: TREASURES.earth_treasure,
-
+    slug: 'earth_stone',
     actions: {
     action1: null,
     action2: null
@@ -402,6 +417,7 @@ const ACTION_CARDS = [
     id: 21,
     type: "Action Card",
     name: "Sandbag",
+    slug: 'sandbags',
 
     actions: {
     action1: "Shore up any one tile on the island",
@@ -418,6 +434,7 @@ const ACTION_CARDS = [
     id: 22,
     type: "Action Card",
     name: "Sandbag",
+    slug: 'sandbags',
 
     actions: {
     action1: "Shore up any one tile on the island",
@@ -433,6 +450,7 @@ const ACTION_CARDS = [
     id: 24,
     type: "Action Card",
     name: "helicopter lift",
+    slug: 'helicopter-lift',
 
     actions: {
     action1: 'Move one or more pawns on the same tile to any other tile',
@@ -448,6 +466,7 @@ const ACTION_CARDS = [
     id: 25,
     type: "Action Card",
     name: "helicopter lift",
+    slug: 'helicopter-lift',
 
     actions: {
     action1: 'Move one or more pawns on the same tile to any other tile',
@@ -463,6 +482,7 @@ const ACTION_CARDS = [
     id: 26,
     type: "Action Card",
     name: "helicopter lift",
+    slug: 'helicopter-lift',
 
     actions: {
     action1: 'Move one or more pawns on the same tile to any other tile',
@@ -478,6 +498,7 @@ const ACTION_CARDS = [
     id: 27,
     type: "Action Card",
     name: "water rises",
+    slug: 'water-rise',
 
     actions: {
     action1: "",
@@ -488,6 +509,7 @@ const ACTION_CARDS = [
     id: 28,
     type: "Action Card",
     name: "water rises",
+    slug: 'water-rise',
 
     actions: {
     action1: "",
@@ -498,6 +520,7 @@ const ACTION_CARDS = [
     id: 29,
     type: "Action Card",
     name: "water rises",
+    slug: 'water-rise',
 
     actions: {
     action1: "",
@@ -777,22 +800,25 @@ const TREASURES_PIECES = [
     {
       id: 1,
       name: TREASURES.wind_treasure,
+      slug: 'statue-of-the-wind',
       color: "Yellow"
     },
     {
       id: 2,
       name: TREASURES.fire_treasure,
+      slug: 'crystal-of-fire',
       color: "Red"
     },
     {
       id: 3,
       name: TREASURES.water_treasure,
+      slug: 'ocean-chalice',
       color: "Blue"
     },
     {
       id: 4,
       name: TREASURES.earth_treasure,
-      color: "Purple"
+    slug: 'earth_stone',      color: "Purple"
     }
 ]
 
