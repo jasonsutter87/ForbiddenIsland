@@ -612,6 +612,10 @@ html {
   max-width: 150px;
   height: 100%;
   max-height: 200px;
+
+  &.card-back {
+    cursor: pointer;
+  }
 }
 
 

@@ -162,7 +162,7 @@ $(() => {
             gameRoom.gameDetails.flood_deck.unused = gameRoom.gameDetails.flood_deck.discard
             gameRoom.gameDetails.flood_deck.discard = []
             $('#dealFloodCard').append(`
-                <img class="ui-cards" src="/assets/images/flood/flood_card-back.jpeg" alt="">
+                <img class="ui-cards card-back" src="/assets/images/flood/flood_card-back.jpeg" alt="">
             `)    
 
         } else {
@@ -210,7 +210,7 @@ $(() => {
             gameRoom.gameDetails.action_deck.unused = gameRoom.gameDetails.action_deck.discard
             gameRoom.gameDetails.action_deck.discard = []
             $('#dealActionCard').append(`
-                <img class="ui-cards" src="/assets/images/action/action_card-back.jpeg" alt="">
+                <img class="ui-cards card-back" src="/assets/images/action/action_card-back.jpeg" alt="">
             `)    
 
         } else {
