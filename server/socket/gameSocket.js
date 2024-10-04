@@ -9,7 +9,7 @@ module.exports = (io) => {
   const { setPlayerOnTheBoard } = require('../controllers/game-logic/player')
   const { checkForPlayerLost,
           placeTilesOnBoard,
-          floodSix,
+          floodBoard,
           moveCardNewPile,
           floodOrSink,
           checkForWaterRise } =  require('../controllers/game-logic/board')
@@ -246,10 +246,10 @@ module.exports = (io) => {
 
       io.to(roomName).emit('setPlayersOnBoard', rooms[roomName]);
 
-      let updatedRoom = floodSix(rooms[roomName])
+      let updatedRoom = floodBoard(rooms[roomName], 6)
       rooms[roomName] = updatedRoom
 
-      io.to(roomName).emit('floodSix', rooms[roomName]);
+      io.to(roomName).emit('floodBoard', rooms[roomName]);
 
       io.to(roomName).emit('setFloodDeck', rooms[roomName])
 

@@ -3,20 +3,17 @@ const { TREASURES, GAME_STATUS } = require("../../Enums/enums.js");
 let { game_details } = require("../../models/models.js");
 const { dividedShuffle  } = require('../../controllers/game-machanics/shuffling')
 
-let raiseTheWaterLevel = () => { 
-    flood_level++
+
+let raiseTheWaterLevel = (room) => { 
       switch (true) {
-        case (flood_level >= 8):
-          flood_draw_count = 5;
-          break;
-        case (flood_level >= 6):
-          flood_draw_count = 4;
-          break;
-        case (flood_level >= 3):
-          flood_draw_count = 3;
-          break;
+        case (room.current_flood_level >= 8):
+          return 5;
+        case (room.current_flood_level >= 6):
+         return 4;
+        case (room.current_flood_level >= 3):
+          return 3;
         default:
-          flood_draw_count = 2; // Base case
+          return 2; 
       }
 } 
   
@@ -58,10 +55,9 @@ let selectObjectById = (board, id) => {
   return null;
 };
 
-
-let floodSix = (room) => {
+let floodBoard = (room, tileCount) => {
   room.gameDetails.flood_deck.unused.forEach((val, ind) => {
-      if(ind < 6) {
+      if(ind < tileCount) {
       let tile = selectObjectById(room.gameDetails.gameBoard, val.id)
       tile.flooded = true 
       moveCardNewPile(room.gameDetails.flood_deck.discard,  room.gameDetails.flood_deck.unused );
@@ -113,9 +109,15 @@ let checkForWaterRise = (room) => {
       room.gameDetails.flood_deck.discard = [];
 
       // raise the water level
+      //todo.... check if this is working..
+      room.current_flood_level++
+      let level = raiseTheWaterLevel(room)
+      
 
 
       //flood # of card per the flood level
+      let updatedRoom = floodBoard(room, level)
+      room = updatedRoom
 
 
       return room
@@ -252,6 +254,6 @@ module.exports = {
     resetGame,
     moveCardNewPile,
     floodOrSink,
-    floodSix,
+    floodBoard,
     checkForWaterRise
 };

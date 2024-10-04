@@ -190,7 +190,7 @@ socket.on('redrawBoard', (data) => {
 })
 
 
-socket.on('floodSix', (data)=> {
+socket.on('floodBoard', (data)=> {
     createBoardUI(data.gameDetails.gameBoard)
 })
 

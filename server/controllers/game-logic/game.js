@@ -82,7 +82,7 @@ let game_runner = () => {
         // //////////////////
 
         // // Flood six cards
-        // addToQueue(floodSix, FLOOD_CARDS);
+        // addToQueue(floodBoard, FLOOD_CARDS);
 
         // // Redraw UI
         // addToQueue(redrawBoardUI, game_board);
