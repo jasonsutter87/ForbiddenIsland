@@ -8,10 +8,8 @@ const serverUrl = window.location.hostname === 'localhost'
 // Connect to the Socket.io server
 const socket = io(serverUrl);
 
-
 // const socket = io('http://localhost:3000');
 let gameRoom;
-
 
 // Define createBoardUI as a separate function
 function createBoardUI(board) {
