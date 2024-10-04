@@ -7,7 +7,12 @@ module.exports = (io) => {
   const rooms = {};
   const { initialize } =  require('../controllers/game-logic/game')
   const { setPlayerOnTheBoard } = require('../controllers/game-logic/player')
-  const { setDifficulty, placeTilesOnBoard, floodSix, moveCardNewPile, floodOrSink, checkForWaterRise } =  require('../controllers/game-logic/board')
+  const { checkForPlayerLost,
+          placeTilesOnBoard,
+          floodSix,
+          moveCardNewPile,
+          floodOrSink,
+          checkForWaterRise } =  require('../controllers/game-logic/board')
   const { shuffleCards, shuffle } = require('../controllers/game-machanics/shuffling')
   const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, GAME_BOARDS  } = require('../models/models')
   const { GAME_STATUS } = require("../Enums/enums.js");
@@ -123,6 +128,13 @@ module.exports = (io) => {
 
 
     socket.on('dealFloodCard', (roomName) => {
+      let isGameover =  checkForPlayerLost(rooms[roomName])
+      
+      if(isGameover) {
+        io.to(roomName).emit('gameOver');
+      }
+
+
         let floodDeckUnusedCount = rooms[roomName].gameDetails.flood_deck.unused.length;
 
         //check if the user can take flood card
@@ -148,6 +160,8 @@ module.exports = (io) => {
     })
 
     socket.on('dealActionCard', (roomName) => {
+
+
 
         let actionDeckUnusedCount = rooms[roomName].gameDetails.action_deck.unused.length;
 
