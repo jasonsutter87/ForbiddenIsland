@@ -183,7 +183,7 @@ socket.on('redrawBoard', (data) => {
 })
 
 
-socket.on('floodSix', (data)=> {
+socket.on('floodBoard', (data)=> {
     createBoardUI(data.gameDetails.gameBoard)
 })
 
@@ -252,6 +252,12 @@ socket.on('updateCurrentPlayerImage', (data) => {
 //capture Wind Statue
 //capture Fire Statue
 //capture Water Statue
+
+
+//gameover
+socket.on('gameOver', () => {
+    alert('gameOver!')
+})
 
 export { socket, gameRoom };
 

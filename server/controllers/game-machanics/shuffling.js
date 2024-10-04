@@ -1,7 +1,5 @@
 // Implements the Fisher-Yates shuffle algorithm and any other shuffling or randomization mechanics needed for the game.
 
-const { game_details } = require('../game-logic/board'); // Adjust path based on your file structure
-
 /*
     Normal Shuffle.
 */
@@ -19,8 +17,10 @@ let shuffle = array => {
 */
 let dividedShuffle = (topCards, bottomCards) => {
     shuffle(topCards);
-    return topCards + ',' + bottomCards;
+    let result = topCards.concat(bottomCards);  // Properly combine arrays
+    return result;
 }
+
 function shuffleCards(CARDS, deckToUpdate = null) {
     return new Promise(resolve => {
         shuffle(CARDS);

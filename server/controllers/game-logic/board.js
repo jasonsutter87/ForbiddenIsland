@@ -1,21 +1,19 @@
 // Handles the setup of the game board, including placing tiles, managing the board state, and updating the board as the game progresses.
 const { TREASURES, GAME_STATUS } = require("../../Enums/enums.js");
 let { game_details } = require("../../models/models.js");
+const { dividedShuffle  } = require('../../controllers/game-machanics/shuffling')
 
-let raiseTheWaterLevel = () => { 
-    flood_level++
+
+let raiseTheWaterLevel = (room) => { 
       switch (true) {
-        case (flood_level >= 8):
-          flood_draw_count = 5;
-          break;
-        case (flood_level >= 6):
-          flood_draw_count = 4;
-          break;
-        case (flood_level >= 3):
-          flood_draw_count = 3;
-          break;
+        case (room.current_flood_level >= 8):
+          return 5;
+        case (room.current_flood_level >= 6):
+         return 4;
+        case (room.current_flood_level >= 3):
+          return 3;
         default:
-          flood_draw_count = 2; // Base case
+          return 2; 
       }
 } 
   
@@ -57,10 +55,9 @@ let selectObjectById = (board, id) => {
   return null;
 };
 
-
-let floodSix = (room) => {
+let floodBoard = (room, tileCount) => {
   room.gameDetails.flood_deck.unused.forEach((val, ind) => {
-      if(ind < 6) {
+      if(ind < tileCount) {
       let tile = selectObjectById(room.gameDetails.gameBoard, val.id)
       tile.flooded = true 
       moveCardNewPile(room.gameDetails.flood_deck.discard,  room.gameDetails.flood_deck.unused );
@@ -95,64 +92,102 @@ let floodOrSink = (room) => {
 }
 
 
-let checkTreasureSunk = (board, treasure) => {
-  // Flatten the board to simplify filtering
-  const tiles = board.flat().filter(tile => typeof tile === 'object');
+let checkForWaterRise = (room) => {
+  let discardAction = room.gameDetails.action_deck.discard[0]
+  if(discardAction.name == "water rises"){
+    room.gameDetails.current_flood_level++
+  
+    if(room.gameDetails.current_flood_level == 10) {
+      return 'game over'    
+    } else {
 
-  // Filter the tiles that match the given treasure
-  const matchingTiles = tiles.filter(tile => tile.treasure === treasure);
+      console.log('room.gameDetails.current_flood_level', room.gameDetails.current_flood_level)
 
-  // If no matching tiles are found, return true
-  if (matchingTiles.length === 0) {
-      return true;
+      //shuffle the discard cards and place back on top of unused
+      let dividedShuffleAction = dividedShuffle(room.gameDetails.flood_deck.discard, room.gameDetails.flood_deck.unused )
+      room.gameDetails.flood_deck.unused = dividedShuffleAction;
+      room.gameDetails.flood_deck.discard = [];
+
+      // raise the water level
+      //todo.... check if this is working..
+      room.current_flood_level++
+      let level = raiseTheWaterLevel(room)
+      
+
+
+      //flood # of card per the flood level
+      let updatedRoom = floodBoard(room, level)
+      room = updatedRoom
+
+
+      return room
+    }
+  } else {
+    return false;
   }
 
-  // Check if all matching tiles have "sunk": false
-  return !matchingTiles.every(tile => tile.sunk === false);
 }
 
-let checkForPlayerLost = (cardId, count) => {
-  return new Promise(resolve => {
 
-    // console.log(('checking if Player Lost Attempt:' +  count)
-    //- check water level < 10
-    if(game_details.current_flood_level >= 10 ) {
-      resolve(true);
+
+let checkTreasureSunk = (board, treasure) => {
+  let treasureCount = 0;
+  let flatten = board.flat()
+
+  flatten.forEach((tile, ind) => {
+      if (tile.treasure === treasure && tile.sunk == false) {
+          treasureCount++
+      }
+  })
+
+  if(treasureCount == 0) {
+      return true
+  }
+
+  return false;
+}
+
+
+let checkForPlayerLost = (room) => {
+
+    if(room.gameDetails.current_flood_level >= 10 ) {
+      return true;
     }
        //- Wind is sunk under
-    if(checkTreasureSunk(game_details.gameBoard, TREASURES.wind_treasure )) {
-      resolve(true);
+    if(checkTreasureSunk(room.gameDetails.gameBoard, TREASURES.wind_treasure )) {
+      return true;
     }
     
     //- Fire is sunk under
-    if(checkTreasureSunk(game_details.gameBoard, TREASURES.fire_treasure )) {
-      resolve(true);
+    if(checkTreasureSunk(room.gameDetails.gameBoard, TREASURES.fire_treasure )) {
+      return true;
     }
     
     //- Water is sunk under
-    if(checkTreasureSunk(game_details.gameBoard, TREASURES.water_treasure )) {
-      resolve(true);
+    if(checkTreasureSunk(room.gameDetails.gameBoard, TREASURES.water_treasure )) {
+      return true;
     }
     
     //- Earth is sunk under
-    if(checkTreasureSunk(game_details.gameBoard, TREASURES.earth_treasure )) {
-      resolve(true);
+    if(checkTreasureSunk(room.gameDetails.gameBoard, TREASURES.earth_treasure )) {
+      return true;
     }
     
     
-    //- fools Landing is sunk under
-    let fools_landing = selectObjectById(game_details.gameBoard, cardId)
+   // - fools Landing is sunk under
+    let fools_landing = selectObjectById(room.gameDetails.gameBoard, 9)
     if(fools_landing.sunk == true) {
-      resolve(true);
+      return true;
     }
+
+
+    return false;
     
     
     //TODO
     //- check players location
     //- isDrowning
 
-    resolve(false);
-});
 }
 
 let checkForPlayerWon = () => {
@@ -202,7 +237,7 @@ let resetGame = () => {
     current_player_turns_left: null,
     gameBoard: game_board,
     status: GAME_STATUS.notStarted,
-    current_flood_level: 0
+    current_flood_level: 1
 }; 
 
  
@@ -219,5 +254,6 @@ module.exports = {
     resetGame,
     moveCardNewPile,
     floodOrSink,
-    floodSix
+    floodBoard,
+    checkForWaterRise
 };
