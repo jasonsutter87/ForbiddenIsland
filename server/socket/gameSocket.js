@@ -79,6 +79,7 @@ module.exports = (io) => {
         shuffleCards(newPlayerCards);
   
         let shuffleFlood = [...newFloodCards];
+        let floodDealCards = JSON.parse(JSON.stringify(shuffleFlood)); 
         shuffleCards(shuffleFlood)
 
         rooms[roomName].gameDetails.action_deck.unused = newActionCards
@@ -96,6 +97,8 @@ module.exports = (io) => {
         
         placeTilesOnBoard(rooms[roomName].gameDetails.gameBoard, newFloodCards).then(result => {
           rooms[roomName].gameDetails.gameBoard = result
+          rooms[roomName].gameDetails.flood_deck.unused = floodDealCards
+
           rooms[roomName].status = GAME_STATUS.inProgress;
           io.to(roomName).emit('startGame', result); 
           startGameLoop(roomName);
