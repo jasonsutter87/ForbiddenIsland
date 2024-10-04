@@ -17,8 +17,8 @@ let shuffle = array => {
 */
 let dividedShuffle = (topCards, bottomCards) => {
     shuffle(topCards);
-    console.log('dividedShuffle', topCards + ',' + bottomCards)
-    return topCards + ',' + bottomCards;
+    let result = topCards.concat(bottomCards);  // Properly combine arrays
+    return result;
 }
 
 function shuffleCards(CARDS, deckToUpdate = null) {
