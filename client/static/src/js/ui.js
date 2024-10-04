@@ -1,13 +1,13 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
-import { socket, gameRoom } from './sockets.js'
-import { moveCardNewPile } from './board.js'
+import { socket } from './sockets.js'
+
 
 $(() => {
     //master
-    // let socketURL = 'https://forbiddenisland.onrender.com';
+    let socketURL = 'https://forbiddenisland.onrender.com';
 
     //dev
-    let socketURL = 'http://localhost:3000';
+    // let socketURL = 'http://localhost:3000';
 
     $('#btn-play-game').on('click', e => {
         e.preventDefault();

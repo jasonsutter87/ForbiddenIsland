@@ -7,7 +7,7 @@ module.exports = (io) => {
   const rooms = {};
   const { initialize } =  require('../controllers/game-logic/game')
   const { setPlayerOnTheBoard } = require('../controllers/game-logic/player')
-  const { setDifficulty, placeTilesOnBoard, floodSix, moveCardNewPile } =  require('../controllers/game-logic/board')
+  const { setDifficulty, placeTilesOnBoard, floodSix, moveCardNewPile, floodOrSink } =  require('../controllers/game-logic/board')
   const { shuffleCards, shuffle } = require('../controllers/game-machanics/shuffling')
   const { game_board, game_details, FLOOD_CARDS, ACTION_CARDS, PLAYER_CARDS, GAME_BOARDS  } = require('../models/models')
   const { GAME_STATUS } = require("../Enums/enums.js");
@@ -100,7 +100,12 @@ module.exports = (io) => {
           rooms[roomName].gameDetails.flood_deck.unused = floodDealCards
 
           rooms[roomName].status = GAME_STATUS.inProgress;
+
+          rooms[roomName].gameDetails.current_flood_level = 1
+          rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
+          rooms[roomName].gameDetails.current_player_turns_left = 3;
           io.to(roomName).emit('startGame', result); 
+          io.to(roomName).emit('updateCurrentPlayerImage', rooms[roomName].gameDetails.current_player.name)
           startGameLoop(roomName);
         })
       }
@@ -126,11 +131,15 @@ module.exports = (io) => {
         if(floodDeckUnusedCount == 0) {
             rooms[roomName].gameDetails.flood_deck.unused = rooms[roomName].gameDetails.flood_deck.discard
             rooms[roomName].gameDetails.flood_deck.discard = []
-
             io.to(roomName).emit('floodDeckUnusedCount0');  
-        } else {
+          } else {
             moveCardNewPile(rooms[roomName].gameDetails.flood_deck.discard,  rooms[roomName].gameDetails.flood_deck.unused );  
+            
             io.to(roomName).emit('floodDeckDiscard', rooms[roomName]);  
+            let updatedBoard = floodOrSink(rooms[roomName])
+            rooms[roomName] =  updatedBoard
+
+            io.to(roomName).emit('redrawBoard', rooms[roomName]);
 
             if(floodDeckUnusedCount == 0) {
               io.to(roomName).emit('floodDeckUnusedCount0');  
@@ -205,6 +214,9 @@ module.exports = (io) => {
       })
 
       io.to(roomName).emit('setPlayersOnBoard', rooms[roomName]);
+
+      let updatedRoom = floodSix(rooms[roomName])
+      rooms[roomName] = updatedRoom
 
       io.to(roomName).emit('floodSix', rooms[roomName]);
 

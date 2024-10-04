@@ -42,9 +42,57 @@ let placeTilesOnBoard = (gameBoard, cards) => {
 
 let moveCardNewPile = (inbound, outbound) => {
   if (outbound.length > 0) {
-      inbound.push(outbound.shift());
+      inbound.unshift(outbound.shift());
   }
 };
+
+let selectObjectById = (board, id) => {
+  for (let row of board) {
+      for (let tile of row) {
+          if (typeof tile === 'object' && tile.id === id) {
+              return tile;
+          }
+      }
+  }
+  return null;
+};
+
+
+let floodSix = (room) => {
+  room.gameDetails.flood_deck.unused.forEach((val, ind) => {
+      if(ind < 6) {
+      let tile = selectObjectById(room.gameDetails.gameBoard, val.id)
+      tile.flooded = true 
+      moveCardNewPile(room.gameDetails.flood_deck.discard,  room.gameDetails.flood_deck.unused );
+      }
+  });
+
+  return room;
+};
+
+let floodOrSink = (room) => {
+
+  let tile = room.gameDetails.flood_deck.discard[0]
+  let boardTitle = selectObjectById(room.gameDetails.gameBoard, tile.id)
+
+
+  if(boardTitle.flooded == true) {
+    tile.sunk = true;
+    boardTitle.sunk = true;
+  }
+
+  if(boardTitle.flooded == false) {
+    tile.flooded = true;
+    boardTitle.flooded = true; 
+  }
+
+  if(tile.sunk == true) {
+    moveCardNewPile(room.gameDetails.flood_deck.removed,  room.gameDetails.flood_deck.discard )
+  }
+
+  
+  return room
+}
 
 
 let checkTreasureSunk = (board, treasure) => {
@@ -169,5 +217,7 @@ module.exports = {
     checkForPlayerWon,
     setDifficulty,
     resetGame,
-    moveCardNewPile
+    moveCardNewPile,
+    floodOrSink,
+    floodSix
 };

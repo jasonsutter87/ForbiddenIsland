@@ -1,16 +1,15 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
-import { floodSix } from './board.js';
 
 //1. Connect to Socket.io server
-// const serverUrl = window.location.hostname === 'localhost' 
-//     ? 'http://localhost:3000' 
-//     : 'https://forbiddenisland.onrender.com';
+const serverUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : 'https://forbiddenisland.onrender.com';
 
-// // Connect to the Socket.io server
-// const socket = io(serverUrl);
+// Connect to the Socket.io server
+const socket = io(serverUrl);
 
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
 let gameRoom;
 
 
@@ -187,56 +186,11 @@ socket.on('setGameLayout', (id) => {
 //    GAME_SETUP     //
 ///////////////////////
 socket.on('redrawBoard', (data) => {
-    createBoardUI(data.gameBoard)
-
-     // $(() => {
-
-    //   $('.tile').each(function() {
-    //     const classes = $(this).attr('class').split(/\s+/);
-    //     const playerClasses = classes.filter(cls => cls.startsWith('player-active-'));
-    
-    //     if (playerClasses.length > 1) {
-    //         // Add the combined-border class
-    //         $(this).addClass('combined-border');
-  
-    //         // Define colors based on player classes
-    //         const colors = playerClasses.map(playerClass => {
-    //             switch (playerClass) {
-    //               case 'player-active-Diver':
-    //                 return '#000000'; // Example color for Diver
-    //               case 'player-active-Pilot':
-    //                   return '#0000ff'; // Example color for Diver
-    //               case 'player-active-Messenger':
-    //                     return '#c0c0c0'; // Example color for Diver
-    //               case 'player-active-Explorer':
-    //                     return '##008000'; // Example color for Diver
-    //                 case 'player-active-Engineer':
-    //                     return '#ff0000'; // Example color for Explorer
-    //                 case 'player-active-Navigator':
-    //                   return '#ffff00'; // Example color for Explorer
-    //               // Add more cases for other player classes
-    //                 default:
-    //                     return '#FFFFFF'; // Fallback color
-    //             }
-    //         });
-    
-    //         // Apply the gradient based on the number of colors
-    //         if (colors.length === 2) {
-    //             $(this).css('border-image-source', `linear-gradient(to right, ${colors[0]}, ${colors[1]})`);
-    //         } else if (colors.length === 3) {
-    //             $(this).css('border-image-source', `linear-gradient(to right, ${colors[0]}, ${colors[1]}, ${colors[2]})`);
-    //         }
-    //         // Continue for more colors if needed
-    //     }
-    // });
-    
-    
-    //  })
+    createBoardUI(data.gameDetails.gameBoard)
 })
 
 
 socket.on('floodSix', (data)=> {
-    floodSix(data)
     createBoardUI(data.gameDetails.gameBoard)
 })
 
@@ -254,7 +208,7 @@ socket.on('floodDeckUnusedCount0', ()=> {
 socket.on('floodDeckDiscard', (data)=> {
     $('#floodDiscardPile').empty()
     $('#floodDiscardPile').append(`
-        <img class="ui-cards" src="/assets/images/flood/${data.gameDetails.flood_deck.discard[data.gameDetails.flood_deck.discard.length -1].slug}.jpeg" alt="${data.gameDetails.flood_deck.discard[data.gameDetails.flood_deck.discard.length -1].name}">
+        <img class="ui-cards" src="/assets/images/flood/${data.gameDetails.flood_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.flood_deck.discard[0].name}">
     `) 
 })
 
@@ -273,6 +227,13 @@ socket.on('actionDeckDiscard', (data)=> {
     $('#actionDiscardPile').append(`
         <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[data.gameDetails.action_deck.discard.length -1].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[data.gameDetails.action_deck.discard.length -1].name}">
     `) 
+})
+
+socket.on('updateCurrentPlayerImage', (data) => {
+    $('.current-player-image-wrapper').empty()
+    $('.current-player-image-wrapper').append(`
+        <img class="w-100" src="/assets/images/players/${data}-card.webp" alt="${data} player card to show current player">
+    `)
 })
 
 
