@@ -225,7 +225,7 @@ socket.on('actionDeckUnusedCount0', () => {
 socket.on('actionDeckDiscard', (data)=> {
     $('#actionDiscardPile').empty()
     $('#actionDiscardPile').append(`
-        <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[data.gameDetails.action_deck.discard.length -1].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[data.gameDetails.action_deck.discard.length -1].name}">
+        <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[0].name}">
     `) 
 })
 
