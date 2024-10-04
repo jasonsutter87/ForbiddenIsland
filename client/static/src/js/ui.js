@@ -1,6 +1,6 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
-import { socket, gameRoom } from './sockets.js'
-import { moveCardNewPile } from './board.js'
+import { socket } from './sockets.js'
+
 
 $(() => {
     //master
