@@ -1,6 +1,7 @@
 // Handles the setup of the game board, including placing tiles, managing the board state, and updating the board as the game progresses.
 const { TREASURES, GAME_STATUS } = require("../../Enums/enums.js");
 let { game_details } = require("../../models/models.js");
+const { dividedShuffle  } = require('../../controllers/game-machanics/shuffling')
 
 let raiseTheWaterLevel = () => { 
     flood_level++
@@ -92,6 +93,33 @@ let floodOrSink = (room) => {
 
   
   return room
+}
+
+let checkForWaterRise = (room) => {
+  let discardAction = room.gameDetails.action_deck.discard[0]
+  if(discardAction.name == "water rises"){
+    console.log('Water:', room.gameDetails.current_flood_level)
+    room.gameDetails.current_flood_level++
+    
+    
+    if(room.gameDetails.current_flood_level == 10) {
+      return 'game over'    
+    } else {
+      //do divided shuffle
+
+
+      //todo this break is
+      // let dividedShuffleAction = dividedShuffle(room.gameDetails.action_deck.discard, room.gameDetails.action_deck.unused )
+      // room.gameDetails.action_deck.unused = dividedShuffleAction;
+      // room.gameDetails.action_deck.discard = [];
+
+
+      return room
+    }
+  } else {
+    return false;
+  }
+
 }
 
 
@@ -202,7 +230,7 @@ let resetGame = () => {
     current_player_turns_left: null,
     gameBoard: game_board,
     status: GAME_STATUS.notStarted,
-    current_flood_level: 0
+    current_flood_level: 1
 }; 
 
  
@@ -219,5 +247,6 @@ module.exports = {
     resetGame,
     moveCardNewPile,
     floodOrSink,
-    floodSix
+    floodSix,
+    checkForWaterRise
 };
