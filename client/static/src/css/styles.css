@@ -19359,6 +19359,9 @@ html {
   transition: transform 0.3s;
   border-radius: 8px;
 }
+.ui-cards.backs {
+  cursor: pointer;
+}
 .ui-cards.backs:hover {
   transform: scale(1.05);
 }

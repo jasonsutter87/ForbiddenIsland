@@ -615,11 +615,15 @@ html {
   border-radius: 8px;
 
   &.backs {
+    cursor: pointer;
     &:hover {
       transform: scale(1.05);
     }
   }
 }
+
+
+
 
 
 .player-action-cards{
