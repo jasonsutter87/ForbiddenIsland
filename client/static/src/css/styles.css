@@ -18913,8 +18913,7 @@ html {
   grid-template-rows: repeat(2, 1fr);
   gap: 10px; /* Adjust spacing between items as needed */
   padding: 1px;
-  width: 100%;
-  max-width: 250px;
+  aspect-ratio: 1/1;
 }
 #game-ui .header2 .captured-treasures .treasure {
   width: 25px;
@@ -19367,4 +19366,18 @@ html {
 .player-action-cards {
   width: 100%;
   max-width: 75px;
+}
+
+.flood-level-section {
+  width: 100%;
+  padding: 1rem;
+}
+.flood-level-section .current-flood-level {
+  overflow: hidden;
+  border-radius: 50px;
+  border: 2px solid grey;
+}
+.flood-level-section .current-flood-level .flood-level-slider {
+  height: 35px;
+  background: blue;
 }/*# sourceMappingURL=styles.css.map */

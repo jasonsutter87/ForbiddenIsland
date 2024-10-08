@@ -57,7 +57,8 @@ const handleGameEvents = ({
           current_player_turns_left: null,
           gameBoard: rooms[roomName].gameBoard,
           status: GAME_STATUS.notStarted,
-          current_flood_level: 1
+          current_flood_level: 1,
+          flood_deal_count: 2
         }; 
 
         let newActionCards = JSON.parse(JSON.stringify(ACTION_CARDS)); 
@@ -96,6 +97,8 @@ const handleGameEvents = ({
           rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
           rooms[roomName].gameDetails.current_player_turns_left = 3;
           io.to(roomName).emit('startGame', result); 
+          io.to(roomName).emit('updateFloodLevelUI', rooms[roomName]); 
+          io.to(roomName).emit('renderPlayerActionCards', rooms[roomName]); 
           io.to(roomName).emit('updateCurrentPlayerImage', rooms[roomName].gameDetails.current_player.name)
           startGameLoop(roomName);
         })
@@ -159,7 +162,7 @@ const handleGameEvents = ({
             moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard,  rooms[roomName].gameDetails.action_deck.unused );
             io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
 
-            let updatedWaterRise = checkForWaterRise(rooms[roomName])
+            let updatedWaterRise = checkForWaterRise({room: rooms[roomName], io: io})
     
             if(updatedWaterRise == 'game over'){
               io.to(roomName).emit('gameOver');  
