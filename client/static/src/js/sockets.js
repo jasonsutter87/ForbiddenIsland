@@ -228,6 +228,40 @@ socket.on('updateCurrentPlayerImage', (data) => {
 })
 
 
+socket.on('renderPlayerActionCards', (data) => {})
+
+socket.on('updateFloodLevelUI', (data) => {
+        $('.flood-level-slider').css('width', `${data.gameDetails.current_flood_level * 10}%`)
+        let level = data.gameDetails.current_flood_level;
+        
+        if (level >= 10) {
+            $('.flood-level-slider').css('background', '#ff1919');
+        } else if (level >= 8) {
+            $('.flood-level-slider').css('background', '#010125');
+        } else if (level >= 6) {
+            $('.flood-level-slider').css('background', '#11118a');
+        } else if (level >= 3) {
+            $('.flood-level-slider').css('background', '#2c2cb1');
+        } else {
+            $('.flood-level-slider').css('background', '#5858da'); 
+        }
+
+        $('#current-flood-number').html(data.gameDetails.current_flood_level)
+        $('#current-flood-deal-number').html(data.gameDetails.flood_deal_count)
+})
+
+
+
+
+{/* <div class="text-center">
+<div class="current-flood-level">
+  <div class="flood-level-slider"></div>
+</div>
+<p>Water level is <span id=""></span> / 10 </p>
+<p>Flood Deal is <span id=""></span> / 5 </p>
+</div> */}
+
+
 ///////////////////////
 //    GAME_PLAY      //
 ///////////////////////

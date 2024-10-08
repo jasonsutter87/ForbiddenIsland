@@ -3,20 +3,6 @@ const { TREASURES, GAME_STATUS } = require("../../Enums/enums.js");
 let { game_details } = require("../../models/models.js");
 const { dividedShuffle  } = require('../../controllers/game-machanics/shuffling')
 
-
-let raiseTheWaterLevel = (room) => { 
-      switch (true) {
-        case (room.current_flood_level >= 8):
-          return 5;
-        case (room.current_flood_level >= 6):
-         return 4;
-        case (room.current_flood_level >= 3):
-          return 3;
-        default:
-          return 2; 
-      }
-} 
-  
 let placeTilesOnBoard = (gameBoard, cards) => {
   return new Promise(( resolve ) => {
     let duplicateFloodDeck = [...cards];
@@ -91,34 +77,39 @@ let floodOrSink = (room) => {
   return room
 }
 
-
-let checkForWaterRise = (room) => {
+let checkForWaterRise = ({
+  io = null,          
+  room = {},          
+  ...rest            
+} = {}) => {
   let discardAction = room.gameDetails.action_deck.discard[0]
   if(discardAction.name == "water rises"){
-    room.gameDetails.current_flood_level++
+
   
     if(room.gameDetails.current_flood_level == 10) {
       return 'game over'    
     } else {
-
-      console.log('room.gameDetails.current_flood_level', room.gameDetails.current_flood_level)
-
+      io.to(room.name).emit('updateFloodLevelUI', room); 
+      
       //shuffle the discard cards and place back on top of unused
       let dividedShuffleAction = dividedShuffle(room.gameDetails.flood_deck.discard, room.gameDetails.flood_deck.unused )
       room.gameDetails.flood_deck.unused = dividedShuffleAction;
       room.gameDetails.flood_deck.discard = [];
 
-      // raise the water level
-      //todo.... check if this is working..
-      room.current_flood_level++
-      let level = raiseTheWaterLevel(room)
-      
+
+      let current_flood_level = room.gameDetails.current_flood_level++
+      if (current_flood_level == 8) {
+        room.gameDetails.flood_deal_count = 5;
+      } else if (current_flood_level == 6) {
+        room.gameDetails.flood_deal_count = 4;
+      } else if (current_flood_level == 3) {
+        room.gameDetails.flood_deal_count = 3;
+      }
 
 
       //flood # of card per the flood level
-      let updatedRoom = floodBoard(room, level)
+      let updatedRoom = floodBoard(room, room.gameDetails.flood_deal_count)
       room = updatedRoom
-
 
       return room
     }
@@ -127,8 +118,6 @@ let checkForWaterRise = (room) => {
   }
 
 }
-
-
 
 let checkTreasureSunk = (board, treasure) => {
   let treasureCount = 0;
@@ -146,7 +135,6 @@ let checkTreasureSunk = (board, treasure) => {
 
   return false;
 }
-
 
 let checkForPlayerLost = (room) => {
 
@@ -245,7 +233,6 @@ let resetGame = () => {
 
 // Exported functions to be used in routes and sockets
 module.exports = {
-    raiseTheWaterLevel,
     placeTilesOnBoard,
     checkTreasureSunk,
     checkForPlayerLost,

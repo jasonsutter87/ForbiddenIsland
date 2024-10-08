@@ -143,7 +143,8 @@ let game_details = {
     current_player_turns_left: null,
     gameBoard: GAME_BOARDS[0].layout,
     status: GAME_STATUS.notStarted,
-    current_flood_level: 1
+    current_flood_level: 1,
+    flood_deal_count: 2
 };
 
 const PLAYER_CARDS = [
