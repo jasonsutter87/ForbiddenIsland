@@ -79,7 +79,7 @@ const handleGameEvents = ({
         shuffle(newFloodCards)
 
         for(var i = 0; i < rooms[roomName].gameDetails.number_of_players; i++) {
-          newPlayerCards[i].socketId = socket.id
+          newPlayerCards[i].socketId = rooms[roomName].players[i]
           newPlayerCards[i].playerId = i + 1,
           rooms[roomName].gameDetails.players.push(newPlayerCards[i])
         }
@@ -100,7 +100,7 @@ const handleGameEvents = ({
           io.to(roomName).emit('startGame', result); 
           io.to(roomName).emit('updateFloodLevelUI', rooms[roomName]); 
           io.to(roomName).emit('renderPlayerActionCards', rooms[roomName]); 
-          io.to(roomName).emit('updateCurrentPlayerImage', rooms[roomName].gameDetails.current_player.name)
+          io.to(roomName).emit('updateClientsPlayer', rooms[roomName])
           startGameLoop(roomName);
         })
       }
