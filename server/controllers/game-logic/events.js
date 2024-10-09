@@ -80,6 +80,7 @@ const handleGameEvents = ({
 
         for(var i = 0; i < rooms[roomName].gameDetails.number_of_players; i++) {
           newPlayerCards[i].socketId = socket.id
+          newPlayerCards[i].playerId = i + 1,
           rooms[roomName].gameDetails.players.push(newPlayerCards[i])
         }
         

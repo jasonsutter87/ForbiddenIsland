@@ -228,7 +228,19 @@ socket.on('updateCurrentPlayerImage', (data) => {
 })
 
 
-socket.on('renderPlayerActionCards', (data) => {})
+socket.on('renderPlayerActionCards', (data) => {
+    data.gameDetails.players.forEach((player, index) => {
+        console.log(player)
+
+        player.actionCards.forEach((card, cardIndex) => {
+
+            $(`#player-${player.playerId}-action-cards`).append(`
+                <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">
+            `)
+        })
+
+    })
+})
 
 socket.on('updateFloodLevelUI', (data) => {
         $('.flood-level-slider').css('width', `${data.gameDetails.current_flood_level * 10}%`)
