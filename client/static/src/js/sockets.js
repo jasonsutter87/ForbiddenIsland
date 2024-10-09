@@ -267,8 +267,8 @@ socket.on('updateFloodLevelUI', (data) => {
             $('.flood-level-slider').css('background', '#5858da'); 
         }
 
-        $('#current-flood-number').html(data.gameDetails.current_flood_level)
-        $('#current-flood-deal-number').html(data.gameDetails.flood_deal_count)
+        $('.current-flood-number').html(data.gameDetails.current_flood_level)
+        $('.current-flood-deal-number').html(data.gameDetails.flood_deal_count)
 })
 
 
