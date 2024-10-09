@@ -18886,7 +18886,7 @@ html {
   display: grid;
   grid-template-columns: 1fr; /* Single column for mobile */
   grid-template-rows: 15vh 1fr auto; /* Adjust based on content */
-  grid-template-areas: "header2" "main-content" "small-box-1" "small-box-2" "footer";
+  grid-template-areas: "header2" "header1" "main-content" "small-box-1" "small-box-2" "footer";
   gap: 10px; /* Optional spacing between grid items */
   height: 100vh; /* Full viewport height */
 }
@@ -18899,6 +18899,24 @@ html {
 #game-ui .header1 {
   grid-area: header1;
   background: lightgray;
+}
+@media (min-width: 992px) {
+  #game-ui .header1 {
+    display: none;
+  }
+}
+#game-ui .header1 .captured-treasures {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px; /* Adjust spacing between items as needed */
+  padding: 1px;
+  aspect-ratio: 1/1;
+}
+#game-ui .header1 .captured-treasures .treasure {
+  width: 25px;
+  height: 25px;
 }
 #game-ui .header2 {
   grid-area: header2;
