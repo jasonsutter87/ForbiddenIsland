@@ -154,7 +154,8 @@ const PLAYER_CARDS = [
       color: "Black",
       actionCards: [],
       Action: "Move through flooded or sunk areas as 1 turn, must land on land.",
-      socketId: null
+      socketId: null,
+      playerId: null
     },
     {
       id: 2,
@@ -162,7 +163,8 @@ const PLAYER_CARDS = [
       color: "Blue",
       actionCards: [],
       Action: "Once per turn, fly to any tile on the island for 1 action.",
-      socketId: null
+      socketId: null,
+      playerId: null
     },
     {
       id: 3,
@@ -170,7 +172,8 @@ const PLAYER_CARDS = [
       color: "Silver",
       actionCards: [],
       Action: "Give Treasure cards to a player anyer on the island for 1 action.",
-      socketId: null
+      socketId: null,
+      playerId: null
     },
     {
       id: 4,
@@ -178,7 +181,8 @@ const PLAYER_CARDS = [
       color: "Green",
       actionCards: [],
       Action: "Move and/or shore up diagonally.",
-      socketId: null
+      socketId: null,
+      playerId: null
     },
     {
       id: 5,
@@ -194,7 +198,8 @@ const PLAYER_CARDS = [
       color: "Yellow",
       actionCards: [],
       Action: "Move another player up to 2 adjacent tiles for 1 action.",
-      socketId: null
+      socketId: null,
+      playerId: null
     }
 ]
 

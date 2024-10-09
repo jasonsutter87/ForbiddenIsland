@@ -1,14 +1,14 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 
 //1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 let gameRoom;
 
 // Define createBoardUI as a separate function
@@ -228,7 +228,19 @@ socket.on('updateCurrentPlayerImage', (data) => {
 })
 
 
-socket.on('renderPlayerActionCards', (data) => {})
+socket.on('renderPlayerActionCards', (data) => {
+    data.gameDetails.players.forEach((player, index) => {
+        console.log(player)
+
+        player.actionCards.forEach((card, cardIndex) => {
+
+            $(`#player-${player.playerId}-action-cards`).append(`
+                <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">
+            `)
+        })
+
+    })
+})
 
 socket.on('updateFloodLevelUI', (data) => {
         $('.flood-level-slider').css('width', `${data.gameDetails.current_flood_level * 10}%`)
