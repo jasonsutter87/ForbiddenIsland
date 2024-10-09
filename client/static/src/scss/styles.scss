@@ -38,8 +38,8 @@ html {
       grid-template-columns: 1fr; /* Single column for mobile */
       grid-template-rows: 15vh 1fr auto; /* Adjust based on content */
       grid-template-areas:
-        "header2"
         "header1"
+        "header2"
         "main-content"
         "small-box-1"
         "small-box-2"
@@ -52,7 +52,7 @@ html {
       @media(min-width: 992px){
         grid-template-columns: .5fr .3fr .35fr .55fr; /* Three columns: main, and two smaller ones */
         grid-template-areas:
-        "main-content main-content header2 header2"
+        "main-content main-content header1 header1"
         "main-content main-content small-box-1 small-box-2"
         "footer footer footer footer";
       }
@@ -61,7 +61,36 @@ html {
     /* Assigning grid areas to each section */
     .header1 {
       grid-area: header1;
-      background: lightgray;
+      background: tan;
+      display: flex;
+      justify-content: space-between;
+    
+      .captured-treasures {
+        border: 1px solid black;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 10px; /* Adjust spacing between items as needed */
+        padding: 1px;
+        aspect-ratio: 1 / 1;
+    
+        .treasure {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    
+      .current-player-image-wrapper {
+        aspect-ratio:  1 / 1;
+        border: 1px solid black;
+      }
+    }
+    
+    .header2 {
+      grid-area: header2;
+      background: tan;
+      display: flex;
+      justify-content: center;
         
       @media(min-width: 992px) {
         display: none;
@@ -77,39 +106,13 @@ html {
         aspect-ratio: 1 / 1;
     
         .treasure {
-          width: 25px;
-          height: 25px;
+          width: 100%;
+          height: 100%;
         }
       }
     }
     
-    .header2 {
-      grid-area: header2;
-      background: lightgray;
-      display: flex;
-      justify-content: space-between;
     
-      .captured-treasures {
-        border: 1px solid black;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: 10px; /* Adjust spacing between items as needed */
-        padding: 1px;
-        aspect-ratio: 1 / 1;
-    
-        .treasure {
-          width: 25px;
-          height: 25px;
-          background-color: green;
-        }
-      }
-    
-      .current-player-image-wrapper {
-        aspect-ratio:  1 / 1;
-        border: 1px solid black;
-      }
-    }
     
     .footer {
       grid-area: footer;
@@ -140,7 +143,19 @@ html {
       align-items: center;
       justify-content: center;
       background-color: tan;
+      position: relative;
+
+      .players-name {
+        display: none;
+        @media(min-width: 992px) {
+          display: block;
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+        }
+      }
     }
+    
     
     .sidebar-item-1 {
       grid-area: sidebar-item-1;
@@ -170,6 +185,33 @@ html {
       padding: 4px 1rem;
     }
     
+  }
+
+  .clients-players-name {
+
+    .Diver {
+      color: Black;
+    }
+
+    .Pilot {
+      color: blue;
+    }
+
+    .Messenger {
+      color: silver;
+    }
+
+    .Explorer {
+      color: green;
+    }
+
+    .Engineer {
+      color: red;
+    }
+
+    .Navigator {
+      color: yellow;
+    }
   }
   
   

@@ -221,20 +221,37 @@ socket.on('actionDeckDiscard', (data)=> {
     `) 
 })
 
-socket.on('updateCurrentPlayerImage', (data) => {
-    $('.current-player-image-wrapper').empty()
-    $('.current-player-image-wrapper').append(`
-        <img class="w-100" src="/assets/images/players/${data}-card.webp" alt="${data} player card to show current player">
-    `)
+
+
+socket.on('updateClientsPlayer', (data) => {
+    console.log('data: ', data)
+    console.log('my id is: ', socket.id)
+    console.log('players: ', data.gameDetails.players)
+
+
+    data.gameDetails.players.forEach((player, index) => {
+        console.log('players id: ', player.socketId)
+
+        if(socket.id === player.socketId) {
+            console.log('client is: ', player)
+
+            $('.clients-players-name span').html(player.name)
+            $('.clients-players-name span').removeClass()
+            $('.clients-players-name span').addClass(player.name)
+
+            $('.current-player-image-wrapper').empty()
+            $('.current-player-image-wrapper').append(`
+                <img class="w-100" src="/assets/images/players/${player.name}-card.webp" alt="${player.name} player card to show current player">
+            `)
+        }
+    })
 })
 
 
-socket.on('renderPlayerActionCards', (data) => {
+
+socket.on('renderPlayerActionCards', (data) => { 
     data.gameDetails.players.forEach((player, index) => {
-        console.log(player)
-
         player.actionCards.forEach((card, cardIndex) => {
-
             $(`#player-${player.playerId}-action-cards`).append(`
                 <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">
             `)
