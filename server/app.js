@@ -26,7 +26,6 @@ const io = socketIo(server, {
     },
 });
 
-
 // Set up the socket.io events
 gameSocket(io);
 

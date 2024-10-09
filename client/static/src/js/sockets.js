@@ -1,5 +1,6 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 
+
 //1. Connect to Socket.io server
 const serverUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000' 
