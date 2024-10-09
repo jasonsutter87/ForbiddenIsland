@@ -224,17 +224,8 @@ socket.on('actionDeckDiscard', (data)=> {
 
 
 socket.on('updateClientsPlayer', (data) => {
-    console.log('data: ', data)
-    console.log('my id is: ', socket.id)
-    console.log('players: ', data.gameDetails.players)
-
-
     data.gameDetails.players.forEach((player, index) => {
-        console.log('players id: ', player.socketId)
-
         if(socket.id === player.socketId) {
-            console.log('client is: ', player)
-
             $('.clients-players-name span').html(player.name)
             $('.clients-players-name span').removeClass()
             $('.clients-players-name span').addClass(player.name)
