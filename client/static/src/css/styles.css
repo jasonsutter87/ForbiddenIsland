@@ -19007,21 +19007,27 @@ html {
   padding: 4px 1rem;
 }
 
+.clients-players-actions-cards .Diver,
 .clients-players-name .Diver {
   color: Black;
 }
+.clients-players-actions-cards .Pilot,
 .clients-players-name .Pilot {
   color: blue;
 }
+.clients-players-actions-cards .Messenger,
 .clients-players-name .Messenger {
   color: white;
 }
+.clients-players-actions-cards .Explorer,
 .clients-players-name .Explorer {
   color: green;
 }
+.clients-players-actions-cards .Engineer,
 .clients-players-name .Engineer {
   color: red;
 }
+.clients-players-actions-cards .Navigator,
 .clients-players-name .Navigator {
   color: yellow;
 }
@@ -19130,6 +19136,10 @@ html {
   border-radius: 10px;
   font-size: 1.111rem !important;
   line-height: 27.984px !important;
+}
+
+.bold {
+  font-weight: 700;
 }
 
 .player-piece {

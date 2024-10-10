@@ -238,10 +238,16 @@ socket.on('updateClientsPlayer', (data) => {
     })
 })
 
-
-
 socket.on('renderPlayerActionCards', (data) => { 
     data.gameDetails.players.forEach((player, index) => {
+        $('#player-cards-ui-area').append(`
+            <div class="clients-players-actions-cards sidebar-item-${index + 1}">
+
+            <span class="${player.name} bold">${player.name}'s</span> Cards<br>
+            <div id="player-${index + 1}-action-cards"></div>
+        </div>
+        `)
+
         player.actionCards.forEach((card, cardIndex) => {
             $(`#player-${player.playerId}-action-cards`).append(`
                 <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">
