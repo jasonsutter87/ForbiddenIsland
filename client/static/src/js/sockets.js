@@ -85,7 +85,7 @@ socket.on('setPlayersOnBoard', (room) => {
   
 
 
-               setInterval(() =>{
+               setTimeout(() =>{
                    if(result.starting_position == room.gameDetails.current_player.name) {
                      $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
                    }
@@ -94,7 +94,7 @@ socket.on('setPlayersOnBoard', (room) => {
                      <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
                    `)
 
-               }, 1000) 
+               }, 500) 
 
             })
       
@@ -238,10 +238,16 @@ socket.on('updateClientsPlayer', (data) => {
     })
 })
 
-
-
 socket.on('renderPlayerActionCards', (data) => { 
     data.gameDetails.players.forEach((player, index) => {
+        $('#player-cards-ui-area').append(`
+            <div class="clients-players-actions-cards sidebar-item-${index + 1}">
+
+            <span class="${player.name} bold">${player.name}'s</span> Cards<br>
+            <div id="player-${index + 1}-action-cards" class="clients-players-actions-cards-set"></div>
+        </div>
+        `)
+
         player.actionCards.forEach((card, cardIndex) => {
             $(`#player-${player.playerId}-action-cards`).append(`
                 <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">

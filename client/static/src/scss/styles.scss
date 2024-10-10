@@ -187,8 +187,8 @@ html {
     
   }
 
+  .clients-players-actions-cards,
   .clients-players-name {
-
     .Diver {
       color: Black;
     }
@@ -359,6 +359,10 @@ html {
 
   //   }
   // }
+
+  .bold{
+    font-weight: 700;
+  }
 
 
   
@@ -684,13 +688,19 @@ html {
   }
 }
 
-
-
+.clients-players-actions-cards-set{
+  display: flex;
+  gap: 8px;
+}
 
 
 .player-action-cards{
   width: 100%;
-  max-width: 75px;
+  max-width: 60px;
+
+  @media(min-width: 768px) {
+    max-width: 75px;
+  }
 }
 
 .flood-level-section{
