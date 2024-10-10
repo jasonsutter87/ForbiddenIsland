@@ -2,14 +2,14 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 
 
 //1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 let gameRoom;
 
 // Define createBoardUI as a separate function
@@ -85,7 +85,7 @@ socket.on('setPlayersOnBoard', (room) => {
   
 
 
-               setInterval(() =>{
+               setTimeout(() =>{
                    if(result.starting_position == room.gameDetails.current_player.name) {
                      $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
                    }
@@ -94,7 +94,7 @@ socket.on('setPlayersOnBoard', (room) => {
                      <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
                    `)
 
-               }, 1000) 
+               }, 500) 
 
             })
       
