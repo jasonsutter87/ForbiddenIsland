@@ -244,7 +244,7 @@ socket.on('renderPlayerActionCards', (data) => {
             <div class="clients-players-actions-cards sidebar-item-${index + 1}">
 
             <span class="${player.name} bold">${player.name}'s</span> Cards<br>
-            <div id="player-${index + 1}-action-cards"></div>
+            <div id="player-${index + 1}-action-cards" class="clients-players-actions-cards-set"></div>
         </div>
         `)
 
