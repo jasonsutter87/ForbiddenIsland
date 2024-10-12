@@ -26,13 +26,23 @@ const handleGameEvents = ({
 } = {}) => {
 
     //Emits a message to everyone in a room including the sender
-    socket.on('gameMessage', (data) => {
-      io.to(roomName).emit('incomingGameMessage',  data, socket.id );
+    socket.on('gameMessage', (message, socketId) => {
+      let id = rooms[roomName].chat_history.length + 1
+      rooms[roomName].chat_history.push({id: id, socketId: socketId, message: message})
+
+      io.to(roomName).emit('incomingGameMessage',  message, socket.id );
     })
   
     //receving incoming messages from the page
-    socket.on('incomingPlayer', (data) => {
-     socket.to(roomName).emit('incomingNewPlayer', data);
+    socket.on('incomingPlayer', (name, id) => {
+      for (let i = 0; i < rooms[roomName].players.length; i++) {
+        if (rooms[roomName].players[i].socketId === id) {
+          rooms[roomName].players[i].name = name;
+          break; 
+        }
+      }
+
+     socket.to(roomName).emit('incomingNewPlayer', name);
     })
 
     //increase the player ready for starting a new game
@@ -190,18 +200,29 @@ const handleGameEvents = ({
     socket.on('disconnect', () => {
       // Get the player's room from the stored socket information
       const playerRoom = socket.roomName;
-      
+
       // Filter out the disconnected player
-      if (rooms[playerRoom]) {
-        rooms[playerRoom].players = rooms[playerRoom].players.filter(playerId => playerId !== socket.id);
-        rooms[playerRoom].gameDetails.number_of_players--
-        io.to(playerRoom).emit('number_of_players_in_room', rooms[playerRoom].gameDetails.number_of_players);
+          if (rooms[playerRoom]) {
+            const playerIndex = rooms[playerRoom].players.findIndex(player => player.socketId === socket.id);
+            
+            if (playerIndex !== -1) {
+                const player = rooms[playerRoom].players[playerIndex];
+                
+                rooms[playerRoom].players.splice(playerIndex, 1);
+                rooms[playerRoom].gameDetails.number_of_players--;
+                
+                // Notify other players about the disconnection
+                io.to(playerRoom).emit('player_disconnected', player.name);
+                // Update the number of players in the room
+                io.to(playerRoom).emit('number_of_players_in_room', rooms[playerRoom].gameDetails.number_of_players);
+                
+                // If the room is empty, delete it
+                if (rooms[playerRoom].players.length === 0) {
+                    delete rooms[playerRoom];
+                }
+            }
+        }
     
-        // If the room is empty, delete it
-        if (rooms[playerRoom].players.length === 0) {
-          delete rooms[playerRoom];
-        } 
-      }
     });
 
     //deal action cards to a player

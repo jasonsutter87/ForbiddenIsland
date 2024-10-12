@@ -28,7 +28,7 @@ module.exports = (io) => {
     if (!rooms[roomName]) {
       rooms[roomName] = [];
     }
-    rooms[roomName].players.push(socket.id);
+    rooms[roomName].players.push({socketId: socket.id, name: '' });
     rooms[roomName].gameDetails.number_of_players = rooms[roomName].players.length
     io.to(roomName).emit('number_of_players_in_room', rooms[roomName].gameDetails.number_of_players);
 
@@ -50,6 +50,7 @@ module.exports = (io) => {
       name: newRoomName,
       players: [],
       readyCount: 0,
+      chat_history: [],
       gameDetails: game_details,
       gameBoard: GAME_BOARDS[0].layout,
       status: GAME_STATUS.notStarted

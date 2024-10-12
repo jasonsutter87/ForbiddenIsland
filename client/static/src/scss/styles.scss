@@ -384,7 +384,7 @@ html {
     border: 5px solid #0000ff;
   }
   .player-active-Messenger {
-    border: 5px solid #c0c0c0;
+    border: 5px solid #ffffff;
   }
   .player-active-Explorer {
     border: 5px solid #008000;
@@ -668,7 +668,10 @@ html {
   
   &.success {
     background: transparentize($color: greenyellow, $amount: .3);
+  }
 
+  &.danger {
+    background: transparentize($color: red, $amount: .3);
   }
 }
 
