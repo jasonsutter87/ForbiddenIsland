@@ -26,8 +26,11 @@ const handleGameEvents = ({
 } = {}) => {
 
     //Emits a message to everyone in a room including the sender
-    socket.on('gameMessage', (data) => {
-      io.to(roomName).emit('incomingGameMessage',  data, socket.id );
+    socket.on('gameMessage', (message, socketId) => {
+      let id = rooms[roomName].chat_history.length + 1
+      rooms[roomName].chat_history.push({id: id, socketId: socketId, message: message})
+
+      io.to(roomName).emit('incomingGameMessage',  message, socket.id );
     })
   
     //receving incoming messages from the page

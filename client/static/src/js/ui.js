@@ -27,7 +27,7 @@ $(() => {
         let message = $('#gameRoomMessageInput').val(); 
 
         if(message.length >= 1) {
-            socket.emit('gameMessage', message)
+            socket.emit('gameMessage', message, socket.id)
             $('#gameRoomMessageInput').val('');
         } else {
             $('.error').addClass('active')
@@ -42,7 +42,7 @@ $(() => {
         let message = $('#gameRoomMessageInput').val(); 
 
         if(message.length >= 1) {
-            socket.emit('gameMessage', message)
+            socket.emit('gameMessage', message, socket.id)
             $('#gameRoomMessageInput').val('');
         } else {
             $('.error').addClass('active')
