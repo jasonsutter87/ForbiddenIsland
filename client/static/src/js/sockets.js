@@ -2,12 +2,12 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 
 
 //1. Connect to Socket.io server
-// const serverUrl = window.location.hostname === 'localhost' 
-//     ? 'http://localhost:3000' 
-//     : 'https://forbiddenisland.onrender.com';
+const serverUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : 'https://forbiddenisland.onrender.com';
 
-// // Connect to the Socket.io server
-// const socket = io(serverUrl);
+// Connect to the Socket.io server
+const socket = io(serverUrl);
 
 const socket = io('http://localhost:3000');
 let gameRoom;
@@ -72,7 +72,6 @@ function createBoardUI(board) {
 }
 
 socket.on('setPlayersOnBoard', (room) => {
-    console.log(room)
     gameRoom = room;
         room.gameDetails.players.forEach((val, int) => {
             let playerName = val.name
@@ -217,7 +216,7 @@ socket.on('actionDeckDiscard', (data)=> {
 
 socket.on('updateClientsPlayer', (data) => {
     data.gameDetails.players.forEach((player, index) => {
-        if(socket.id === player.socketId) {
+        if(socket.id === player.socketId.socketId) {
             $('.clients-players-name span').html(player.name)
             $('.clients-players-name span').removeClass()
             $('.clients-players-name span').addClass(player.name)

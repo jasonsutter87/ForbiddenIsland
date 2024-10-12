@@ -213,8 +213,6 @@ const handleGameEvents = ({
                 
                 // Notify other players about the disconnection
                 io.to(playerRoom).emit('player_disconnected', player.name);
-                console.log('player_disconnected', player.name);
-                
                 // Update the number of players in the room
                 io.to(playerRoom).emit('number_of_players_in_room', rooms[playerRoom].gameDetails.number_of_players);
                 
