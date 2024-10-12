@@ -50,6 +50,7 @@ module.exports = (io) => {
       name: newRoomName,
       players: [],
       readyCount: 0,
+      chat_history: [],
       gameDetails: game_details,
       gameBoard: GAME_BOARDS[0].layout,
       status: GAME_STATUS.notStarted
