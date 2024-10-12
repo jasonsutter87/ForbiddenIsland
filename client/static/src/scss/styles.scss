@@ -465,134 +465,151 @@ html {
   }
 }
 
-#joinRoomModal {
-  background-color: #11121a;
-  padding: 24px;
-  padding-top: 0;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
+.joinRoomModal-wrapper{
+  position: absolute;
+  top: 0;
+  left: -100vw;
+  right: 0;
+  bottom: 0;
+  transition: .1s;
+  opacity: 0;
+  z-index: 100;
 
-  .header{
-    height: 10vh;
+  &.active {
+    left: 0;
+    opacity: 1;
+  }
+
+  #joinRoomModal {
+    background-color: #11121a;
+    padding: 24px;
+    padding-top: 0;
+    height: 100vh;
+    width: 100vw;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: $white;
-
-    .header-logo {
+    flex-direction: column;
+  
+    .header{
+      height: 10vh;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: $white;
+  
+      .header-logo {
+        width: 100%;
+        max-width: 125px;
+        padding: 10px 0;
+      }
+  
+    }
+  
+    .userimage {
       width: 100%;
-      max-width: 125px;
+      max-width: 65px;
       padding: 10px 0;
     }
-
-  }
-
-  .userimage {
-    width: 100%;
-    max-width: 65px;
-    padding: 10px 0;
-  }
+    
+    .ChatContentArea-wrapper {
+      position: relative;
+      height: 60vh;
+      overflow-y: scroll;
   
-  .ChatContentArea-wrapper {
-    position: relative;
-    height: 60vh;
-    overflow-y: scroll;
-
-    .userName {
-      display: flex;
-      justify-content: flex-end;
-      padding: 1rem;
-
-      .name {
-        font-weight: 600;
-        padding-left: 4px;
+      .userName {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1rem;
+  
+        .name {
+          font-weight: 600;
+          padding-left: 4px;
+        }
       }
-    }
-
-    #ChatContentArea {
-      padding: 0;
-      margin: 0;
-    
-    
-    
-      li{
-        list-style: none;
-      }
-    }
-  }
-
-  .joinRoomModal-content{
-    background: $white;
-    flex-grow: 1;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    border-radius: 10px;
-
-    .form-wrapper {
-      padding: 1rem;
-      background-color: transparentize($color: #11121a, $amount: .7);
-    }
-
-    input {
-      width: 100%;
-      height: 45px;
-      border-radius: 10px;
-      border: 2px solid $mid;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right: 0;
-    }
-
-    .error {
-      color: red;
-      visibility: hidden;
+  
+      #ChatContentArea {
+        padding: 0;
+        margin: 0;
       
-      &.active {
-        visibility: visible;
+      
+      
+        li{
+          list-style: none;
+        }
       }
     }
-
-    select {
-      width: auto;
-      height: 35px;
-      border-radius: 10px;
-      border: 2px solid $mid;
-    }
-
-    button {
-      height: 45px;
-      padding: 0 25px;
-      font-size: 1.25rem;
-      font-weight: 700;
-      border-radius: 10px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      transition: 0.3s;
   
-      background-color: $white;
-      border: 2px solid $mid;
-      color: $black;
+    .joinRoomModal-content{
+      background: $white;
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      border-radius: 10px;
   
-      &:hover,
-      &:active{
-        border: 2px solid $white;
-        background-color: #11121a;
-        color: $white;
+      .form-wrapper {
+        padding: 1rem;
+        background-color: transparentize($color: #11121a, $amount: .7);
       }
   
+      input {
+        width: 100%;
+        height: 45px;
+        border-radius: 10px;
+        border: 2px solid $mid;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: 0;
+      }
   
-    }
-
+      .error {
+        color: red;
+        visibility: hidden;
+        
+        &.active {
+          visibility: visible;
+        }
+      }
+  
+      select {
+        width: auto;
+        height: 35px;
+        border-radius: 10px;
+        border: 2px solid $mid;
+      }
+  
+      button {
+        height: 45px;
+        padding: 0 25px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        border-radius: 10px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        transition: 0.3s;
     
-  }
-
-  .form-wrapper {
-    height: calc(30vh - 25px);
+        background-color: $white;
+        border: 2px solid $mid;
+        color: $black;
+    
+        &:hover,
+        &:active{
+          border: 2px solid $white;
+          background-color: #11121a;
+          color: $white;
+        }
+    
+    
+      }
+  
+      
+    }
+  
+    .form-wrapper {
+      height: calc(30vh - 25px);
+    }
   }
 }
+
 
 #inputNameModal {
   background-color: transparentize($color: #000000, $amount: .7);
