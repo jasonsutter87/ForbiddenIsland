@@ -72,6 +72,7 @@ function createBoardUI(board) {
 }
 
 socket.on('setPlayersOnBoard', (room) => {
+    console.log(room)
     gameRoom = room;
         room.gameDetails.players.forEach((val, int) => {
             let playerName = val.name
@@ -106,22 +107,10 @@ socket.on('settingRoomName', (data) => {
     socket.roomName = data
 })
 
-
-
-//Handle connection  
-socket.on('connect', () => {
-});
-
-// Handle disconnection
-socket.on('disconnect', () => {
-});
-
-
 ///////////////////////
 //     GAME_ROOM     //
 ///////////////////////
 
-//game room - receive message
 socket.on('incomingGameMessage', (data, id) => {
     $('#ChatContentArea').append(`<li>
         <span>
@@ -133,11 +122,22 @@ socket.on('incomingGameMessage', (data, id) => {
     </li>`); 
 })
 
-//game room - set incoming player name
 socket.on('incomingNewPlayer', (data) => {    
     $('.ChatContentArea-wrapper').prepend(`
             <div class="toast success">
              <p class="mb-0"><span id="incomingUser" class="bold">${data}</span> <span>has entered the room</span></p>
+         </div>
+        `)
+
+        setTimeout(() => {
+            $('.toast').remove();
+        }, 3000)
+})
+
+socket.on('player_disconnected', (data) => {    
+    $('.ChatContentArea-wrapper').prepend(`
+            <div class="toast danger">
+             <p class="mb-0"><span id="incomingUser" class="bold">${data}</span> <span>has left the room</span></p>
          </div>
         `)
 
@@ -173,7 +173,6 @@ socket.on('setGameLayout', (id) => {
     })
 })
 
-
 ///////////////////////
 //    GAME_SETUP     //
 ///////////////////////
@@ -186,8 +185,6 @@ socket.on('floodBoard', (data)=> {
     createBoardUI(data.gameDetails.gameBoard)
 })
 
-
-
 socket.on('floodDeckUnusedCount0', ()=> {
     $('#floodDiscardPile').empty()
     $('#dealFloodCard').empty()
@@ -196,14 +193,12 @@ socket.on('floodDeckUnusedCount0', ()=> {
     `)    
 })
 
-
 socket.on('floodDeckDiscard', (data)=> {
     $('#floodDiscardPile').empty()
     $('#floodDiscardPile').append(`
         <img class="ui-cards" src="/assets/images/flood/${data.gameDetails.flood_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.flood_deck.discard[0].name}">
     `) 
 })
-
 
 socket.on('actionDeckUnusedCount0', () => {
         $('#actionDiscardPile').empty()
@@ -213,15 +208,12 @@ socket.on('actionDeckUnusedCount0', () => {
         `)    
 })
 
-
 socket.on('actionDeckDiscard', (data)=> {
     $('#actionDiscardPile').empty()
     $('#actionDiscardPile').append(`
         <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[0].name}">
     `) 
 })
-
-
 
 socket.on('updateClientsPlayer', (data) => {
     data.gameDetails.players.forEach((player, index) => {
@@ -276,17 +268,6 @@ socket.on('updateFloodLevelUI', (data) => {
         $('.current-flood-number').html(data.gameDetails.current_flood_level)
         $('.current-flood-deal-number').html(data.gameDetails.flood_deal_count)
 })
-
-
-
-
-{/* <div class="text-center">
-<div class="current-flood-level">
-  <div class="flood-level-slider"></div>
-</div>
-<p>Water level is <span id=""></span> / 10 </p>
-<p>Flood Deal is <span id=""></span> / 5 </p>
-</div> */}
 
 
 ///////////////////////

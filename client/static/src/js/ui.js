@@ -84,7 +84,7 @@ $(() => {
             $('.toast').remove();
         }, 3000)
 
-        socket.emit('incomingPlayer', socket.name)
+        socket.emit('incomingPlayer', socket.name, socket.id)
        $('#inputNameModal').remove();
     })
 
@@ -120,7 +120,7 @@ $(() => {
             $('.toast').remove();
         }, 3000)
 
-        socket.emit('incomingPlayer', socket.name)
+        socket.emit('incomingPlayer', socket.name, socket.id)
   
        $('#inputNameModal').remove();
     })

@@ -19410,6 +19410,9 @@ html {
 .toast.success {
   background: rgba(173, 255, 47, 0.7);
 }
+.toast.danger {
+  background: rgba(255, 0, 0, 0.7);
+}
 
 .ui-cards {
   width: 100%;

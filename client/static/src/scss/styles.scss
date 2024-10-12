@@ -668,7 +668,10 @@ html {
   
   &.success {
     background: transparentize($color: greenyellow, $amount: .3);
+  }
 
+  &.danger {
+    background: transparentize($color: red, $amount: .3);
   }
 }
 
