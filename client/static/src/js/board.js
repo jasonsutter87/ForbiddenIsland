@@ -1,3 +1,4 @@
+
 // Contains utility functions that can be reused across the project
 let selectObjectById = (board, id) => {
     for (let row of board) {
@@ -32,69 +33,77 @@ let moveCardNewPile = (inbound, outbound) => {
 };
 
 
-const findPlayerCoordinates = (playerName) => {
-  // Get all rows in the board
-  const rows = document.querySelectorAll('#board .row');
 
-  // Loop through each row
-  for (let row = 0; row < rows.length; row++) {
-      // Get all tiles in the current row
-      const tiles = rows[row].querySelectorAll('.tile');
 
-      // Loop through each tile
-      for (let col = 0; col < tiles.length; col++) {
-          // Check if the tile contains the player's piece
-          const playerPiece = tiles[col].querySelector(`.player-piece[player="${playerName}"]`);
 
-          // If the player piece is found, return the coordinates
-          if (playerPiece) {
-              return { row: row, col: col };
-          }
+
+//refacfor.
+/*
+current bug, if you click fast enough, the wrong player will start moving,
+
+solution: update
+ if($(val).hasClass('player-piece')){
+        $player = $(val);   
       }
-  }
 
-  // If the player is not found, return null
-  return null;
+      to include a check of the players Id 
+
+*/
+let movePlayer = (game_details, fromId, toId) => {
+    var $clickedtitle = $('[class*="player-active-"]').children()
+    var $player; 
+
+    $clickedtitle.each((ind, val) => {
+      if($(val).hasClass('player-piece')){
+        $player = $(val);   
+      }
+    });
+
+    var $fromCell = $(`.tile[cardid="${fromId}"]`);
+    var $toCell = $(`.tile[cardid="${toId}"]`);
+
+    if(fromId === toId){
+      return false
+    } else {
+
+    // Clone player
+    var $clone = $player.clone().appendTo($('body'));
+
+
+    $clone.css({
+        top: $player.offset().top,
+        left: $player.offset().left,
+        zIndex: 1000
+    });
+
+    // Calculate target position
+    var targetOffset = $toCell.offset();
+
+
+
+    //refactor
+    $($fromCell).removeClass(`player-active-${game_details.current_player.name}`)
+    $($toCell).addClass(`player-active-${game_details.current_player.name}`)
+
+
+    // Animate the clone to the new position
+    $clone.animate({
+        top: targetOffset.top,
+        left: targetOffset.left
+    }, 500, function() {
+        // After animation completes, move the real player and remove the clone
+        $clone.remove();
+        $player.appendTo($toCell);
+    });
+
+ 
+    }
+
 }
 
-let getAdjacentTileIds = (board, playerPosition) => {
-  let directions;
-  if(game_details.current_player.name == "Explorer"){
-    directions = [
-      { row: -1, col: 0 },  // Above
-      { row: 1, col: 0 },   // Below
-      { row: 0, col: -1 },  // Left
-      { row: 0, col: 1 },   // Right
-      { row: -1, col: -1 }, // Top-left diagonal
-      { row: -1, col: 1 },  // Top-right diagonal
-      { row: 1, col: -1 },  // Bottom-left diagonal
-      { row: 1, col: 1 }    // Bottom-right diagonal
-  
-    ] ;
-  } else {
-    directions = [
-       { row: -1, col: 0 },  // Above
-       { row: 1, col: 0 },   // Below
-       { row: 0, col: -1 },  // Left
-       { row: 0, col: 1 },   // Right
-   ];
-  }
-
-   return directions.map(direction => ({
-      row: playerPosition.row + direction.row,
-      col: playerPosition.col + direction.col
-  }))
-  .filter(tile =>
-      // Ensure the tile is within the bounds of the board and not 'x'
-      tile.row >= 0 && tile.row < board.length &&
-      tile.col >= 0 && tile.col < board[0].length &&
-      typeof board[tile.row][tile.col] === 'object'
-  )
-  .map(tile => board[tile.row][tile.col].id);
-}
 
 
 
 
 
-export {  moveCardNewPile };
+export {  moveCardNewPile, movePlayer };

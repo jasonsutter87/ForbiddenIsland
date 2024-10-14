@@ -225,6 +225,13 @@ const handleGameEvents = ({
     
     });
 
+    socket.on('getRoomDetails', (roomName, callback) => {
+      const roomDetails = rooms[roomName]; 
+      if (callback) {
+        callback(roomDetails); 
+      }
+    });
+
     //deal action cards to a player
     const dealInitialActionCards = (from, to, dealCount) => {
     let player = to.actionCards;

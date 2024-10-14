@@ -1,4 +1,5 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
+import { movePlayer } from './board.js'
 
 
 //1. Connect to Socket.io server
@@ -9,67 +10,10 @@ const serverUrl = window.location.hostname === 'localhost'
 // Connect to the Socket.io server
 const socket = io(serverUrl);
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
+
 let gameRoom;
 
-// Define createBoardUI as a separate function
-function createBoardUI(board) {
-    return new Promise(resolve => {
-        const boardElement = document.getElementById('board');
-        boardElement.innerHTML = ''; // Clear any existing content
-
-        boardElement.style.gridTemplateColumns = `repeat(${board[0].length}, 1fr)`;
-        // Create the grid
-        for (let row = 0; row < board.length; row++) {
-            const rowElement = document.createElement('div');
-            rowElement.className = 'row'; // Optional: style rows separately
-            for (let col = 0; col < board[row].length; col++) {
-                const tileData = board[row][col];
-                const tile = document.createElement('div');
-                tile.className = 'tile'; // Basic styling for each tile
-                // Handle different tile data cases
-                if (tileData === 'x') {
-                    tile.classList.add('blocked');
-                } else if (tileData.flooded) {
-                    tile.setAttribute('cardId', tileData.id);
-                    tile.classList.add('flooded');
-                    tile.onclick = () => playerMoveOrActionModal(tileData.id);
-                    const img = document.createElement('img');
-                    img.src = `./assets/images/flooded-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
-                    img.alt = tileData.name; // Optional: add alt text for accessibility
-                    tile.appendChild(img);
-                } else {
-                    tile.setAttribute('cardId', tileData.id);
-                    tile.classList.add('normal');
-                    tile.onclick = () => playerMoveOrActionModal(tileData.id);
-                    // Create and append the image element
-                    const img = document.createElement('img');
-                    img.src = `./assets/images/game-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
-                    img.alt = tileData.name; // Optional: add alt text for accessibility
-                    tile.appendChild(img);
-                }
-
-                if (tileData.sunk) {
-                    tile.setAttribute('cardId', tileData.id);
-                    tile.classList.add('sunk');
-                }
-
-                rowElement.appendChild(tile);
-            }
-            boardElement.appendChild(rowElement);
-        }
-
-        // append div#board to .main-content
-        document.querySelector('#game-ui .wrapper .main-content').appendChild(boardElement);
-
-
-
-
-
-      
-        resolve();
-    });
-}
 
 socket.on('setPlayersOnBoard', (room) => {
     gameRoom = room;
@@ -159,8 +103,7 @@ socket.on('number_of_players_in_room', data => {
 })
 
 socket.on('startGame', (board) => {
-    $('#joinRoomModal').remove()
-    $('.joinRoomModal-wrapper').remove()
+    $('.joinRoomModal-wrapper').removeClass('active')
     $('.gameUI-wrapper').removeClass('d-none')
     $('main').append('<div id="board"></div>')
     createBoardUI(board)
@@ -297,6 +240,157 @@ socket.on('updateFloodLevelUI', (data) => {
 socket.on('gameOver', () => {
     alert('gameOver!')
 })
+
+
+
+// Define createBoardUI as a separate function
+function createBoardUI(board) {
+    return new Promise(resolve => {
+        const boardElement = document.getElementById('board');
+        boardElement.innerHTML = ''; // Clear any existing content
+
+        boardElement.style.gridTemplateColumns = `repeat(${board[0].length}, 1fr)`;
+        // Create the grid
+        for (let row = 0; row < board.length; row++) {
+            const rowElement = document.createElement('div');
+            rowElement.className = 'row'; // Optional: style rows separately
+            for (let col = 0; col < board[row].length; col++) {
+                const tileData = board[row][col];
+                const tile = document.createElement('div');
+                tile.className = 'tile'; // Basic styling for each tile
+                // Handle different tile data cases
+                if (tileData === 'x') {
+                    tile.classList.add('blocked');
+                } else if (tileData.flooded) {
+                    tile.setAttribute('cardId', tileData.id);
+                    tile.classList.add('flooded');
+                    tile.onclick = () => playerMoveOrActionModal(tileData.id, socket.roomName);
+                    const img = document.createElement('img');
+                    img.src = `./assets/images/flooded-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
+                    img.alt = tileData.name; // Optional: add alt text for accessibility
+                    tile.appendChild(img);
+                } else {
+                    tile.setAttribute('cardId', tileData.id);
+                    tile.classList.add('normal');
+                    tile.onclick = () => playerMoveOrActionModal(tileData.id, socket.roomName);
+                    // Create and append the image element
+                    const img = document.createElement('img');
+                    img.src = `./assets/images/game-tiles/${tileData.slug}.jpeg`; // Adjust the extension if needed
+                    img.alt = tileData.name; // Optional: add alt text for accessibility
+                    tile.appendChild(img);
+                }
+
+                if (tileData.sunk) {
+                    tile.setAttribute('cardId', tileData.id);
+                    tile.classList.add('sunk');
+                }
+
+                rowElement.appendChild(tile);
+            }
+            boardElement.appendChild(rowElement);
+        }
+
+        // append div#board to .main-content
+        document.querySelector('#game-ui .wrapper .main-content').appendChild(boardElement);
+
+
+
+
+
+      
+        resolve();
+    });
+}
+
+const findPlayerCoordinates = (playerName) => {
+    // Get all rows in the board
+    const rows = document.querySelectorAll('#board .row');
+  
+    // Loop through each row
+    for (let row = 0; row < rows.length; row++) {
+        // Get all tiles in the current row
+        const tiles = rows[row].querySelectorAll('.tile');
+  
+        // Loop through each tile
+        for (let col = 0; col < tiles.length; col++) {
+            // Check if the tile contains the player's piece
+            const playerPiece = tiles[col].querySelector(`.player-piece[player="${playerName}"]`);
+  
+            // If the player piece is found, return the coordinates
+            if (playerPiece) {
+                return { row: row, col: col };
+            }
+        }
+    }
+  
+    // If the player is not found, return null
+    return null;
+  }
+  
+  let getAdjacentTileIds = (game_details, board, playerPosition) => {
+
+    let directions;
+    if(game_details.current_player.name == "Explorer"){
+      directions = [
+        { row: -1, col: 0 },  // Above
+        { row: 1, col: 0 },   // Below
+        { row: 0, col: -1 },  // Left
+        { row: 0, col: 1 },   // Right
+        { row: -1, col: -1 }, // Top-left diagonal
+        { row: -1, col: 1 },  // Top-right diagonal
+        { row: 1, col: -1 },  // Bottom-left diagonal
+        { row: 1, col: 1 }    // Bottom-right diagonal
+    
+      ] ;
+    } else {
+      directions = [
+         { row: -1, col: 0 },  // Above
+         { row: 1, col: 0 },   // Below
+         { row: 0, col: -1 },  // Left
+         { row: 0, col: 1 },   // Right
+     ];
+    }
+  
+     return directions.map(direction => ({
+        row: playerPosition.row + direction.row,
+        col: playerPosition.col + direction.col
+    }))
+    .filter(tile =>
+        // Ensure the tile is within the bounds of the board and not 'x'
+        tile.row >= 0 && tile.row < board.length &&
+        tile.col >= 0 && tile.col < board[0].length &&
+        typeof board[tile.row][tile.col] === 'object'
+    )
+    .map(tile => board[tile.row][tile.col].id);
+  }
+  
+  
+  let playerMoveOrActionModal = (toId, roomName) => {         
+      let game_details;
+      socket.emit('getRoomDetails', roomName, (roomDetails) => {
+        game_details =  roomDetails.gameDetails;
+
+      
+        let fromId = $('[class*="player-active-"]').attr('cardid');
+    
+        //refactor
+    
+        let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
+        let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
+        let result = adjacentTileIds.find(x => x == toId)
+        
+        if(result) {  
+          if(fromId != toId ) {
+            movePlayer(game_details, fromId, toId)
+          }
+        }
+    });
+  
+  
+  
+  
+  }
+  
 
 export { socket, gameRoom };
 
