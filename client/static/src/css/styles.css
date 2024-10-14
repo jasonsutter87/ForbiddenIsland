@@ -19249,11 +19249,12 @@ html {
   bottom: 0;
   transition: 0.1s;
   opacity: 0;
-  z-index: 100;
+  z-index: -1;
 }
 .joinRoomModal-wrapper.active {
   left: 0;
   opacity: 1;
+  z-index: 100;
 }
 .joinRoomModal-wrapper #joinRoomModal {
   background-color: #11121a;
