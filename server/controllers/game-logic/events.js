@@ -164,6 +164,7 @@ const handleGameEvents = ({
 
 
 
+
         let actionDeckUnusedCount = rooms[roomName].gameDetails.action_deck.unused.length;
 
         if(actionDeckUnusedCount == 0) {
@@ -171,6 +172,10 @@ const handleGameEvents = ({
             rooms[roomName].gameDetails.action_deck.discard = []
             io.to(roomName).emit('actionDeckUnusedCount0');  
         } else {
+
+
+          rooms[roomName].gameDetails.current_player_turn.action_cards_deal++
+          
             moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard,  rooms[roomName].gameDetails.action_deck.unused );
             io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
 
@@ -185,9 +190,6 @@ const handleGameEvents = ({
               //check / refactor for raiseTheWaterLevel
 
               // flood more tiles
-
-         
-s
 
               io.to(roomName).emit('redrawBoard', rooms[roomName]);
               rooms[roomName].gameDetails.players.forEach((player) => {
