@@ -152,7 +152,9 @@ const handleGameEvents = ({
             rooms[roomName] =  updatedBoard
 
             io.to(roomName).emit('redrawBoard', rooms[roomName]);
-
+            rooms[roomName].gameDetails.players.forEach((player) => {
+              setPlayerOnTheBoard(rooms[roomName].gameDetails, player)
+            })
             if(floodDeckUnusedCount == 0) {
               io.to(roomName).emit('floodDeckUnusedCount0');  
             }
@@ -186,8 +188,12 @@ const handleGameEvents = ({
               // flood more tiles
 
          
+s
 
               io.to(roomName).emit('redrawBoard', rooms[roomName]);
+              rooms[roomName].gameDetails.players.forEach((player) => {
+                setPlayerOnTheBoard(rooms[roomName].gameDetails, player)
+              })
 
               if(actionDeckUnusedCount == 0) {
                 io.to(roomName).emit('actionDeckUnusedCount0');  

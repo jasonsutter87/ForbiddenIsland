@@ -3,14 +3,14 @@ import { movePlayer } from './board.js'
 
 
 //1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 
 let gameRoom;
 
@@ -160,6 +160,7 @@ socket.on('actionDeckDiscard', (data)=> {
 socket.on('updateClientsPlayer', (data) => {
     data.gameDetails.players.forEach((player, index) => {
         if(socket.id === player.socketId.socketId) {
+            socket.playerName = player.name
             $('.clients-players-name span').html(player.name)
             $('.clients-players-name span').removeClass()
             $('.clients-players-name span').addClass(player.name)
@@ -367,23 +368,26 @@ const findPlayerCoordinates = (playerName) => {
   
   let playerMoveOrActionModal = (toId, roomName) => {         
       let game_details;
+
       socket.emit('getRoomDetails', roomName, (roomDetails) => {
         game_details =  roomDetails.gameDetails;
 
-      
-        let fromId = $('[class*="player-active-"]').attr('cardid');
-    
-        //refactor
-    
-        let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
-        let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
-        let result = adjacentTileIds.find(x => x == toId)
+        if(socket.playerName == game_details.current_player.name) {
+            let fromId = $('[class*="player-active-"]').attr('cardid');
         
-        if(result) {  
-          if(fromId != toId ) {
-            movePlayer(game_details, fromId, toId)
-          }
+            //refactor
+        
+            let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
+            let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
+            let result = adjacentTileIds.find(x => x == toId)
+            
+            if(result) {  
+              if(fromId != toId ) {
+                movePlayer(game_details, fromId, toId)
+              }
+            }
         }
+        
     });
   
   
