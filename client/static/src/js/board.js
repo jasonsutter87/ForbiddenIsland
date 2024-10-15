@@ -1,3 +1,4 @@
+import {socket} from './sockets.js'
 
 // Contains utility functions that can be reused across the project
 let selectObjectById = (board, id) => {
@@ -52,6 +53,8 @@ solution: update
 let movePlayer = (game_details, fromId, toId) => {
     var $clickedtitle = $('[class*="player-active-"]').children()
     var $player; 
+
+    socket.emit('movePlayer', fromId, toId)
 
     $clickedtitle.each((ind, val) => {
       if($(val).hasClass('player-piece')){

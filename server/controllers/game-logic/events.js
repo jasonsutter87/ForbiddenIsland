@@ -64,7 +64,7 @@ const handleGameEvents = ({
           players: [],
           number_of_players: rooms[roomName].players.length,
           current_player: null,
-          current_player_turns_left: null,
+          current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
           gameBoard: rooms[roomName].gameBoard,
           status: GAME_STATUS.notStarted,
           current_flood_level: 1,
@@ -106,7 +106,6 @@ const handleGameEvents = ({
 
           rooms[roomName].gameDetails.current_flood_level = 1
           rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
-          rooms[roomName].gameDetails.current_player_turns_left = 3;
           io.to(roomName).emit('startGame', result); 
           io.to(roomName).emit('updateFloodLevelUI', rooms[roomName]); 
           io.to(roomName).emit('renderPlayerActionCards', rooms[roomName]); 
@@ -237,6 +236,14 @@ s
         callback(roomDetails); 
       }
     });
+
+
+    socket.on('movePlayer', (fromId, toId) => {
+      console.log('in server movePlayer',  fromId, toId)
+      rooms[roomName].gameDetails.current_player_turn.number_of_actions++
+      console.log(rooms[roomName].gameDetails)
+
+    })
 
     //deal action cards to a player
     const dealInitialActionCards = (from, to, dealCount) => {
