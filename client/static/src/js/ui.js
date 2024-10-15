@@ -142,7 +142,24 @@ $(() => {
 
     $('#dealFloodCard').on('click', e => {
         e.preventDefault();
-        socket.emit('dealFloodCard', socket.roomName) 
+
+        let game_details;
+
+        socket.emit('getRoomDetails', socket.roomName, (roomDetails) => {
+          game_details = roomDetails.gameDetails;
+          console.log('dealing flood cards', game_details)
+        
+     
+            if(game_details.current_player_turn.flood_cards_deal >=  game_details.flood_deal_count) {
+                alert('time to chnage players!!!!')
+            }
+
+
+          if((game_details.current_player_turn.number_of_actions >= 3 && game_details.current_player_turn.action_cards_deal >= 2) && game_details.current_player_turn.flood_cards_deal < game_details.flood_deal_count ) {
+              socket.emit('dealFloodCard', socket.roomName) 
+          }
+        })
+
     })
 
     $('#dealActionCard').on('click', e => {
@@ -164,9 +181,7 @@ $(() => {
           } else if (game_details.current_player_turn.number_of_actions < 3 ) {
               alert('Do an action!')
           } 
-        })
-        // : { : 0, action_cards_deal: 0, flood_cards_deal: 0 },
-  
+        })  
     })
 
     let appendLayoutsToRoomSelect = () => { 

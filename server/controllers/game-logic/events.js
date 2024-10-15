@@ -144,6 +144,7 @@ const handleGameEvents = ({
             rooms[roomName].gameDetails.flood_deck.discard = []
             io.to(roomName).emit('floodDeckUnusedCount0');  
           } else {
+            rooms[roomName].gameDetails.current_player_turn.flood_cards_deal++
             moveCardNewPile(rooms[roomName].gameDetails.flood_deck.discard,  rooms[roomName].gameDetails.flood_deck.unused );  
             
             io.to(roomName).emit('floodDeckDiscard', rooms[roomName]);  
