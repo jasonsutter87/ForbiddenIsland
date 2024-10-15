@@ -64,7 +64,7 @@ const handleGameEvents = ({
           players: [],
           number_of_players: rooms[roomName].players.length,
           current_player: null,
-          current_player_turns_left: null,
+          current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
           gameBoard: rooms[roomName].gameBoard,
           status: GAME_STATUS.notStarted,
           current_flood_level: 1,
@@ -106,7 +106,6 @@ const handleGameEvents = ({
 
           rooms[roomName].gameDetails.current_flood_level = 1
           rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
-          rooms[roomName].gameDetails.current_player_turns_left = 3;
           io.to(roomName).emit('startGame', result); 
           io.to(roomName).emit('updateFloodLevelUI', rooms[roomName]); 
           io.to(roomName).emit('renderPlayerActionCards', rooms[roomName]); 
@@ -152,7 +151,9 @@ const handleGameEvents = ({
             rooms[roomName] =  updatedBoard
 
             io.to(roomName).emit('redrawBoard', rooms[roomName]);
-
+            rooms[roomName].gameDetails.players.forEach((player) => {
+              setPlayerOnTheBoard(rooms[roomName].gameDetails, player)
+            })
             if(floodDeckUnusedCount == 0) {
               io.to(roomName).emit('floodDeckUnusedCount0');  
             }
@@ -163,6 +164,7 @@ const handleGameEvents = ({
 
 
 
+
         let actionDeckUnusedCount = rooms[roomName].gameDetails.action_deck.unused.length;
 
         if(actionDeckUnusedCount == 0) {
@@ -170,6 +172,10 @@ const handleGameEvents = ({
             rooms[roomName].gameDetails.action_deck.discard = []
             io.to(roomName).emit('actionDeckUnusedCount0');  
         } else {
+
+
+          rooms[roomName].gameDetails.current_player_turn.action_cards_deal++
+          
             moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard,  rooms[roomName].gameDetails.action_deck.unused );
             io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
 
@@ -185,9 +191,10 @@ const handleGameEvents = ({
 
               // flood more tiles
 
-         
-
               io.to(roomName).emit('redrawBoard', rooms[roomName]);
+              rooms[roomName].gameDetails.players.forEach((player) => {
+                setPlayerOnTheBoard(rooms[roomName].gameDetails, player)
+              })
 
               if(actionDeckUnusedCount == 0) {
                 io.to(roomName).emit('actionDeckUnusedCount0');  
@@ -231,6 +238,14 @@ const handleGameEvents = ({
         callback(roomDetails); 
       }
     });
+
+
+    socket.on('movePlayer', (fromId, toId) => {
+      console.log('in server movePlayer',  fromId, toId)
+      rooms[roomName].gameDetails.current_player_turn.number_of_actions++
+      console.log(rooms[roomName].gameDetails)
+
+    })
 
     //deal action cards to a player
     const dealInitialActionCards = (from, to, dealCount) => {

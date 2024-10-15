@@ -160,6 +160,7 @@ socket.on('actionDeckDiscard', (data)=> {
 socket.on('updateClientsPlayer', (data) => {
     data.gameDetails.players.forEach((player, index) => {
         if(socket.id === player.socketId.socketId) {
+            socket.playerName = player.name
             $('.clients-players-name span').html(player.name)
             $('.clients-players-name span').removeClass()
             $('.clients-players-name span').addClass(player.name)
@@ -367,28 +368,36 @@ const findPlayerCoordinates = (playerName) => {
   
   let playerMoveOrActionModal = (toId, roomName) => {         
       let game_details;
+
       socket.emit('getRoomDetails', roomName, (roomDetails) => {
         game_details =  roomDetails.gameDetails;
 
-      
-        let fromId = $('[class*="player-active-"]').attr('cardid');
-    
-        //refactor
-    
-        let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
-        let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
-        let result = adjacentTileIds.find(x => x == toId)
-        
-        if(result) {  
-          if(fromId != toId ) {
-            movePlayer(game_details, fromId, toId)
-          }
+
+
+        if(socket.playerName == game_details.current_player.name) {
+            if(game_details.current_player_turn.number_of_actions < 3) {
+                let fromId = $('[class*="player-active-"]').attr('cardid');
+            
+                //refactor
+            
+                let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
+                let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
+                let result = adjacentTileIds.find(x => x == toId)
+                
+                if(result) {  
+                  if(fromId != toId ) {
+                    movePlayer(game_details, fromId, toId)
+                  }
+                }
+            } else {
+                alert('player needs to pull 2 action card')
+            }
+        } else {
+            alert('Its Not your turn yo  🤡')
         }
+        
     });
-  
-  
-  
-  
+
   }
   
 
