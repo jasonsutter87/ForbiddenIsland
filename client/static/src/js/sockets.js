@@ -278,24 +278,6 @@ socket.on('rotateUIPlayers',  (data) => {
 })
 
 
-//flood tile
-//sink tile
-
-//deal action card
-//deal flood card
-
-//raise the water
-
-//sandbag Tile
-//helicopter Tile
-//helicopter takeoff
-
-
-//capture Earth Stone
-//capture Wind Statue
-//capture Fire Statue
-//capture Water Statue
-
 
 //gameover
 socket.on('gameOver', () => {
@@ -386,81 +368,76 @@ const findPlayerCoordinates = (playerName) => {
   
     // If the player is not found, return null
     return null;
-  }
+}
   
-  let getAdjacentTileIds = (game_details, board, playerPosition) => {
+let getAdjacentTileIds = (game_details, board, playerPosition) => {
 
-    let directions;
-    if(game_details.current_player.name == "Explorer"){
-      directions = [
+let directions;
+if(game_details.current_player.name == "Explorer"){
+    directions = [
+    { row: -1, col: 0 },  // Above
+    { row: 1, col: 0 },   // Below
+    { row: 0, col: -1 },  // Left
+    { row: 0, col: 1 },   // Right
+    { row: -1, col: -1 }, // Top-left diagonal
+    { row: -1, col: 1 },  // Top-right diagonal
+    { row: 1, col: -1 },  // Bottom-left diagonal
+    { row: 1, col: 1 }    // Bottom-right diagonal
+
+    ] ;
+} else {
+    directions = [
         { row: -1, col: 0 },  // Above
         { row: 1, col: 0 },   // Below
         { row: 0, col: -1 },  // Left
         { row: 0, col: 1 },   // Right
-        { row: -1, col: -1 }, // Top-left diagonal
-        { row: -1, col: 1 },  // Top-right diagonal
-        { row: 1, col: -1 },  // Bottom-left diagonal
-        { row: 1, col: 1 }    // Bottom-right diagonal
-    
-      ] ;
-    } else {
-      directions = [
-         { row: -1, col: 0 },  // Above
-         { row: 1, col: 0 },   // Below
-         { row: 0, col: -1 },  // Left
-         { row: 0, col: 1 },   // Right
-     ];
-    }
+    ];
+}
+
+    return directions.map(direction => ({
+    row: playerPosition.row + direction.row,
+    col: playerPosition.col + direction.col
+}))
+.filter(tile =>
+    // Ensure the tile is within the bounds of the board and not 'x'
+    tile.row >= 0 && tile.row < board.length &&
+    tile.col >= 0 && tile.col < board[0].length &&
+    typeof board[tile.row][tile.col] === 'object'
+)
+.map(tile => board[tile.row][tile.col].id);
+}
+
+let playerMoveOrActionModal = (toId, roomName) => {         
+    let game_details;
+
+    socket.emit('getRoomDetails', roomName, (roomDetails) => {
+    game_details =  roomDetails.gameDetails;
+
+
+    if(socket.playerName == game_details.current_player.name) {
+        if(game_details.current_player_turn.number_of_actions < 3) {
+            let fromId = $('[class*="player-active-"]').attr('cardid');
   
-     return directions.map(direction => ({
-        row: playerPosition.row + direction.row,
-        col: playerPosition.col + direction.col
-    }))
-    .filter(tile =>
-        // Ensure the tile is within the bounds of the board and not 'x'
-        tile.row >= 0 && tile.row < board.length &&
-        tile.col >= 0 && tile.col < board[0].length &&
-        typeof board[tile.row][tile.col] === 'object'
-    )
-    .map(tile => board[tile.row][tile.col].id);
-  }
-  
-  
-  let playerMoveOrActionModal = (toId, roomName) => {         
-      let game_details;
-
-      socket.emit('getRoomDetails', roomName, (roomDetails) => {
-        game_details =  roomDetails.gameDetails;
-
-
-
-        if(socket.playerName == game_details.current_player.name) {
-            if(game_details.current_player_turn.number_of_actions < 3) {
-                let fromId = $('[class*="player-active-"]').attr('cardid');
+            let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
+            let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
+            let result = adjacentTileIds.find(x => x == toId)
             
-                //refactor
-            
-                let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
-                let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
-                let result = adjacentTileIds.find(x => x == toId)
-                
-                if(result) {  
-                  if(fromId != toId ) {
-                    movePlayer(game_details, fromId, toId)
-                  }
+            if(result) {  
+                if(fromId != toId ) {
+                movePlayer(game_details, fromId, toId)
                 }
-            } else {
-                alert('player needs to pull 2 action card')
             }
         } else {
-            alert('Its Not your turn yo  🤡')
+            alert('player needs to pull 2 action card')
         }
-        
-    });
+    } else {
+        alert('Its Not your turn yo  🤡')
+    }
+    
+});
 
-  }
+}
   
-
 export { socket, gameRoom };
 
 
