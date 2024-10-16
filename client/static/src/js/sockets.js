@@ -239,7 +239,7 @@ socket.on('moveUIPlayer', (data) => {
             $(`.tile[cardid="${item.id}"]`).append(`
               <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${item.id}' >
             `);
-          }, 500);
+          }, 1500);
         });
       }
     });
