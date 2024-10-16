@@ -154,6 +154,18 @@ html {
           right: 1rem;
         }
       }
+
+
+      .current-players-name {
+        display: none;
+
+        @media(min-width: 992px) {
+          display: block;
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+        }
+      }
     }
     
     
@@ -185,6 +197,32 @@ html {
       padding: 4px 1rem;
     }
     
+  }
+
+  .clients-current-players-name {
+    .Diver {
+      color: Black;
+    }
+
+    .Pilot {
+      color: blue;
+    }
+
+    .Messenger {
+      color: white;
+    }
+
+    .Explorer {
+      color: green;
+    }
+
+    .Engineer {
+      color: red;
+    }
+
+    .Navigator {
+      color: yellow;
+    }
   }
 
   .clients-players-actions-cards,
@@ -739,3 +777,6 @@ html {
     }
   }
 }
+
+
+

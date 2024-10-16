@@ -18982,6 +18982,17 @@ html {
     right: 1rem;
   }
 }
+#game-ui .main-content .current-players-name {
+  display: none;
+}
+@media (min-width: 992px) {
+  #game-ui .main-content .current-players-name {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
+}
 #game-ui .sidebar-item-1 {
   grid-area: sidebar-item-1;
   background: tan;
@@ -19005,6 +19016,25 @@ html {
   background: tan;
   flex-grow: 1;
   padding: 4px 1rem;
+}
+
+.clients-current-players-name .Diver {
+  color: Black;
+}
+.clients-current-players-name .Pilot {
+  color: blue;
+}
+.clients-current-players-name .Messenger {
+  color: white;
+}
+.clients-current-players-name .Explorer {
+  color: green;
+}
+.clients-current-players-name .Engineer {
+  color: red;
+}
+.clients-current-players-name .Navigator {
+  color: yellow;
 }
 
 .clients-players-actions-cards .Diver,

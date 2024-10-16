@@ -12,8 +12,8 @@ const { checkForPlayerLost,
         floodOrSink,
         checkForWaterRise, floodBoard } =  require('../game-logic/board')
 const { setPlayerOnTheBoard } = require('../game-logic/player')
-
-
+const express = require('express');
+const router = express.Router();
 
 const handleGameEvents = ({
   socket = null,     
@@ -322,6 +322,7 @@ const handleGameEvents = ({
 
       io.to(roomName).emit('setFloodDeck', rooms[roomName])
 
+      io.to(roomName).emit('setCurrentPlayer', rooms[roomName].gameDetails.current_player)
 
       console.log('WE HAVE DONE IT ALL')
 
@@ -334,6 +335,10 @@ const handleGameEvents = ({
     //   io.to(roomName).emit('gameUpdate', { message: 'Game update...' });
     // }, 1000); // Send updates every second
     };
+
+
+
+
 
 };
 
