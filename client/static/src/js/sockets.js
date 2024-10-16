@@ -252,6 +252,11 @@ socket.on('moveUIPlayer', (data) => {
   
         $(() => {
           setTimeout(() => {
+
+            console.log('playerName', playerName)
+            console.log('data.gameDetails.current_player.name', data.gameDetails.current_player.name)
+
+
             // Add active class to the current player's tile
             if (playerName === data.gameDetails.current_player.name) {
               $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${playerName}`);
