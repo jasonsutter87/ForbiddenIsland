@@ -17,32 +17,32 @@ let gameRoom;
 
 socket.on('setPlayersOnBoard', (room) => {
     gameRoom = room;
-        room.gameDetails.players.forEach((val, int) => {
-            let playerName = val.name
-            
-            let flattenBoard = room.gameDetails.gameBoard.flat();
+    room.gameDetails.players.forEach((val, int) => {
+        let playerName = val.name
+        
+        let flattenBoard = room.gameDetails.gameBoard.flat();
 
-            let result = flattenBoard.find(item => item && item.starting_position === playerName);
-
-
-            $(() =>  { 
-  
+        let result = flattenBoard.find(item => item && item.starting_position === playerName);
 
 
-               setTimeout(() =>{
-                   if(result.starting_position == room.gameDetails.current_player.name) {
-                     $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
-                   }
-                   
-                   $(`.tile[cardid="${result.id}"]`).append(`
-                     <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
-                   `)
+        $(() =>  { 
 
-               }, 500) 
 
-            })
-      
-          })
+
+            setTimeout(() =>{
+                if(result.starting_position == room.gameDetails.current_player.name) {
+                    $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
+                }
+                
+                $(`.tile[cardid="${result.id}"]`).append(`
+                    <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
+                `)
+
+            }, 500) 
+
+        })
+    
+    })
           
 })
 
@@ -218,6 +218,39 @@ socket.on('updateFloodLevelUI', (data) => {
 ///////////////////////
 
 //move player
+socket.on('moveUIPlayer', (data) => {
+    createBoardUI(data.gameDetails.gameBoard);
+  
+    // Flatten the game board to a single array
+    let flattenBoard = data.gameDetails.gameBoard.flat();
+  
+    flattenBoard.forEach((item) => {
+      if (item.current_players && item.current_players.length >= 1) {
+        let playerName = item.current_players[0].name;
+  
+        $(() => {
+          setTimeout(() => {
+            // Add active class to the current player's tile
+            if (playerName === data.gameDetails.current_player.name) {
+              $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${playerName}`);
+            }
+  
+            // Append player piece to the tile
+            $(`.tile[cardid="${item.id}"]`).append(`
+              <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${item.id}' >
+            `);
+          }, 500);
+        });
+      }
+    });
+  });
+  
+
+socket.on('rotateUIPlayers',  (data) => {
+    console.log('rotateUIPlayers', data)
+})
+
+
 //flood tile
 //sink tile
 

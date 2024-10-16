@@ -5,7 +5,7 @@ import { socket } from './sockets.js'
 $(() => {
     //master
     let socketURL = 'https://forbiddenisland.onrender.com';
-
+// 
     
     //dev
     // let socketURL = 'http://localhost:3000';
@@ -151,6 +151,7 @@ $(() => {
         
      
             if(game_details.current_player_turn.flood_cards_deal >=  game_details.flood_deal_count) {
+                socket.emit('rotatePlayers', socket.roomName) 
                 alert('time to chnage players!!!!')
             }
 
