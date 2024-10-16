@@ -145,6 +145,7 @@ const handleGameEvents = ({
             io.to(roomName).emit('floodDeckUnusedCount0');  
           } else {
             rooms[roomName].gameDetails.current_player_turn.flood_cards_deal++
+
             moveCardNewPile(rooms[roomName].gameDetails.flood_deck.discard,  rooms[roomName].gameDetails.flood_deck.unused );  
             
             io.to(roomName).emit('floodDeckDiscard', rooms[roomName]);  
@@ -205,6 +206,19 @@ const handleGameEvents = ({
 
     })
 
+    socket.on('rotatePlayers', (roomName) => {
+      //rotate players
+      rooms[roomName].gameDetails.players.push(rooms[roomName].gameDetails.players.shift())
+      
+      //set new current player
+      rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
+
+      //reset players turn 
+      rooms[roomName].gameDetails.current_player_turn = { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 }
+
+      io.to(roomName).emit('rotateUIPlayers', rooms[roomName]); 
+    })
+
     socket.on('disconnect', () => {
       // Get the player's room from the stored socket information
       const playerRoom = socket.roomName;
@@ -242,11 +256,36 @@ const handleGameEvents = ({
 
 
     socket.on('movePlayer', (fromId, toId) => {
-      console.log('in server movePlayer',  fromId, toId)
-      rooms[roomName].gameDetails.current_player_turn.number_of_actions++
-      console.log(rooms[roomName].gameDetails)
+      rooms[roomName].gameDetails.current_player_turn.number_of_actions++;
+    
+      let player;
+      let fromTile;
+      let toTile;
+    
+      fromId = Number(fromId);
+      toId = Number(toId);
+    
+      for (let row = 0; row < rooms[roomName].gameDetails.gameBoard.length; row++) {
+        for (let col = 0; col < rooms[roomName].gameDetails.gameBoard[row].length; col++) {
+          let tile = rooms[roomName].gameDetails.gameBoard[row][col];
+    
+          if (tile.id === fromId) {
+            fromTile = tile;
+            player = tile.current_players
+            fromTile.current_players = []
+          }
+    
+          if (tile.id === toId) {
+            toTile = tile;
+            toTile.current_players = player
+          }
+        }
+      }
 
+      io.to(roomName).emit('moveUIPlayer', rooms[roomName]); 
     })
+    
+
 
     //deal action cards to a player
     const dealInitialActionCards = (from, to, dealCount) => {
