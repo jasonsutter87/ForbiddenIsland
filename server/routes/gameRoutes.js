@@ -1,7 +1,8 @@
 // server/routes/gameRoutes.js
 const express = require('express');
 const router = express.Router();
-const { GAME_BOARDS } = require("../models/models")
+const { GAME_BOARDS  } = require("../models/models");
+
 
 // Example route to get game state
 router.get('/state', (req, res) => {
@@ -12,5 +13,6 @@ router.get('/state', (req, res) => {
 router.get('/game-boards', (req, res) => {
   res.json(GAME_BOARDS); // Send GAME_BOARD data as JSON
 });
+
 
 module.exports = router;

@@ -3,14 +3,14 @@ import { movePlayer } from './board.js'
 
 
 //1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 
 let gameRoom;
 
@@ -179,6 +179,11 @@ socket.on('actionDeckDiscard', (data)=> {
     `) 
 })
 
+socket.on('setCurrentPlayer', (data) => {
+    $('.clients-current-players-name span').addClass(data.name)
+    $('.clients-current-players-name span').html(data.name)
+})
+
 socket.on('updateClientsPlayer', (data) => {
     data.gameDetails.players.forEach((player, index) => {
         if(socket.id === player.socketId.socketId) {
@@ -275,6 +280,12 @@ socket.on('moveUIPlayer', (data) => {
 
 socket.on('rotateUIPlayers',  (data) => {
     console.log('rotateUIPlayers', data)
+
+    //updatte the current player spans
+
+    //strip all active class on the grid
+
+    //apply new active player  class 
 })
 
 
