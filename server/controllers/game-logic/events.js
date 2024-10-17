@@ -65,7 +65,7 @@ const handleGameEvents = ({
           number_of_players: rooms[roomName].players.length,
           current_player: null,
           current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
-          gameBoard: rooms[roomName].gameBoard,
+          gameBoard: rooms[roomName].startingGameBoard,
           status: GAME_STATUS.notStarted,
           current_flood_level: 1,
           flood_deal_count: 2
@@ -119,7 +119,7 @@ const handleGameEvents = ({
     socket.on('changeGameLayoutType', (roomName, gameLayoutId) => {
       GAME_BOARDS.filter(board => {
         if(board.id == gameLayoutId) {
-          rooms[roomName].gameBoard = board.layout
+          rooms[roomName].startingGameBoard = board.layout
 
           io.to(roomName).emit('setGameLayout', gameLayoutId); 
         }
@@ -207,6 +207,7 @@ const handleGameEvents = ({
     })
 
     socket.on('rotatePlayers', (roomName) => {
+      console.log('rotateUIPlayers', rooms[roomName])
       //rotate players
       rooms[roomName].gameDetails.players.push(rooms[roomName].gameDetails.players.shift())
       
@@ -216,6 +217,7 @@ const handleGameEvents = ({
       //reset players turn 
       rooms[roomName].gameDetails.current_player_turn = { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 }
 
+     console.log('rotateUIPlayers', rooms[roomName])
       io.to(roomName).emit('rotateUIPlayers', rooms[roomName]); 
     })
 
@@ -255,35 +257,56 @@ const handleGameEvents = ({
     });
 
 
-    socket.on('movePlayer', (fromId, toId) => {
-      rooms[roomName].gameDetails.current_player_turn.number_of_actions++;
-    
-      let player;
+    socket.on('///👾 Bug:', (player, fromId, toId) => {
+      ///👾 Bug: move player isnt working consistant 
+      // i think the solution is the player from input?
+
+      //set the To and From tiles
       let fromTile;
       let toTile;
-    
-      fromId = Number(fromId);
-      toId = Number(toId);
-    
-      for (let row = 0; row < rooms[roomName].gameDetails.gameBoard.length; row++) {
-        for (let col = 0; col < rooms[roomName].gameDetails.gameBoard[row].length; col++) {
-          let tile = rooms[roomName].gameDetails.gameBoard[row][col];
-    
-          if (tile.id === fromId) {
-            fromTile = tile;
-            player = tile.current_players
-            fromTile.current_players = []
-          }
-    
-          if (tile.id === toId) {
-            toTile = tile;
-            toTile.current_players = player
-          }
-        }
-      }
 
-      io.to(roomName).emit('moveUIPlayer', rooms[roomName]); 
-    })
+      rooms[roomName].gameDetails.current_player_turn.number_of_actions++;
+      
+      console.log('there is a still a bug here.')
+      console.log('player', player)
+      console.log('fromId1', typeof(fromId))
+      console.log('toId1', typeof(toId))
+      
+    
+      // Iterate through the game board to find the tiles
+      for (let row = 0; row < rooms[roomName].gameDetails.gameBoard.length; row++) {
+          for (let col = 0; col < rooms[roomName].gameDetails.gameBoard[row].length; col++) {
+              let tile = rooms[roomName].gameDetails.gameBoard[row][col];
+  
+              // Identify the tile being moved from
+              if (tile.id === fromId) {
+                  fromTile = tile;
+  
+                  // Assuming there's only one player per tile
+                  if (fromTile.current_players.length > 0) {
+                    
+
+                      fromTile.current_players = []; // Remove player from current tile
+                      console.log(`Player ${player.name} moved from tile ${fromId}`);
+                  }
+              }
+  
+              // Identify the tile being moved to
+              if (tile.id === toId) {
+                  toTile = tile;
+                  // Add player to the new tile
+                  if (player) {
+                      toTile.current_players.push(player); // Push the player to the new tile
+                      console.log(`Player ${player.name} moved to tile ${toId}`);
+                  }
+              }
+          }
+      }
+  
+      // Emit updated game state to all players in the room
+      io.to(roomName).emit('moveUIPlayer', rooms[roomName]);
+  });
+  
     
 
 

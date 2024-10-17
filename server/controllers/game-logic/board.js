@@ -231,6 +231,40 @@ let resetGame = () => {
  
 }
 
+
+// Contains utility functions that can be reused across the project
+// let selectObjectById = (board, id) => {
+//   for (let row of board) {
+//       for (let tile of row) {
+//           if (typeof tile === 'object' && tile.id === id) {
+//               return tile;
+//           }
+//       }
+//   }
+//   return null;
+// };
+
+
+// let floodByWaterLevel = (floodDeck, waterLevel) => {
+//   for (let i = 0; i < waterLevel; i++) {
+//     if (floodDeck.length > 0) {
+//       let val = floodDeck.shift();
+//       let tile = selectObjectById(game_board, val.id);
+//       if (tile) {
+//         tile.flooded = true;
+//         moveCardNewPile(flood_discard, [val]);
+//       }
+//     }
+//   }
+// };
+
+
+// let moveCardNewPile = (inbound, outbound) => {
+//     if (outbound.length > 0) {
+//         inbound.push(outbound.shift());
+//     }
+// };
+
 // Exported functions to be used in routes and sockets
 module.exports = {
     placeTilesOnBoard,
