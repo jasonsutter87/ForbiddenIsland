@@ -7,7 +7,7 @@ $(() => {
     let socketURL = 'https://forbiddenisland.onrender.com';
 // 
     
-    //dev
+    // //dev
     // let socketURL = 'http://localhost:3000';
 
     $('#btn-play-game').on('click', e => {

@@ -25,11 +25,13 @@ socket.on('setPlayersOnBoard', (room) => {
         let result = flattenBoard.find(item => item && item.starting_position === playerName);
 
 
-        $(() =>  { 
+        
 
 
 
             setTimeout(() =>{
+                console.log('Appending player:', playerName, 'to tile:', result.id);
+
                 if(result.starting_position == room.gameDetails.current_player.name) {
                     $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
                 }
@@ -40,7 +42,7 @@ socket.on('setPlayersOnBoard', (room) => {
 
             }, 500) 
 
-        })
+        
     
     })
           
@@ -110,40 +112,39 @@ socket.on('startGame', (board) => {
 })
 
 socket.on('setGameLayout', (id) => {
-    $(()=> {
-        $('#selectGameLayout').val(id);
-    })
+    $('#selectGameLayout').val(id);
 })
 
 ///////////////////////
 //    GAME_SETUP     //
 ///////////////////////
 socket.on('redrawBoard', (data) => {
-    createBoardUI(data.gameDetails.gameBoard)
+    createBoardUI(data.gameDetails.gameBoard);
 
-    let flattenBoard = data.gameDetails.gameBoard.flat();
-  
+    // Flatten the game board to a single array
+    const flattenBoard = data.gameDetails.gameBoard.flat();
+   
+
     flattenBoard.forEach((item) => {
-      if (item.current_players && item.current_players.length >= 1) {
-        let playerName = item.current_players[0].name;
-  
-        $(() => {
-          setTimeout(() => {
-            // Add active class to the current player's tile
-            if (playerName === data.gameDetails.current_player.name) {
-              $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${playerName}`);
-            }
-  
-            // Append player piece to the tile
-            $(`.tile[cardid="${item.id}"]`).append(`
-              <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${item.id}' >
-            `);
-          }, 1500);
-        });
-      }
-    });
-})
+        if (item.current_players && item.current_players.length > 0) {
+            const playerName = item.current_players[0].name;
 
+            if(item.current_players[0].name == data.gameDetails.current_player.name){
+                // Log the player being appended to the tile
+                console.log('Appending player:', playerName, 'to tile:', item.id);
+    
+                // Add active class to the current player's tile if it matches
+                $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${playerName}`);
+            }
+
+
+            // // Use setTimeout to append the player piece to the tile with a delay
+            setTimeout(() => {
+                appendPlayerPiece(item.id, playerName);
+            }, 1500);
+        }
+    })
+})
 
 socket.on('floodBoard', (data)=> {
     createBoardUI(data.gameDetails.gameBoard)
@@ -239,44 +240,41 @@ socket.on('updateFloodLevelUI', (data) => {
         $('.current-flood-deal-number').html(data.gameDetails.flood_deal_count)
 })
 
-
 ///////////////////////
 //    GAME_PLAY      //
 ///////////////////////
-
-//move player
+// Move player
 socket.on('moveUIPlayer', (data) => {
+    console.log('moveUIPlayer', data)
+
     createBoardUI(data.gameDetails.gameBoard);
-  
+
     // Flatten the game board to a single array
-    let flattenBoard = data.gameDetails.gameBoard.flat();
-  
+    const flattenBoard = data.gameDetails.gameBoard.flat();
+   
+
     flattenBoard.forEach((item) => {
-      if (item.current_players && item.current_players.length >= 1) {
-        let playerName = item.current_players[0].name;
-  
-        $(() => {
-          setTimeout(() => {
+        if (item.current_players && item.current_players.length > 0) {
+            const playerName = item.current_players[0].name;
 
-            console.log('playerName', playerName)
-            console.log('data.gameDetails.current_player.name', data.gameDetails.current_player.name)
-
-
-            // Add active class to the current player's tile
-            if (playerName === data.gameDetails.current_player.name) {
-              $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${playerName}`);
+            if(item.current_players[0].name == data.gameDetails.current_player.name){
+                // Log the player being appended to the tile
+                console.log('Appending player:', playerName, 'to tile:', item.id);
+    
+                // Add active class to the current player's tile if it matches
+                $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${playerName}`);
             }
-  
-            // Append player piece to the tile
-            $(`.tile[cardid="${item.id}"]`).append(`
-              <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${item.id}' >
-            `);
-          }, 1500);
-        });
-      }
+
+
+            // // Use setTimeout to append the player piece to the tile with a delay
+            setTimeout(() => {
+                appendPlayerPiece(item.id, playerName);
+            }, 1500);
+        }
     });
-  });
-  
+});
+
+
 
 socket.on('rotateUIPlayers',  (data) => {
     console.log('rotateUIPlayers', data)
@@ -287,7 +285,6 @@ socket.on('rotateUIPlayers',  (data) => {
 
     //apply new active player  class 
 })
-
 
 
 //gameover
@@ -354,6 +351,16 @@ function createBoardUI(board) {
       
         resolve();
     });
+}
+
+// Function to append the player piece to the tile
+function appendPlayerPiece(tileId, playerName) {
+    const tileSelector = `.tile[cardid="${tileId}"]`;
+    
+    // Append player piece
+    $(tileSelector).append(`
+        <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${tileId}'>
+    `);
 }
 
 const findPlayerCoordinates = (playerName) => {
