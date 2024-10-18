@@ -256,60 +256,41 @@ const handleGameEvents = ({
       }
     });
 
-
-    socket.on('///👾 Bug:', (player, fromId, toId) => {
-      ///👾 Bug: move player isnt working consistant 
-      // i think the solution is the player from input?
-
-      //set the To and From tiles
-      let fromTile;
-      let toTile;
+    socket.on('movePlayer', (player, roomName,fromId, toId) => {
+      let incomingPlayerName = player;
 
       rooms[roomName].gameDetails.current_player_turn.number_of_actions++;
-      
-      console.log('there is a still a bug here.')
-      console.log('player', player)
-      console.log('fromId1', typeof(fromId))
-      console.log('toId1', typeof(toId))
-      
-    
-      // Iterate through the game board to find the tiles
+
+      let current_player = [];
+
       for (let row = 0; row < rooms[roomName].gameDetails.gameBoard.length; row++) {
-          for (let col = 0; col < rooms[roomName].gameDetails.gameBoard[row].length; col++) {
-              let tile = rooms[roomName].gameDetails.gameBoard[row][col];
-  
-              // Identify the tile being moved from
-              if (tile.id === fromId) {
-                  fromTile = tile;
-  
-                  // Assuming there's only one player per tile
-                  if (fromTile.current_players.length > 0) {
-                    
-
-                      fromTile.current_players = []; // Remove player from current tile
-                      console.log(`Player ${player.name} moved from tile ${fromId}`);
+            for (let col = 0; col < rooms[roomName].gameDetails.gameBoard[row].length; col++) {
+                let tile = rooms[roomName].gameDetails.gameBoard[row][col];
+                if (tile != 'x' && tile.id == fromId) {
+                  const playerIndex = tile.current_players.findIndex(player => player.name == incomingPlayerName);
+                  
+                  if (playerIndex !== -1) {
+                      const player = tile.current_players[playerIndex]; 
+                      current_player.push(player); 
+                      tile.current_players.splice(playerIndex, 1);
                   }
               }
-  
-              // Identify the tile being moved to
-              if (tile.id === toId) {
-                  toTile = tile;
-                  // Add player to the new tile
-                  if (player) {
-                      toTile.current_players.push(player); // Push the player to the new tile
-                      console.log(`Player ${player.name} moved to tile ${toId}`);
-                  }
-              }
-          }
+            }
       }
-  
-      // Emit updated game state to all players in the room
+
+      for (let row = 0; row < rooms[roomName].gameDetails.gameBoard.length; row++) {
+        for (let col = 0; col < rooms[roomName].gameDetails.gameBoard[row].length; col++) {
+            let tile = rooms[roomName].gameDetails.gameBoard[row][col];
+
+            if(tile != 'x' && tile.id == toId) {
+              tile.current_players.push(current_player[0])        
+            }
+        }
+      }
+
       io.to(roomName).emit('moveUIPlayer', rooms[roomName]);
-  });
+    });
   
-    
-
-
     //deal action cards to a player
     const dealInitialActionCards = (from, to, dealCount) => {
     let player = to.actionCards;
@@ -358,11 +339,6 @@ const handleGameEvents = ({
     //   io.to(roomName).emit('gameUpdate', { message: 'Game update...' });
     // }, 1000); // Send updates every second
     };
-
-
-
-
-
 };
 
 
