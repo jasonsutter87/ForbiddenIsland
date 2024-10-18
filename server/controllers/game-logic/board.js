@@ -224,7 +224,6 @@ let resetGame = () => {
     current_player: null,
     current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
     gameBoard: game_board,
-    status: GAME_STATUS.notStarted,
     current_flood_level: 1
 }; 
 
