@@ -11988,7 +11988,31 @@ textarea.form-control-lg {
 }
 
 .bold {
+  font-weight: 700 !important;
+}
+
+.btn-primary {
+  transition: 0.5s !important;
+  cursor: pointer !important;
+  background-color: #000033 !important;
   font-weight: 600 !important;
+  border-radius: 10px !important;
+  border: 2px solid #000033 !important;
+  color: #ffffff !important;
+  line-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  text-transform: capitalize;
+  text-decoration: none !important;
+}
+
+.btn-size-lg {
+  padding: 12px 30px;
+  border-radius: 10px;
+  font-size: 1.111rem !important;
+  line-height: 27.984px !important;
 }
 
 :root,
@@ -18885,9 +18909,9 @@ html {
 #game-ui .wrapper {
   display: grid;
   grid-template-columns: 1fr; /* Single column for mobile */
-  grid-template-rows: 15vh 1fr auto; /* Adjust based on content */
+  grid-template-rows: 20vh 1fr auto; /* Adjust based on content */
   grid-template-areas: "header1" "header2" "main-content" "small-box-1" "small-box-2" "footer";
-  gap: 10px; /* Optional spacing between grid items */
+  gap: 4px; /* Optional spacing between grid items */
   height: 100vh; /* Full viewport height */
 }
 @media (min-width: 992px) {
@@ -18945,7 +18969,7 @@ html {
 }
 #game-ui .footer {
   grid-area: footer;
-  background: lightgray;
+  background: tan;
 }
 #game-ui .small-box-1 {
   grid-area: small-box-1;
@@ -19018,48 +19042,35 @@ html {
   padding: 4px 1rem;
 }
 
-.clients-current-players-name .Diver {
-  color: Black;
-}
-.clients-current-players-name .Pilot {
-  color: blue;
-}
-.clients-current-players-name .Messenger {
-  color: white;
-}
-.clients-current-players-name .Explorer {
-  color: green;
-}
-.clients-current-players-name .Engineer {
-  color: red;
-}
-.clients-current-players-name .Navigator {
-  color: yellow;
-}
-
+.clients-current-players-name .Diver,
 .clients-players-actions-cards .Diver,
 .clients-players-name .Diver {
-  color: Black;
+  color: #000000;
 }
+.clients-current-players-name .Pilot,
 .clients-players-actions-cards .Pilot,
 .clients-players-name .Pilot {
-  color: blue;
+  color: #0000ff;
 }
+.clients-current-players-name .Messenger,
 .clients-players-actions-cards .Messenger,
 .clients-players-name .Messenger {
-  color: white;
+  color: #ffffff;
 }
+.clients-current-players-name .Explorer,
 .clients-players-actions-cards .Explorer,
 .clients-players-name .Explorer {
-  color: green;
+  color: #008000;
 }
+.clients-current-players-name .Engineer,
 .clients-players-actions-cards .Engineer,
 .clients-players-name .Engineer {
-  color: red;
+  color: #ff0000;
 }
+.clients-current-players-name .Navigator,
 .clients-players-actions-cards .Navigator,
 .clients-players-name .Navigator {
-  color: yellow;
+  color: #ffff00;
 }
 
 #board {
@@ -19083,11 +19094,6 @@ html {
     padding: 4vh;
   }
 }
-#board .row {
-  display: contents;
-  --bs-gutter-x: 0 !important;
-  --bs-gutter-y: 0 !important;
-}
 @media (max-width: 1200px) {
   #board {
     grid-template-columns: repeat(4, 1fr);
@@ -19108,8 +19114,12 @@ html {
     grid-template-columns: 1fr;
   }
 }
-
-.tile {
+#board .row {
+  display: contents;
+  --bs-gutter-x: 0 !important;
+  --bs-gutter-y: 0 !important;
+}
+#board .tile {
   position: relative;
   aspect-ratio: 1/1;
   overflow: hidden;
@@ -19117,59 +19127,49 @@ html {
   border-radius: 8px;
   transition: transform 0.3s;
 }
-.tile:hover {
+#board .tile:hover {
   transform: scale(1.05);
 }
-.tile.blocked {
+#board .tile.blocked {
   background-color: #444;
   visibility: hidden;
 }
-.tile.flooded {
+#board .tile.flooded {
   background-color: rgba(0, 0, 255, 0.5);
   cursor: pointer;
 }
-.tile.normal {
+#board .tile.normal {
   background-color: #fff;
   cursor: pointer;
 }
-.tile.sunk {
+#board .tile.sunk {
   background-color: darkblue;
   visibility: hidden;
   cursor: none;
 }
-.tile img {
+#board .tile img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
 }
-
-.btn-primary {
-  transition: 0.5s !important;
-  cursor: pointer !important;
-  background-color: #000033 !important;
-  font-weight: 600 !important;
-  border-radius: 10px !important;
-  border: 2px solid #000033 !important;
-  color: #ffffff !important;
-  line-height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  text-transform: capitalize;
-  text-decoration: none !important;
+#board .player-active-Diver {
+  border: 5px solid #000000;
 }
-
-.btn-size-lg {
-  padding: 12px 30px;
-  border-radius: 10px;
-  font-size: 1.111rem !important;
-  line-height: 27.984px !important;
+#board .player-active-Pilot {
+  border: 5px solid #0000ff;
 }
-
-.bold {
-  font-weight: 700;
+#board .player-active-Messenger {
+  border: 5px solid #ffffff;
+}
+#board .player-active-Explorer {
+  border: 5px solid #008000;
+}
+#board .player-active-Engineer {
+  border: 5px solid #ff0000;
+}
+#board .player-active-Navigator {
+  border: 5px solid #ffff00;
 }
 
 .player-piece {
@@ -19181,30 +19181,6 @@ html {
   width: 25px !important;
   box-shadow: 0 8px 3px 0px rgba(0, 0, 0, 0.7098039216);
   border-radius: 35%;
-}
-
-.player-active-Diver {
-  border: 5px solid #000000;
-}
-
-.player-active-Pilot {
-  border: 5px solid #0000ff;
-}
-
-.player-active-Messenger {
-  border: 5px solid #ffffff;
-}
-
-.player-active-Explorer {
-  border: 5px solid #008000;
-}
-
-.player-active-Engineer {
-  border: 5px solid #ff0000;
-}
-
-.player-active-Navigator {
-  border: 5px solid #ffff00;
 }
 
 .startingModal-wrapper {
@@ -19501,4 +19477,47 @@ html {
 .flood-level-section .current-flood-level .flood-level-slider {
   height: 35px;
   background: blue;
+}
+
+.chat-window-btn {
+  border: 0;
+  background-color: transparent;
+  position: relative;
+  margin-top: 8px;
+}
+.chat-window-btn .message-icon {
+  font-size: 2rem;
+}
+.chat-window-btn #noMessages {
+  display: block;
+}
+.chat-window-btn #yesMessages {
+  display: none;
+}
+.chat-window-btn .badge {
+  display: none;
+}
+.chat-window-btn:hover #noMessages {
+  display: none;
+}
+.chat-window-btn:hover #yesMessages {
+  display: block;
+}
+.chat-window-btn.active #noMessages {
+  display: none;
+}
+.chat-window-btn.active #yesMessages {
+  display: block;
+  color: red;
+}
+.chat-window-btn.active .badge {
+  display: block;
+  background: red;
+  position: absolute;
+  top: -5px;
+  right: -6px;
+}
+
+#chat-back-to-game {
+  border-radius: 10px !important;
 }/*# sourceMappingURL=styles.css.map */

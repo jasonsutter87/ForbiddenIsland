@@ -43,15 +43,26 @@ socket.on('settingRoomName', (data) => {
 //     GAME_ROOM     //
 ///////////////////////
 
-socket.on('incomingGameMessage', (data, id) => {
-    $('#ChatContentArea').append(`<li>
+socket.on('incomingGameMessage', (room, data, name, id) => {
+    if(room.status === "Not Started" ) {
+        $('#ChatContentArea').append(`<li>
+            <span>
+                <img class="userimage" src="https://robohash.org/${id}"> 
+            </span>
+            <span>
+                ${data}
+            </span>
+        </li>`); 
+    } else {
+        $('#ChatContentArea').append(`<li>
         <span>
-            <img class="userimage" src="https://robohash.org/${id}"> 
+         <img class="userimage" src="/assets/images/players/${name}-card.webp" alt="${name} player card to show current player">
         </span>
         <span>
             ${data}
         </span>
     </li>`); 
+    }
 })
 
 socket.on('incomingNewPlayer', (data) => {    
@@ -92,8 +103,13 @@ socket.on('number_of_players_in_room', data => {
 })
 
 socket.on('startGame', (board) => {
+    $('#chat-game-button').removeClass('d-none')
+    $('#lobby-player-ready').addClass('d-none')
+    $('#lobby-layout').addClass('d-none')
     $('.joinRoomModal-wrapper').removeClass('active')
     $('.gameUI-wrapper').removeClass('d-none')
+
+
     $('main').append('<div id="board"></div>')
     createBoardUI(board)
 })
@@ -202,6 +218,12 @@ socket.on('updateFloodLevelUI', (data) => {
 
         $('.current-flood-number').html(data.gameDetails.current_flood_level)
         $('.current-flood-deal-number').html(data.gameDetails.flood_deal_count)
+})
+
+socket.on('increaseBadgeCount', (count) => {
+    socket.badge += count;
+    $('.chat-window-btn').addClass('active')
+    $('.chat-window-btn span').html(socket.badge)
 })
 
 ///////////////////////
