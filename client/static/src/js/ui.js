@@ -1,12 +1,8 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { socket } from './sockets.js'
 
-
-
 //master
 let socketURL = 'https://forbiddenisland.onrender.com';
-
-
 
 //dev
 // let socketURL = 'http://localhost:3000';

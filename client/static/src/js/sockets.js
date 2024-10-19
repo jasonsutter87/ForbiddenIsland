@@ -1,13 +1,8 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { movePlayer } from './board.js'
 
-//1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
-
 // Connect to the Socket.io server
-const socket = io(serverUrl);
+const socket = io('https://forbiddenisland.onrender.com');
 
 // const socket = io('http://localhost:3000');
 
@@ -385,24 +380,41 @@ let playerMoveOrActionModal = (toId, roomName) => {
     if(socket.playerName == game_details.current_player.name) {
 
         let tile = getTitleById(game_details.gameBoard, toId)
+        let fromId = $('[class*="player-active-"]').attr('cardid');
 
         if(tile && tile.flooded == true ){
             $('.moveOrUnfloodModal-wrapper ').removeClass('d-none')
 
-            $('#unfloodClickedTile').on('click', e => {
-                e.preventDefault(); 
-                $('.moveOrUnfloodModal-wrapper ').addClass('d-none')
-                tile.flooded = false 
-                socket.emit('unFloodTile', roomName, tile.id );
-            })
+
+            if(fromId == toId) {
+                //allow to unflood - not move
+                $('#movePlayerToClickedTile').addClass('d-none')
+                
+                $('#unfloodClickedTile').on('click', e => {
+                    e.preventDefault(); 
+                    $('.moveOrUnfloodModal-wrapper ').addClass('d-none')
+                    $('#movePlayerToClickedTile').removeClass('d-none')
+                    tile.flooded = false 
+                    socket.emit('unFloodTile', roomName, tile.id );
+                })
+            } else {
+
+                $('#unfloodClickedTile').on('click', e => {
+                    e.preventDefault(); 
+                    $('.moveOrUnfloodModal-wrapper ').addClass('d-none')
+                    tile.flooded = false 
+                    socket.emit('unFloodTile', roomName, tile.id );
+                })
+
+                $('#movePlayerToClickedTile').on('click', e => {
+                    e.preventDefault();
+                    $('.moveOrUnfloodModal-wrapper ').addClass('d-none')
+                    movePlayerAuto(fromId, toId, game_details, roomName)
+                })
+            }
             
-            $('#movePlayerToClickedTile').on('click', e => {
-                e.preventDefault();
-                $('.moveOrUnfloodModal-wrapper ').addClass('d-none')
-                movePlayerAuto(toId, game_details, roomName)
-            })
         } else {
-            movePlayerAuto(toId, game_details, roomName)
+            movePlayerAuto(fromId, toId, game_details, roomName)
         }
     } else {
         alert('Its Not your turn yo  🤡')
@@ -412,11 +424,9 @@ let playerMoveOrActionModal = (toId, roomName) => {
 
 }
 
-
-
-let movePlayerAuto = (toId, game_details, roomName) => {
+let movePlayerAuto = (fromId, toId, game_details, roomName) => {
     if(game_details.current_player_turn.number_of_actions < 3) {
-        let fromId = $('[class*="player-active-"]').attr('cardid');
+        
 
         let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
         let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
@@ -424,7 +434,7 @@ let movePlayerAuto = (toId, game_details, roomName) => {
         
         if(result) {  
             if(fromId != toId ) {
-            movePlayer(roomName, fromId, toId)
+                movePlayer(roomName, fromId, toId)
             }
         }
     } else {
