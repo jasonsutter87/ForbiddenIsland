@@ -4,11 +4,10 @@ import { socket } from './sockets.js'
 
 $(() => {
     //master
-    // let socketURL = 'https://forbiddenisland.onrender.com';
-// 
+    let socketURL = 'https://forbiddenisland.onrender.com';
     
-    // //dev
-    let socketURL = 'http://localhost:3000';
+    //dev
+    // let socketURL = 'http://localhost:3000';
 
     $('#btn-play-game').on('click', e => {
         e.preventDefault();
@@ -147,17 +146,13 @@ $(() => {
 
         socket.emit('getRoomDetails', socket.roomName, (roomDetails) => {
           game_details = roomDetails.gameDetails;
-          console.log('dealing flood cards', game_details)
-        
-     
+
             if(game_details.current_player_turn.flood_cards_deal >=  game_details.flood_deal_count) {
                 socket.emit('rotatePlayers', socket.roomName) 
-                alert('time to chnage players!!!!')
             }
 
-
-          if((game_details.current_player_turn.number_of_actions >= 3 && game_details.current_player_turn.action_cards_deal >= 2) && game_details.current_player_turn.flood_cards_deal < game_details.flood_deal_count ) {
-              socket.emit('dealFloodCard', socket.roomName) 
+          if((game_details.current_player_turn.number_of_actions >= 3 && game_details.current_player_turn.action_cards_deal >= 1) && game_details.current_player_turn.flood_cards_deal < game_details.flood_deal_count ) {
+                socket.emit('dealFloodCard', socket.roomName) 
           }
         })
 

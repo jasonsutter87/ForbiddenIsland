@@ -1,8 +1,3 @@
-// Import the game setup function
-
-const { handleGameEvents } = require('../controllers/game-logic/events.js');
-const { shuffle } = require('../controllers/game-machanics/shuffling');
-
 module.exports = (io) => {
   // Track rooms and player counts
   const rooms = {};
@@ -36,7 +31,6 @@ module.exports = (io) => {
     handleGameEvents({'socket': socket, 'io': io, 'rooms': rooms,'roomName': roomName})
   });
 
-
   // Find a room with less than 4 players or create a new one
   const findRoomWithSpace = (rooms) => {
     for (const room in rooms) {
@@ -57,5 +51,4 @@ module.exports = (io) => {
     };
     return newRoomName;
   };
-
 };
