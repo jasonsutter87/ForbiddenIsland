@@ -30,6 +30,10 @@ const handleGameEvents = ({
       let id = rooms[roomName].chat_history.length + 1
       rooms[roomName].chat_history.push({id: id, socketId: socketId, message: message})
 
+      if(rooms[roomName].status === GAME_STATUS.inProgress) {
+        socket.broadcast.to(roomName).emit('increaseBadgeCount', 1);
+      }
+
       io.to(roomName).emit('incomingGameMessage',  message, socket.id );
     })
   

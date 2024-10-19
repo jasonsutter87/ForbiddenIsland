@@ -209,6 +209,12 @@ socket.on('updateFloodLevelUI', (data) => {
         $('.current-flood-deal-number').html(data.gameDetails.flood_deal_count)
 })
 
+socket.on('increaseBadgeCount', (count) => {
+    socket.badge += count;
+    $('.chat-window-btn').addClass('active')
+    $('.chat-window-btn span').html(socket.badge)
+})
+
 ///////////////////////
 //    GAME_PLAY      //
 ///////////////////////
