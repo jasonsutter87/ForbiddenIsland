@@ -26,15 +26,18 @@ const handleGameEvents = ({
 } = {}) => {
 
     //Emits a message to everyone in a room including the sender
-    socket.on('gameMessage', (message, socketId) => {
+    socket.on('gameMessage', (name, message, socketId) => {
       let id = rooms[roomName].chat_history.length + 1
       rooms[roomName].chat_history.push({id: id, socketId: socketId, message: message})
 
       if(rooms[roomName].status === GAME_STATUS.inProgress) {
         socket.broadcast.to(roomName).emit('increaseBadgeCount', 1);
+        io.to(roomName).emit('incomingGameMessage', rooms[roomName],  message, name, socket.id );
+      } else {
+        io.to(roomName).emit('incomingGameMessage', rooms[roomName],  message, null, socket.id );
+        
       }
 
-      io.to(roomName).emit('incomingGameMessage',  message, socket.id );
     })
   
     //receving incoming messages from the page

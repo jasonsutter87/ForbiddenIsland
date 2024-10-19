@@ -27,7 +27,7 @@ $('#gameRoomMessageForm').on('submit', e => {
     let message = $('#gameRoomMessageInput').val(); 
 
     if(message.length >= 1) {
-        socket.emit('gameMessage', message, socket.id)
+        socket.emit('gameMessage', socket.playerName, message, socket.id)
         $('#gameRoomMessageInput').val('');
     } else {
         $('.error').addClass('active')
@@ -42,7 +42,7 @@ $('#sendGameRoomMessage').on('click', e => {
     let message = $('#gameRoomMessageInput').val(); 
 
     if(message.length >= 1) {
-        socket.emit('gameMessage', message, socket.id)
+        socket.emit('gameMessage', socket.playerName, message, socket.id)
         $('#gameRoomMessageInput').val('');
     } else {
         $('.error').addClass('active')

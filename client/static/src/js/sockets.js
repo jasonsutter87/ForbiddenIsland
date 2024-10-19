@@ -43,15 +43,31 @@ socket.on('settingRoomName', (data) => {
 //     GAME_ROOM     //
 ///////////////////////
 
-socket.on('incomingGameMessage', (data, id) => {
-    $('#ChatContentArea').append(`<li>
+socket.on('incomingGameMessage', (room, data, name, id) => {
+    console.log(room.status, data, name, id)
+
+
+    if(room.status === "Not Started" ) {
+        $('#ChatContentArea').append(`<li>
+            <span>
+                <img class="userimage" src="https://robohash.org/${id}"> 
+            </span>
+            <span>
+                ${data}
+            </span>
+        </li>`); 
+    } else {
+        $('#ChatContentArea').append(`<li>
         <span>
-            <img class="userimage" src="https://robohash.org/${id}"> 
+         <img class="userimage" src="/assets/images/players/${name}-card.webp" alt="${name} player card to show current player">
         </span>
         <span>
             ${data}
         </span>
     </li>`); 
+    }
+
+  
 })
 
 socket.on('incomingNewPlayer', (data) => {    
