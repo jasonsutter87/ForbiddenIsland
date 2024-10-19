@@ -2,13 +2,9 @@
 // Import Bootstrap SCSS
 @import '../../../node_modules/bootstrap/scss/bootstrap';
 
-
-
 // Variable overrides second
 @import "variables";
 @import "utilities";
-
-
 
 // Required Bootstrap imports
 @import "../../../node_modules/bootstrap/scss/variables";
@@ -29,301 +25,270 @@
 html {
     height: 100%;
     width: 100%;
-  }
+}
 
 
-  #game-ui{
-    .wrapper {
-      display: grid;
-      grid-template-columns: 1fr; /* Single column for mobile */
-      grid-template-rows: 20vh 1fr auto; /* Adjust based on content */
-      grid-template-areas:
-        "header1"
-        "header2"
-        "main-content"
-        "small-box-1"
-        "small-box-2"
-        "footer";
-      gap: 4px; /* Optional spacing between grid items */
-      height: 100vh; /* Full viewport height */
-      
-
-
-      @media(min-width: 992px){
-        grid-template-columns: .5fr .3fr .35fr .55fr; /* Three columns: main, and two smaller ones */
-        grid-template-areas:
-        "main-content main-content header1 header1"
-        "main-content main-content small-box-1 small-box-2"
-        "footer footer footer footer";
-      }
-    }
-        
-    /* Assigning grid areas to each section */
-    .header1 {
-      grid-area: header1;
-      background: tan;
-      display: flex;
-      justify-content: space-between;
-    
-      .captured-treasures {
-        border: 1px solid black;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: 10px; /* Adjust spacing between items as needed */
-        padding: 1px;
-        aspect-ratio: 1 / 1;
-    
-        .treasure {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    
-      .current-player-image-wrapper {
-        aspect-ratio:  1 / 1;
-        border: 1px solid black;
-      }
-    }
-    
-    .header2 {
-      grid-area: header2;
-      background: tan;
-      display: flex;
-      justify-content: center;
-        
-      @media(min-width: 992px) {
-        display: none;
-      }
-
-      .captured-treasures {
-        border: 1px solid black;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: 10px; /* Adjust spacing between items as needed */
-        padding: 1px;
-        aspect-ratio: 1 / 1;
-    
-        .treasure {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-    
-    
-    
-    .footer {
-      grid-area: footer;
-      background: tan;
-    }
-    
-    .small-box-1 {
-      grid-area: small-box-1;
-      background: tan;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: space-around;
-    }
-    
-    .small-box-2 {
-      grid-area: small-box-2;
-      background: tan;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: space-around;
-    }
-    
-    .main-content {
-      grid-area: main-content;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: tan;
-      position: relative;
-
-      .players-name {
-        display: none;
-        @media(min-width: 992px) {
-          display: block;
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-        }
-      }
-
-
-      .current-players-name {
-        display: none;
-
-        @media(min-width: 992px) {
-          display: block;
-          position: absolute;
-          top: 1rem;
-          left: 1rem;
-        }
-      }
-    }
-    
-    
-    .sidebar-item-1 {
-      grid-area: sidebar-item-1;
-      background: tan;
-      flex-grow: 1;
-      padding: 4px 1rem;
-    }
-    
-    .sidebar-item-2 {
-      grid-area: sidebar-item-2;
-      background: tan;
-      flex-grow: 1;
-      padding: 4px 1rem;
-    }
-    
-    .sidebar-item-3 {
-      grid-area: sidebar-item-3;
-      background: tan;
-      flex-grow: 1;
-      padding: 4px 1rem;
-    }
-    
-    .sidebar-item-4 {
-      grid-area: sidebar-item-4;
-      background: tan;
-      flex-grow: 1;
-      padding: 4px 1rem;
-    }
-    
-  }
-
-  .clients-current-players-name {
-    .Diver {
-      color: Black;
-    }
-
-    .Pilot {
-      color: blue;
-    }
-
-    .Messenger {
-      color: white;
-    }
-
-    .Explorer {
-      color: green;
-    }
-
-    .Engineer {
-      color: red;
-    }
-
-    .Navigator {
-      color: yellow;
-    }
-  }
-
-  .clients-players-actions-cards,
-  .clients-players-name {
-    .Diver {
-      color: Black;
-    }
-
-    .Pilot {
-      color: blue;
-    }
-
-    .Messenger {
-      color: white;
-    }
-
-    .Explorer {
-      color: green;
-    }
-
-    .Engineer {
-      color: red;
-    }
-
-    .Navigator {
-      color: yellow;
-    }
-  }
-  
-  
-  #board {
+#game-ui{
+  .wrapper {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-gap: 2px;
-    padding: 4px;
-    max-width: 1200px; // Optional: Limit board width
-    margin: auto; // Center the board
-    border-radius: 8px; // Optional: Rounded corners
+    grid-template-columns: 1fr; /* Single column for mobile */
+    grid-template-rows: 20vh 1fr auto; /* Adjust based on content */
+    grid-template-areas:
+      "header1"
+      "header2"
+      "main-content"
+      "small-box-1"
+      "small-box-2"
+      "footer";
+    gap: 4px; /* Optional spacing between grid items */
+    height: 100vh; /* Full viewport height */
+    
 
 
-    @media(min-width: 586px){
-      grid-gap: 4px;
-      padding: 1rem;
+    @media(min-width: 992px){
+      grid-template-columns: .5fr .3fr .35fr .55fr; /* Three columns: main, and two smaller ones */
+      grid-template-areas:
+      "main-content main-content header1 header1"
+      "main-content main-content small-box-1 small-box-2"
+      "footer footer footer footer";
     }
-
-    @media(min-width: 768px){
-      grid-gap: 10px;
-      padding: 4vh;
-    }
-
-
-    .row {
-      display: contents;
-      --bs-gutter-x: 0 !important;
-      --bs-gutter-y: 0 !important;
-    }
+  }
+      
+  /* Assigning grid areas to each section */
+  .header1 {
+    grid-area: header1;
+    background: tan;
+    display: flex;
+    justify-content: space-between;
   
-    @media (max-width: 1200px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  
-    @media (max-width: 800px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  
-    @media (max-width: 500px) {
+    .captured-treasures {
+      border: 1px solid black;
+      display: grid;
       grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px; /* Adjust spacing between items as needed */
+      padding: 1px;
+      aspect-ratio: 1 / 1;
+  
+      .treasure {
+        width: 100%;
+        height: 100%;
+      }
     }
   
-    @media (max-width: 300px) {
-      grid-template-columns: 1fr;
+    .current-player-image-wrapper {
+      aspect-ratio:  1 / 1;
+      border: 1px solid black;
     }
   }
   
+  .header2 {
+    grid-area: header2;
+    background: tan;
+    display: flex;
+    justify-content: center;
+      
+    @media(min-width: 992px) {
+      display: none;
+    }
 
-
+    .captured-treasures {
+      border: 1px solid black;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px; /* Adjust spacing between items as needed */
+      padding: 1px;
+      aspect-ratio: 1 / 1;
   
+      .treasure {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  
+  
+  
+  .footer {
+    grid-area: footer;
+    background: tan;
+  }
+  
+  .small-box-1 {
+    grid-area: small-box-1;
+    background: tan;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+  }
+  
+  .small-box-2 {
+    grid-area: small-box-2;
+    background: tan;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+  }
+  
+  .main-content {
+    grid-area: main-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: tan;
+    position: relative;
+
+    .players-name {
+      display: none;
+      @media(min-width: 992px) {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+
+
+    .current-players-name {
+      display: none;
+
+      @media(min-width: 992px) {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  }
+  
+  
+  .sidebar-item-1 {
+    grid-area: sidebar-item-1;
+    background: tan;
+    flex-grow: 1;
+    padding: 4px 1rem;
+  }
+  
+  .sidebar-item-2 {
+    grid-area: sidebar-item-2;
+    background: tan;
+    flex-grow: 1;
+    padding: 4px 1rem;
+  }
+  
+  .sidebar-item-3 {
+    grid-area: sidebar-item-3;
+    background: tan;
+    flex-grow: 1;
+    padding: 4px 1rem;
+  }
+  
+  .sidebar-item-4 {
+    grid-area: sidebar-item-4;
+    background: tan;
+    flex-grow: 1;
+    padding: 4px 1rem;
+  }
+  
+}
+
+.clients-current-players-name,
+.clients-players-actions-cards,
+.clients-players-name {
+  .Diver {
+    color: $Diver;
+  }
+
+  .Pilot {
+    color: $Pilot;
+  }
+
+  .Messenger {
+    color: $Messenger;
+  }
+
+  .Explorer {
+    color: $Explorer;
+  }
+
+  .Engineer {
+    color: $Engineer;
+  }
+
+  .Navigator {
+    color: $Navigator;
+  }
+}
+
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 2px;
+  padding: 4px;
+  max-width: 1200px; 
+  margin: auto; 
+  border-radius: 8px; 
+
+  @media(min-width: 586px){
+    grid-gap: 4px;
+    padding: 1rem;
+  }
+
+  @media(min-width: 768px){
+    grid-gap: 10px;
+    padding: 4vh;
+  }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 300px) {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    display: contents;
+    --bs-gutter-x: 0 !important;
+    --bs-gutter-y: 0 !important;
+  }
+
   .tile {
     position: relative;
-    aspect-ratio: 1 / 1; // Ensures the tiles are square
-    overflow: hidden; // Ensures images are contained within the tile
-    border: 2px solid #ccc; // Add a border for visibility
-    border-radius: 8px; // Optional: rounded corners
-    transition: transform 0.3s; // Optional: hover effect
+    aspect-ratio: 1 / 1; 
+    overflow: hidden;
+    border: 2px solid #ccc; 
+    border-radius: 8px; 
+    transition: transform 0.3s; 
   
     &:hover {
-      transform: scale(1.05); // Slightly enlarge the tile on hover
+      transform: scale(1.05); 
     }
   
     &.blocked {
-      background-color: #444; // Color for blocked tiles
+      background-color: #444; 
       visibility: hidden;
     }
   
     &.flooded {
-      background-color: rgba(0, 0, 255, 0.5); // Semi-transparent blue for flooded tiles
+      background-color: rgba(0, 0, 255, 0.5); 
       cursor: pointer;
     }
   
     &.normal {
-      background-color: #fff; // Color for normal tiles
+      background-color: #fff; 
       cursor: pointer;
     }
 
@@ -334,105 +299,80 @@ html {
     }
   
     img {
-      width: 100%; // Image takes the full width of the tile
-      height: 100%; // Image takes the full height of the tile
-      object-fit: cover; // Ensures the image covers the tile
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
     }
   }
-  
-
-  .btn-primary {
-    transition: 0.5s !important;
-    cursor: pointer !important;
-    background-color: #000033 !important;
-    font-weight: 600 !important;
-    border-radius: 10px !important;
-    border: 2px solid #000033 !important;
-    color: #ffffff !important;
-    line-height: 24px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    text-transform: capitalize;
-    text-decoration: none !important;
 }
-.btn-size-lg {
-    padding: 12px 30px;
-    border-radius: 10px;
-    font-size: calc(1rem * 1.111) !important;
-    line-height: calc(24px * 1.166) !important;
+
+
+
+
+// #moveOrActionModal,
+// #statingModal {
+
+//   .modal-backdrop {
+//     background-color: transparentize($color: #000000, $amount: .7);
+    
+//     .modal-body {
+//       display: flex;
+//       align-items: center;
+//       height: 100%;
+//       justify-content: center;
+//     }
+
+//     .modal-inner {
+//       width: 100%;
+//       max-width: 300px;
+//       background-color: greenyellow;
+//       padding: 1.25rem;
+//     }
+
+//     .modal-exit {
+//       display: flex;
+//       justify-content: flex-end;
+
+//       button {
+//         background-color: transparent;
+//         border: 0;
+//         box-shadow: none;
+//       }
+//     }
+
+//   }
+// }
+
+
+.player-piece {
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  height: unset !important;
+  z-index: 10;
+  width: 25px !important;
+  box-shadow: 0 8px 3px 0px #000000b5;
+  border-radius: 35%;
 }
-  
-  // #moveOrActionModal,
-  // #statingModal {
 
-  //   .modal-backdrop {
-  //     background-color: transparentize($color: #000000, $amount: .7);
-      
-  //     .modal-body {
-  //       display: flex;
-  //       align-items: center;
-  //       height: 100%;
-  //       justify-content: center;
-  //     }
-
-  //     .modal-inner {
-  //       width: 100%;
-  //       max-width: 300px;
-  //       background-color: greenyellow;
-  //       padding: 1.25rem;
-  //     }
-
-  //     .modal-exit {
-  //       display: flex;
-  //       justify-content: flex-end;
-
-  //       button {
-  //         background-color: transparent;
-  //         border: 0;
-  //         box-shadow: none;
-  //       }
-  //     }
-
-  //   }
-  // }
-
-  .bold{
-    font-weight: 700;
-  }
-
-
-  
-  .player-piece {
-    position: absolute;
-    top: 15%;
-    left: 20%;
-    height: unset !important;
-    z-index: 10;
-    width: 25px !important;
-    box-shadow: 0 8px 3px 0px #000000b5;
-    border-radius: 35%;
-  }
-
-  .player-active-Diver {
-    border: 5px solid #000000;
-  }
-  .player-active-Pilot {
-    border: 5px solid #0000ff;
-  }
-  .player-active-Messenger {
-    border: 5px solid #ffffff;
-  }
-  .player-active-Explorer {
-    border: 5px solid #008000;
-  }
-  .player-active-Engineer {
-    border: 5px solid #ff0000;
-  }
-  .player-active-Navigator {
-    border: 5px solid #ffff00;
-  }
+.player-active-Diver {
+  border: 5px solid $Diver;
+}
+.player-active-Pilot {
+  border: 5px solid $Pilot;
+}
+.player-active-Messenger {
+  border: 5px solid $Messenger;
+}
+.player-active-Explorer {
+  border: 5px solid $Explorer;
+}
+.player-active-Engineer {
+  border: 5px solid $Engineer;
+}
+.player-active-Navigator {
+  border: 5px solid $Navigator;
+}
   
 .startingModal-wrapper {
   display: flex;
@@ -649,7 +589,6 @@ html {
   }
 }
 
-
 #inputNameModal {
   background-color: transparentize($color: #000000, $amount: .7);
   position: fixed;
@@ -752,7 +691,6 @@ html {
   gap: 8px;
 }
 
-
 .player-action-cards{
   width: 100%;
   max-width: 60px;
@@ -777,7 +715,6 @@ html {
     }
   }
 }
-
 
 .chat-window-btn{
   border: 0;
