@@ -66,7 +66,6 @@ const handleGameEvents = ({
           current_player: null,
           current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
           gameBoard: rooms[roomName].startingGameBoard,
-          status: GAME_STATUS.notStarted,
           current_flood_level: 1,
           flood_deal_count: 2
         }; 
@@ -153,9 +152,7 @@ const handleGameEvents = ({
             rooms[roomName] =  updatedBoard
 
             io.to(roomName).emit('redrawBoard', rooms[roomName]);
-            rooms[roomName].gameDetails.players.forEach((player) => {
-              setPlayerOnTheBoard(rooms[roomName].gameDetails, player)
-            })
+
             if(floodDeckUnusedCount == 0) {
               io.to(roomName).emit('floodDeckUnusedCount0');  
             }
@@ -194,9 +191,6 @@ const handleGameEvents = ({
               // flood more tiles
 
               io.to(roomName).emit('redrawBoard', rooms[roomName]);
-              rooms[roomName].gameDetails.players.forEach((player) => {
-                setPlayerOnTheBoard(rooms[roomName].gameDetails, player)
-              })
 
               if(actionDeckUnusedCount == 0) {
                 io.to(roomName).emit('actionDeckUnusedCount0');  
@@ -207,9 +201,9 @@ const handleGameEvents = ({
     })
 
     socket.on('rotatePlayers', (roomName) => {
-      console.log('rotateUIPlayers', rooms[roomName])
+
       //rotate players
-      rooms[roomName].gameDetails.players.push(rooms[roomName].gameDetails.players.shift())
+      rooms[roomName].gameDetails.players.push(rooms[roomName].gameDetails.players.unshift())
       
       //set new current player
       rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
@@ -217,7 +211,6 @@ const handleGameEvents = ({
       //reset players turn 
       rooms[roomName].gameDetails.current_player_turn = { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 }
 
-     console.log('rotateUIPlayers', rooms[roomName])
       io.to(roomName).emit('rotateUIPlayers', rooms[roomName]); 
     })
 
@@ -328,22 +321,10 @@ const handleGameEvents = ({
 
       io.to(roomName).emit('setCurrentPlayer', rooms[roomName].gameDetails.current_player)
 
-      console.log('WE HAVE DONE IT ALL')
+      console.log('The Game is Ready.')
 
-    // // Example game loop logic
-    // let gameRunning = true;
-    // let intervalId = setInterval(() => {
-    //   if (!gameRunning) {
-    //     clearInterval(intervalId);
-    //   }
-    //   io.to(roomName).emit('gameUpdate', { message: 'Game update...' });
-    // }, 1000); // Send updates every second
     };
 };
-
-
-
-
 
 module.exports = {
   handleGameEvents,

@@ -224,46 +224,26 @@ let resetGame = () => {
     current_player: null,
     current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
     gameBoard: game_board,
-    status: GAME_STATUS.notStarted,
     current_flood_level: 1
 }; 
 
  
 }
 
-
-// Contains utility functions that can be reused across the project
-// let selectObjectById = (board, id) => {
-//   for (let row of board) {
-//       for (let tile of row) {
-//           if (typeof tile === 'object' && tile.id === id) {
-//               return tile;
-//           }
-//       }
-//   }
-//   return null;
-// };
-
-
-// let floodByWaterLevel = (floodDeck, waterLevel) => {
-//   for (let i = 0; i < waterLevel; i++) {
-//     if (floodDeck.length > 0) {
-//       let val = floodDeck.shift();
-//       let tile = selectObjectById(game_board, val.id);
-//       if (tile) {
-//         tile.flooded = true;
-//         moveCardNewPile(flood_discard, [val]);
-//       }
-//     }
-//   }
-// };
+let floodByWaterLevel = (floodDeck, waterLevel) => {
+  for (let i = 0; i < waterLevel; i++) {
+    if (floodDeck.length > 0) {
+      let val = floodDeck.shift();
+      let tile = selectObjectById(game_board, val.id);
+      if (tile) {
+        tile.flooded = true;
+        moveCardNewPile(flood_discard, [val]);
+      }
+    }
+  }
+};
 
 
-// let moveCardNewPile = (inbound, outbound) => {
-//     if (outbound.length > 0) {
-//         inbound.push(outbound.shift());
-//     }
-// };
 
 // Exported functions to be used in routes and sockets
 module.exports = {

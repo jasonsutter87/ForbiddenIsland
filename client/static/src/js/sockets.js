@@ -1,7 +1,6 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { movePlayer } from './board.js'
 
-
 //1. Connect to Socket.io server
 const serverUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000' 
@@ -14,9 +13,7 @@ const socket = io(serverUrl);
 
 let gameRoom;
 
-
 socket.on('setPlayersOnBoard', (room) => {
-    console.log(room)
     gameRoom = room;
     room.gameDetails.players.forEach((val, int) => {
         let playerName = val.name
@@ -24,7 +21,6 @@ socket.on('setPlayersOnBoard', (room) => {
         let flattenBoard = room.gameDetails.gameBoard.flat();
 
         let result = flattenBoard.find(item => item && item.starting_position === playerName);
-
 
             setTimeout(() =>{
                 if(result.starting_position == room.gameDetails.current_player.name) {
@@ -36,11 +32,7 @@ socket.on('setPlayersOnBoard', (room) => {
                 `)
 
             }, 500) 
-
-        
-    
-    })
-          
+    })      
 })
 
 socket.on('settingRoomName', (data) => {
@@ -115,30 +107,7 @@ socket.on('setGameLayout', (id) => {
 ///////////////////////
 socket.on('redrawBoard', (data) => {
     createBoardUI(data.gameDetails.gameBoard);
-
-    // Flatten the game board to a single array
-    const flattenBoard = data.gameDetails.gameBoard.flat();
-   
-
-    flattenBoard.forEach((item) => {
-        if (item.current_players && item.current_players.length > 0) {
-            const playerName = item.current_players[0].name;
-
-            if(item.current_players[0].name == data.gameDetails.current_player.name){
-                // Log the player being appended to the tile
-                console.log('Appending player:', playerName, 'to tile:', item.id);
-    
-                // Add active class to the current player's tile if it matches
-                $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${playerName}`);
-            }
-
-
-            // // Use setTimeout to append the player piece to the tile with a delay
-            setTimeout(() => {
-                appendPlayerPiece(item.id, playerName);
-            }, 1500);
-        }
-    })
+    redrawPlayers(data)
 })
 
 socket.on('floodBoard', (data)=> {
@@ -240,75 +209,23 @@ socket.on('updateFloodLevelUI', (data) => {
 ///////////////////////
 // Move player
 socket.on('moveUIPlayer', (data) => {
-    console.log('moveUIPlayer', data)
-
-
-
-
-    /// Everything should be working. Refactor this to reflect.
-    //Remove all player pieces
-    //add again? 
-
-    //refactor the current method flattenBoard? this would work best since the ui could be dumb
-
-
-
-
-
-
-
-
-    
-    
-
-    //if and bugs happen they are here now
-
-    // createBoardUI(data.gameDetails.gameBoard);
-
-    // Flatten the game board to a single array
-    // const flattenBoard = data.gameDetails.gameBoard.flat();
-   
-
-    // flattenBoard.forEach((item) => {
-    //     if (item.current_players && item.current_players.length > 0) {
-    //         const playerName = item.current_players[0].name;
-
-    //         if(item.current_players[0].name == data.gameDetails.current_player.name){
-    //             // Log the player being appended to the tile
-    //             console.log('Appending player:', playerName, 'to tile:', item.id);
-    
-    //             // Add active class to the current player's tile if it matches
-    //             $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${playerName}`);
-    //         }
-
-
-    //         // // Use setTimeout to append the player piece to the tile with a delay
-    //         setTimeout(() => {
-    //             appendPlayerPiece(item.id, playerName);
-    //         }, 1500);
-    //     }
-    // });
+    redrawPlayers(data)
 });
-
-
 
 socket.on('rotateUIPlayers',  (data) => {
     console.log('rotateUIPlayers', data)
 
-    //updatte the current player spans
+    $('.clients-current-players-name span').removeClass()
+    $('.clients-current-players-name span').addClass(data.gameDetails.current_player.name)
+    $('.clients-current-players-name span').html(data.gameDetails.current_player.name)
 
-    //strip all active class on the grid
-
-    //apply new active player  class 
+    redrawPlayers(data)
 })
-
 
 //gameover
 socket.on('gameOver', () => {
     alert('gameOver!')
 })
-
-
 
 // Define createBoardUI as a separate function
 function createBoardUI(board) {
@@ -367,16 +284,6 @@ function createBoardUI(board) {
       
         resolve();
     });
-}
-
-// Function to append the player piece to the tile
-function appendPlayerPiece(tileId, playerName) {
-    const tileSelector = `.tile[cardid="${tileId}"]`;
-    
-    // Append player piece
-    $(tileSelector).append(`
-        <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${tileId}'>
-    `);
 }
 
 const findPlayerCoordinates = (playerName) => {
@@ -471,7 +378,35 @@ let playerMoveOrActionModal = (toId, roomName) => {
 });
 
 }
-  
+
+let redrawPlayers = (data) => {
+       //remove active boarder
+       $('[class*="player-active"]').removeClass(function(index, className) {
+        return (className.match(/\bplayer-active-\S+/g) || []).join(' ');
+    });
+
+    //remove all players
+    $('.player-piece').remove()
+
+    const flattenBoard = data.gameDetails.gameBoard.flat();
+    flattenBoard.forEach((item) => {
+        if(item !== 'x' && item.current_players.length > 0) {
+            item.current_players.forEach(player => {
+                if(player.name == data.gameDetails.current_player.name) {
+                    $(`.tile[cardid="${item.id}"]`).addClass(`player-active-${player.name}`);
+                    $(`.tile[cardid="${item.id}"]`).append(`
+                            <img src="/assets/images/players/${player.name}.png" class="player-piece" player='${player.name}' playerId='${item.id}'>
+                    `)
+                } else {
+                    $(`.tile[cardid="${item.id}"]`).append(`
+                         <img src="/assets/images/players/${player.name}.png" class="player-piece" player='${player.name}' playerId='${item.id}'>
+                    `)
+                }
+            })
+        }
+    });
+}
+
 export { socket, gameRoom };
 
 
