@@ -184,11 +184,13 @@ $('.chat-window-btn').on('click', e => {
         socket.badge = 0;
     }
 
+    $('body').addClass('overflow-hidden')
     $('.joinRoomModal-wrapper').addClass('active')
 })
 
 $('#chat-back-to-game').on('click', e => {
     e.preventDefault();
+    $('body').removeClass('overflow-hidden')
     $('.joinRoomModal-wrapper').removeClass('active')
 })
 

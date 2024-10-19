@@ -35,4 +35,8 @@
   border-radius: 10px;
   font-size: 1.111rem !important;
   line-height: 27.984px !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
 }/*# sourceMappingURL=utilities.css.map */
