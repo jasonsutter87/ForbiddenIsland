@@ -2,14 +2,14 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { movePlayer } from './board.js'
 
 //1. Connect to Socket.io server
-// const serverUrl = window.location.hostname === 'localhost' 
-//     ? 'http://localhost:3000' 
-//     : 'https://forbiddenisland.onrender.com';
+const serverUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : 'https://forbiddenisland.onrender.com';
 
-// // Connect to the Socket.io server
-// const socket = io(serverUrl);
+// Connect to the Socket.io server
+const socket = io(serverUrl);
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
 
 let gameRoom;
 
@@ -44,9 +44,6 @@ socket.on('settingRoomName', (data) => {
 ///////////////////////
 
 socket.on('incomingGameMessage', (room, data, name, id) => {
-    console.log(room.status, data, name, id)
-
-
     if(room.status === "Not Started" ) {
         $('#ChatContentArea').append(`<li>
             <span>
@@ -66,8 +63,6 @@ socket.on('incomingGameMessage', (room, data, name, id) => {
         </span>
     </li>`); 
     }
-
-  
 })
 
 socket.on('incomingNewPlayer', (data) => {    
