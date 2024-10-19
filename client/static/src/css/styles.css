@@ -19153,6 +19153,24 @@ html {
   -o-object-fit: cover;
      object-fit: cover;
 }
+#board .player-active-Diver {
+  border: 5px solid #000000;
+}
+#board .player-active-Pilot {
+  border: 5px solid #0000ff;
+}
+#board .player-active-Messenger {
+  border: 5px solid #ffffff;
+}
+#board .player-active-Explorer {
+  border: 5px solid #008000;
+}
+#board .player-active-Engineer {
+  border: 5px solid #ff0000;
+}
+#board .player-active-Navigator {
+  border: 5px solid #ffff00;
+}
 
 .player-piece {
   position: absolute;
@@ -19163,30 +19181,6 @@ html {
   width: 25px !important;
   box-shadow: 0 8px 3px 0px rgba(0, 0, 0, 0.7098039216);
   border-radius: 35%;
-}
-
-.player-active-Diver {
-  border: 5px solid #000000;
-}
-
-.player-active-Pilot {
-  border: 5px solid #0000ff;
-}
-
-.player-active-Messenger {
-  border: 5px solid #ffffff;
-}
-
-.player-active-Explorer {
-  border: 5px solid #008000;
-}
-
-.player-active-Engineer {
-  border: 5px solid #ff0000;
-}
-
-.player-active-Navigator {
-  border: 5px solid #ffff00;
 }
 
 .startingModal-wrapper {

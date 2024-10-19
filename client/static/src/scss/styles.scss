@@ -304,6 +304,25 @@ html {
       object-fit: cover; 
     }
   }
+
+  .player-active-Diver {
+    border: 5px solid $Diver;
+  }
+  .player-active-Pilot {
+    border: 5px solid $Pilot;
+  }
+  .player-active-Messenger {
+    border: 5px solid $Messenger;
+  }
+  .player-active-Explorer {
+    border: 5px solid $Explorer;
+  }
+  .player-active-Engineer {
+    border: 5px solid $Engineer;
+  }
+  .player-active-Navigator {
+    border: 5px solid $Navigator;
+  }
 }
 
 
@@ -355,24 +374,7 @@ html {
   border-radius: 35%;
 }
 
-.player-active-Diver {
-  border: 5px solid $Diver;
-}
-.player-active-Pilot {
-  border: 5px solid $Pilot;
-}
-.player-active-Messenger {
-  border: 5px solid $Messenger;
-}
-.player-active-Explorer {
-  border: 5px solid $Explorer;
-}
-.player-active-Engineer {
-  border: 5px solid $Engineer;
-}
-.player-active-Navigator {
-  border: 5px solid $Navigator;
-}
+
   
 .startingModal-wrapper {
   display: flex;
