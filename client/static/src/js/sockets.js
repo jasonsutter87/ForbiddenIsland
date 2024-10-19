@@ -1,46 +1,19 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { movePlayer } from './board.js'
 
-//1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
-
 // Connect to the Socket.io server
-const socket = io(serverUrl);
+const socket = io('https://forbiddenisland.onrender.com');
 
 // const socket = io('http://localhost:3000');
 
 let gameRoom;
-
-socket.on('setPlayersOnBoard', (room) => {
-    gameRoom = room;
-    room.gameDetails.players.forEach((val, int) => {
-        let playerName = val.name
-        
-        let flattenBoard = room.gameDetails.gameBoard.flat();
-
-        let result = flattenBoard.find(item => item && item.starting_position === playerName);
-
-            setTimeout(() =>{
-                if(result.starting_position == room.gameDetails.current_player.name) {
-                    $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
-                }
-                
-                $(`.tile[cardid="${result.id}"]`).append(`
-                    <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
-                `)
-
-            }, 500) 
-    })      
-})
 
 socket.on('settingRoomName', (data) => {
     socket.roomName = data
 })
 
 ///////////////////////
-//     GAME_ROOM     //
+//     CHAT_ROOM     //
 ///////////////////////
 
 socket.on('incomingGameMessage', (room, data, name, id) => {
@@ -108,8 +81,6 @@ socket.on('startGame', (board) => {
     $('#lobby-layout').addClass('d-none')
     $('.joinRoomModal-wrapper').removeClass('active')
     $('.gameUI-wrapper').removeClass('d-none')
-
-
     $('main').append('<div id="board"></div>')
     createBoardUI(board)
 })
@@ -121,6 +92,28 @@ socket.on('setGameLayout', (id) => {
 ///////////////////////
 //    GAME_SETUP     //
 ///////////////////////
+socket.on('setPlayersOnBoard', (room) => {
+    gameRoom = room;
+    room.gameDetails.players.forEach((val, int) => {
+        let playerName = val.name
+        
+        let flattenBoard = room.gameDetails.gameBoard.flat();
+
+        let result = flattenBoard.find(item => item && item.starting_position === playerName);
+
+            setTimeout(() =>{
+                if(result.starting_position == room.gameDetails.current_player.name) {
+                    $(`.tile[cardid="${result.id}"]`).addClass(`player-active-${room.gameDetails.current_player.name}`)
+                }
+                
+                $(`.tile[cardid="${result.id}"]`).append(`
+                    <img src="/assets/images/players/${playerName}.png" class="player-piece" player='${playerName}' playerId='${result.current_players[0].id}' >
+                `)
+
+            }, 500) 
+    })      
+})
+
 socket.on('redrawBoard', (data) => {
     createBoardUI(data.gameDetails.gameBoard);
     redrawPlayers(data)
@@ -370,28 +363,58 @@ if(game_details.current_player.name == "Explorer"){
 .map(tile => board[tile.row][tile.col].id);
 }
 
+
+let getTitleById = (board, id) => {
+    let flatten = board.flat()
+    let tile = flatten.filter(tile => tile.id == id)
+    return tile[0];
+}
+
 let playerMoveOrActionModal = (toId, roomName) => {         
     let game_details;
 
     socket.emit('getRoomDetails', roomName, (roomDetails) => {
+        
     game_details =  roomDetails.gameDetails;
 
-
     if(socket.playerName == game_details.current_player.name) {
-        if(game_details.current_player_turn.number_of_actions < 3) {
-            let fromId = $('[class*="player-active-"]').attr('cardid');
-  
-            let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
-            let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
-            let result = adjacentTileIds.find(x => x == toId)
-            
-            if(result) {  
-                if(fromId != toId ) {
-                movePlayer(roomName, fromId, toId)
-                }
+
+        let tile = getTitleById(game_details.gameBoard, toId)
+        let fromId = $('[class*="player-active-"]').attr('cardid');
+
+        if(tile && tile.flooded == true ){
+            $('.moveOrUnfloodModal-wrapper ').removeClass('d-none')
+
+
+            if(fromId == toId) {
+                //allow to unflood - not move
+                $('#movePlayerToClickedTile').addClass('d-none')
+                
+                $('#unfloodClickedTile').on('click', e => {
+                    e.preventDefault(); 
+                    $('.moveOrUnfloodModal-wrapper ').addClass('d-none')
+                    $('#movePlayerToClickedTile').removeClass('d-none')
+                    tile.flooded = false 
+                    socket.emit('unFloodTile', roomName, tile.id );
+                })
+            } else {
+
+                $('#unfloodClickedTile').on('click', e => {
+                    e.preventDefault(); 
+                    $('.moveOrUnfloodModal-wrapper ').addClass('d-none')
+                    tile.flooded = false 
+                    socket.emit('unFloodTile', roomName, tile.id );
+                })
+
+                $('#movePlayerToClickedTile').on('click', e => {
+                    e.preventDefault();
+                    $('.moveOrUnfloodModal-wrapper ').addClass('d-none')
+                    movePlayerAuto(fromId, toId, game_details, roomName)
+                })
             }
+            
         } else {
-            alert('player needs to pull 2 action card')
+            movePlayerAuto(fromId, toId, game_details, roomName)
         }
     } else {
         alert('Its Not your turn yo  🤡')
@@ -400,6 +423,24 @@ let playerMoveOrActionModal = (toId, roomName) => {
 });
 
 }
+
+let movePlayerAuto = (fromId, toId, game_details, roomName) => {
+    if(game_details.current_player_turn.number_of_actions < 3) {
+        
+
+        let currentPlayersLocation = findPlayerCoordinates(game_details.current_player.name)
+        let adjacentTileIds = getAdjacentTileIds(game_details, game_details.gameBoard, currentPlayersLocation)
+        let result = adjacentTileIds.find(x => x == toId)
+        
+        if(result) {  
+            if(fromId != toId ) {
+                movePlayer(roomName, fromId, toId)
+            }
+        }
+    } else {
+        alert('player needs to pull 2 action card')
+    }
+} 
 
 let redrawPlayers = (data) => {
        //remove active boarder

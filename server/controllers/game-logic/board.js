@@ -52,6 +52,15 @@ let floodBoard = (room, tileCount) => {
 
   return room;
 };
+let unFloodTile = (room, id) => {
+  let boardTitle = selectObjectById(room.gameDetails.gameBoard, id)
+
+  if(boardTitle.flooded == true) {
+    boardTitle.flooded = false
+  }
+
+ return room
+}
 
 let floodOrSink = (room) => {
 
@@ -256,5 +265,6 @@ module.exports = {
     moveCardNewPile,
     floodOrSink,
     floodBoard,
-    checkForWaterRise
+    checkForWaterRise,
+    unFloodTile
 };
