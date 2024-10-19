@@ -19176,6 +19176,30 @@ html {
   border: 5px solid #ffff00;
 }
 
+.moveOrUnfloodModal-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.1s;
+  opacity: 1;
+  z-index: 25;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.moveOrUnfloodModal-wrapper .modal-main {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+}
+.moveOrUnfloodModal-wrapper .modal-main .modal-body {
+  width: 100%;
+  max-width: 300px;
+  background-color: greenyellow;
+  padding: 1.25rem;
+}
+
 .player-piece {
   position: absolute;
   top: 15%;

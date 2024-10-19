@@ -10,6 +10,7 @@ const { checkForPlayerLost,
         placeTilesOnBoard,
         moveCardNewPile,
         floodOrSink,
+        unFloodTile,
         checkForWaterRise, floodBoard } =  require('../game-logic/board')
 const { setPlayerOnTheBoard } = require('../game-logic/player')
 const express = require('express');
@@ -225,6 +226,14 @@ const handleGameEvents = ({
             }
         }
 
+    })
+
+
+    socket.on('unFloodTile', (roomName, tile) => {
+      let updatedBoard =  unFloodTile(rooms[roomName], tile)
+      rooms[roomName] =  updatedBoard
+      rooms[roomName].gameDetails.current_player_turn.number_of_actions++;
+      io.to(roomName).emit('redrawBoard', rooms[roomName]);
     })
 
     socket.on('rotatePlayers', (roomName) => {
