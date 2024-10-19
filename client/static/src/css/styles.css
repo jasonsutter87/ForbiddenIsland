@@ -18885,9 +18885,9 @@ html {
 #game-ui .wrapper {
   display: grid;
   grid-template-columns: 1fr; /* Single column for mobile */
-  grid-template-rows: 15vh 1fr auto; /* Adjust based on content */
+  grid-template-rows: 20vh 1fr auto; /* Adjust based on content */
   grid-template-areas: "header1" "header2" "main-content" "small-box-1" "small-box-2" "footer";
-  gap: 10px; /* Optional spacing between grid items */
+  gap: 4px; /* Optional spacing between grid items */
   height: 100vh; /* Full viewport height */
 }
 @media (min-width: 992px) {
@@ -18945,7 +18945,7 @@ html {
 }
 #game-ui .footer {
   grid-area: footer;
-  background: lightgray;
+  background: tan;
 }
 #game-ui .small-box-1 {
   grid-area: small-box-1;
@@ -19501,4 +19501,47 @@ html {
 .flood-level-section .current-flood-level .flood-level-slider {
   height: 35px;
   background: blue;
+}
+
+.chat-window-btn {
+  border: 0;
+  background-color: transparent;
+  position: relative;
+  margin-top: 8px;
+}
+.chat-window-btn .message-icon {
+  font-size: 2rem;
+}
+.chat-window-btn #noMessages {
+  display: block;
+}
+.chat-window-btn #yesMessages {
+  display: none;
+}
+.chat-window-btn .badge {
+  display: none;
+}
+.chat-window-btn:hover #noMessages {
+  display: none;
+}
+.chat-window-btn:hover #yesMessages {
+  display: block;
+}
+.chat-window-btn.active #noMessages {
+  display: none;
+}
+.chat-window-btn.active #yesMessages {
+  display: block;
+  color: red;
+}
+.chat-window-btn.active .badge {
+  display: block;
+  background: red;
+  position: absolute;
+  top: -5px;
+  right: -6px;
+}
+
+#chat-back-to-game {
+  border-radius: 10px !important;
 }/*# sourceMappingURL=styles.css.map */

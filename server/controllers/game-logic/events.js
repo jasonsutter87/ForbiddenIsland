@@ -127,6 +127,9 @@ const handleGameEvents = ({
 
     socket.on('dealFloodCard', (roomName) => {
       let isGameover =  checkForPlayerLost(rooms[roomName])
+
+
+ 
       
       if(isGameover) {
         io.to(roomName).emit('gameOver');
@@ -135,14 +138,31 @@ const handleGameEvents = ({
 
         let floodDeckUnusedCount = rooms[roomName].gameDetails.flood_deck.unused.length;
 
-        //check if the user can take flood card
-        //TODO
-
         if(floodDeckUnusedCount == 0) {
             rooms[roomName].gameDetails.flood_deck.unused = rooms[roomName].gameDetails.flood_deck.discard
             rooms[roomName].gameDetails.flood_deck.discard = []
             io.to(roomName).emit('floodDeckUnusedCount0');  
           } else {
+   
+/*
+            Todo: 
+            - add logic that will see if the all the flood cards have been dealt and can rotate the player
+
+
+  ////Refactor....
+
+    //   if(game_details.current_player_turn.flood_cards_deal >=  game_details.flood_deal_count) {
+    //     rotatePlayers(roomName) 
+    // } else {
+    //
+    //}
+
+
+*/
+
+
+
+
             rooms[roomName].gameDetails.current_player_turn.flood_cards_deal++
 
             moveCardNewPile(rooms[roomName].gameDetails.flood_deck.discard,  rooms[roomName].gameDetails.flood_deck.unused );  
@@ -201,15 +221,7 @@ const handleGameEvents = ({
     })
 
     socket.on('rotatePlayers', (roomName) => {
-
-      //rotate players
-      rooms[roomName].gameDetails.players.push(rooms[roomName].gameDetails.players.unshift())
-      
-      //set new current player
-      rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
-
-      //reset players turn 
-      rooms[roomName].gameDetails.current_player_turn = { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 }
+      rotatePlayers(roomName)
 
       io.to(roomName).emit('rotateUIPlayers', rooms[roomName]); 
     })
@@ -324,6 +336,18 @@ const handleGameEvents = ({
       console.log('The Game is Ready.')
 
     };
+
+
+    let rotatePlayers = (roomName) => {
+      //rotate players
+      rooms[roomName].gameDetails.players.push(rooms[roomName].gameDetails.players.unshift())
+            
+      //set new current player
+      rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
+
+      //reset players turn 
+      rooms[roomName].gameDetails.current_player_turn = { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 }
+    }
 };
 
 module.exports = {

@@ -20,10 +20,15 @@
           <div class="text-center">
             <p class="error">Error: Text must be present</p>
           </div>
-
-
+          
         <div class="row gap-lg-4 justify-content-lg-center">
-          <div class="col-6 col-lg-auto text-center">
+          <div id="chat-game-button" class="d-none col-12 text-center">
+              <button id="chat-back-to-game" type="button">
+                 Back to the Game <i class="fa-solid fa-arrow-right"></i>
+              </button>
+          </div>
+
+          <div id="lobby-player-ready" class="col-6 col-lg-auto text-center">
             <label for="areYouReady">Are you Ready to start the game?</label><br>
             <select name="is-player-ready" id="areYouReady">
               <option value="no">No</option>
@@ -31,7 +36,7 @@
             </select>
           </div>
 
-          <div class="col-6 col-lg-auto text-center">
+          <div id="lobby-layout" class="col-6 col-lg-auto text-center">
             <label for="areYouReady">Select Game Layout</label><br>
             <select name="select-game-layout" id="selectGameLayout">
             </select>

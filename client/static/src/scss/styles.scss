@@ -36,7 +36,7 @@ html {
     .wrapper {
       display: grid;
       grid-template-columns: 1fr; /* Single column for mobile */
-      grid-template-rows: 15vh 1fr auto; /* Adjust based on content */
+      grid-template-rows: 20vh 1fr auto; /* Adjust based on content */
       grid-template-areas:
         "header1"
         "header2"
@@ -44,7 +44,7 @@ html {
         "small-box-1"
         "small-box-2"
         "footer";
-      gap: 10px; /* Optional spacing between grid items */
+      gap: 4px; /* Optional spacing between grid items */
       height: 100vh; /* Full viewport height */
       
 
@@ -116,7 +116,7 @@ html {
     
     .footer {
       grid-area: footer;
-      background: lightgray;
+      background: tan;
     }
     
     .small-box-1 {
@@ -779,4 +779,60 @@ html {
 }
 
 
+.chat-window-btn{
+  border: 0;
+  background-color: transparent;
+  position: relative;
+  margin-top: 8px;
 
+  .message-icon{
+    font-size: 2rem;
+  
+  }
+
+  #noMessages{
+    display: block;
+  }
+
+  #yesMessages{
+    display: none;
+  }
+
+  .badge {
+    display: none;
+  }
+
+
+  &:hover {
+    #noMessages{
+      display: none;
+    }
+  
+    #yesMessages{
+      display: block;
+    }
+  }
+
+  &.active {
+    #noMessages{
+      display: none;
+    }
+  
+    #yesMessages{
+      display: block;
+      color: red;
+    }
+
+    .badge{
+      display: block;
+      background: red;
+      position: absolute;
+      top: -5px;
+      right: -6px;
+    }
+  }
+}
+
+#chat-back-to-game {
+  border-radius: 10px !important;
+}
