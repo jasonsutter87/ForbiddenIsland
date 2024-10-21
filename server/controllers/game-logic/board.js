@@ -26,8 +26,11 @@ let placeTilesOnBoard = (gameBoard, cards) => {
 
 let moveCardNewPile = (inbound, outbound) => {
   if (outbound.length > 0) {
-      inbound.unshift(outbound.shift());
+    const movedItem = outbound.shift();
+    inbound.unshift(movedItem);
+    return movedItem;
   }
+  return null; 
 };
 
 let selectObjectById = (board, id) => {
@@ -92,7 +95,8 @@ let checkForWaterRise = ({
   ...rest            
 } = {}) => {
   let discardAction = room.gameDetails.action_deck.discard[0]
-  if(discardAction.name == "water rises"){
+
+  if(discardAction && discardAction.name == "water rises"){
 
   
     if(room.gameDetails.current_flood_level == 10) {
@@ -250,7 +254,10 @@ let floodByWaterLevel = (floodDeck, waterLevel) => {
       }
     }
   }
-};
+}; 
+
+
+
 
 
 
@@ -266,5 +273,6 @@ module.exports = {
     floodOrSink,
     floodBoard,
     checkForWaterRise,
-    unFloodTile
+    unFloodTile,
+    floodByWaterLevel
 };

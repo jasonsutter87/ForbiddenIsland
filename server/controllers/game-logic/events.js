@@ -152,24 +152,6 @@ const handleGameEvents = ({
             io.to(roomName).emit('floodDeckUnusedCount0');  
           } else {
    
-/*
-            Todo: 
-            - add logic that will see if the all the flood cards have been dealt and can rotate the player
-
-
-  ////Refactor....
-
-    //   if(game_details.current_player_turn.flood_cards_deal >=  game_details.flood_deal_count) {
-    //     rotatePlayers(roomName) 
-    // } else {
-    //
-    //}
-
-
-*/
-
-
-
 
             rooms[roomName].gameDetails.current_player_turn.flood_cards_deal++
 
@@ -177,9 +159,14 @@ const handleGameEvents = ({
             
             io.to(roomName).emit('floodDeckDiscard', rooms[roomName]);  
             let updatedBoard = floodOrSink(rooms[roomName])
-            rooms[roomName] =  updatedBoard
+            rooms[roomName] = updatedBoard
 
             io.to(roomName).emit('redrawBoard', rooms[roomName]);
+
+            if(rooms[roomName].gameDetails.current_player_turn.flood_cards_deal ==  rooms[roomName].gameDetails.flood_deal_count) {
+              rotatePlayers(roomName) 
+              io.to(roomName).emit('rotateUIPlayers', rooms[roomName]); 
+            }
 
             if(floodDeckUnusedCount == 0) {
               io.to(roomName).emit('floodDeckUnusedCount0');  
@@ -189,9 +176,6 @@ const handleGameEvents = ({
 
     socket.on('dealActionCard', (roomName) => {
 
-
-
-
         let actionDeckUnusedCount = rooms[roomName].gameDetails.action_deck.unused.length;
 
         if(actionDeckUnusedCount == 0) {
@@ -200,11 +184,19 @@ const handleGameEvents = ({
             io.to(roomName).emit('actionDeckUnusedCount0');  
         } else {
 
-
-          rooms[roomName].gameDetails.current_player_turn.action_cards_deal++
+            rooms[roomName].gameDetails.current_player_turn.action_cards_deal++
           
-            moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard,  rooms[roomName].gameDetails.action_deck.unused );
-            io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
+            let peekCard =  rooms[roomName].gameDetails.action_deck.unused[0]
+
+            if(peekCard.name == 'water rises') {
+              moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard,  rooms[roomName].gameDetails.action_deck.unused );
+              io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
+            } else {
+
+              let movedCard = moveCardNewPile(rooms[roomName].gameDetails.players[0].actionCards,  rooms[roomName].gameDetails.action_deck.unused );
+              io.to(roomName).emit('actionDeckDiscard', rooms[roomName], rooms[roomName].gameDetails.players[0], movedCard);
+            }
+          
 
             let updatedWaterRise = checkForWaterRise({room: rooms[roomName], io: io})
     
@@ -217,7 +209,6 @@ const handleGameEvents = ({
               //check / refactor for raiseTheWaterLevel
 
               // flood more tiles
-
               io.to(roomName).emit('redrawBoard', rooms[roomName]);
 
               if(actionDeckUnusedCount == 0) {
@@ -236,11 +227,6 @@ const handleGameEvents = ({
       io.to(roomName).emit('redrawBoard', rooms[roomName]);
     })
 
-    socket.on('rotatePlayers', (roomName) => {
-      rotatePlayers(roomName)
-
-      io.to(roomName).emit('rotateUIPlayers', rooms[roomName]); 
-    })
 
     socket.on('disconnect', () => {
       // Get the player's room from the stored socket information
@@ -353,17 +339,19 @@ const handleGameEvents = ({
 
     };
 
-
     let rotatePlayers = (roomName) => {
-      //rotate players
-      rooms[roomName].gameDetails.players.push(rooms[roomName].gameDetails.players.unshift())
-            
-      //set new current player
-      rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
+      // Rotate players
 
-      //reset players turn 
-      rooms[roomName].gameDetails.current_player_turn = { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 }
-    }
+      let firstPlayer = rooms[roomName].gameDetails.players.shift()
+      rooms[roomName].gameDetails.players.push(firstPlayer)
+      
+      // Set new current player
+      rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0];
+    
+      // Reset player's turn
+      rooms[roomName].gameDetails.current_player_turn = { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 };
+    };
+    
 };
 
 module.exports = {

@@ -5,7 +5,7 @@ const addPlayerToTile = (cell, player) => {
 };
 
 let setPlayerOnTheBoard = (gameDetails, player) => {
-  gameDetails.current_player = player;
+  gameDetails.current_player = gameDetails.players[0];
 
   gameDetails.players.forEach((val) => {
       let playerName = val.name;
