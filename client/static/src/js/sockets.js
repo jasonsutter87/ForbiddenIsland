@@ -240,8 +240,6 @@ socket.on('moveUIPlayer', (data) => {
 });
 
 socket.on('rotateUIPlayers',  (data) => {
-    console.log('rotateUIPlayers', data)
-
     $('.clients-current-players-name span').removeClass()
     $('.clients-current-players-name span').addClass(data.gameDetails.current_player.name)
     $('.clients-current-players-name span').html(data.gameDetails.current_player.name)

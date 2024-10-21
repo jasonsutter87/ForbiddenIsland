@@ -342,16 +342,8 @@ const handleGameEvents = ({
     let rotatePlayers = (roomName) => {
       // Rotate players
 
-      let firstPlayer = rooms[roomName].gameDetails.players.unshift()
-
-      console.log('firstPlayer', firstPlayer)
-      console.log('rooms[roomName].gameDetails.players', rooms[roomName].gameDetails.players)
-
-
-      // rooms[roomName].gameDetails.players.push(firstPlayer)
-
-      // let firstPlayer = rooms[roomName].gameDetails.players.shift();
-      // rooms[roomName].gameDetails.players.push(firstPlayer);
+      let firstPlayer = rooms[roomName].gameDetails.players.shift()
+      rooms[roomName].gameDetails.players.push(firstPlayer)
       
       // Set new current player
       rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0];
