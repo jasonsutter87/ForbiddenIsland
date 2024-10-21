@@ -2,14 +2,14 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { movePlayer } from './board.js'
 
 //1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 
 let gameRoom;
 
@@ -151,11 +151,18 @@ socket.on('actionDeckUnusedCount0', () => {
         `)    
 })
 
-socket.on('actionDeckDiscard', (data)=> {
-    $('#actionDiscardPile').empty()
-    $('#actionDiscardPile').append(`
-        <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[0].name}">
+socket.on('actionDeckDiscard', (data, player, card)=> {
+    if(player && card) {
+        $(`#${player.name}-action-cards`).append(`
+        <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">
     `) 
+    } else {
+        $('#actionDiscardPile').empty()
+        $('#actionDiscardPile').append(`
+            <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[0].name}">
+        `) 
+    }
+
 })
 
 socket.on('setCurrentPlayer', (data) => {
@@ -185,12 +192,12 @@ socket.on('renderPlayerActionCards', (data) => {
             <div class="clients-players-actions-cards sidebar-item-${index + 1}">
 
             <span class="${player.name} bold">${player.name}'s</span> Cards<br>
-            <div id="player-${index + 1}-action-cards" class="clients-players-actions-cards-set"></div>
+            <div id="${player.name}-action-cards" class="clients-players-actions-cards-set"></div>
         </div>
         `)
 
         player.actionCards.forEach((card, cardIndex) => {
-            $(`#player-${player.playerId}-action-cards`).append(`
+            $(`#${player.name}-action-cards`).append(`
                 <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">
             `)
         })
@@ -377,6 +384,12 @@ let getTitleById = (board, id) => {
 
 let playerMoveOrActionModal = (toId, roomName) => {         
     let game_details;
+
+    /*
+        refactor:
+        - so the the function know the adjacted tiles before the move or the unflood happens so the model doesnt pop un places it should.
+    
+    */
 
     socket.emit('getRoomDetails', roomName, (roomDetails) => {
         
