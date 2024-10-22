@@ -237,6 +237,7 @@ let resetGame = () => {
         unused: []
     },
     players: [],
+    captured_treasures: [],
     number_of_players: null,
     current_player: null,
     current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },

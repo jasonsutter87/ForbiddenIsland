@@ -122,10 +122,13 @@ socket.on('setPlayersOnBoard', (room) => {
 socket.on('redrawBoard', (data) => {
     createBoardUI(data.gameDetails.gameBoard);
     redrawPlayers(data)
+    redrawCapturedTreasures(data)
 })
 
 socket.on('floodBoard', (data)=> {
+    console.log(data)
     createBoardUI(data.gameDetails.gameBoard);
+    redrawCapturedTreasures(data)
 })
 
 socket.on('floodDeckUnusedCount0', ()=> {
@@ -137,10 +140,9 @@ socket.on('floodDeckUnusedCount0', ()=> {
 })
 
 socket.on('floodDeckDiscard', (data)=> {
-    console.log(data)
     $('#floodDiscardPile').empty()
     $('#floodDiscardPile').append(`
-        <img class="ui-cards" src="/assets/images/flood/${data.gameDetails.flood_deck.discard[data.gameDetails.flood_deck.discard.length - 1].slug}.jpeg" alt="${data.gameDetails.flood_deck.discard[data.gameDetails.flood_deck.discard.length - 1].name}">
+        <img class="ui-cards" src="/assets/images/flood/${data.gameDetails.flood_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.flood_deck.discard[0].name}">
     `) 
 })
 
@@ -485,6 +487,17 @@ let redrawPlayers = (data) => {
         }
     });
 }
+
+
+let redrawCapturedTreasures = (data) => {
+    if(data.gameDetails.captured_treasures.length > 0) {
+        data.gameDetails.captured_treasures.forEach((val, ind) => {
+            $('.captured-treasures').append(`
+                <img class="treasure" src="/assets/images/treasures/${val.slug}.webp" alt="treasure: ${val.name}, color: ${val.color}">
+            `)
+        })
+    }
+ }
 
 export { socket, gameRoom };
 
