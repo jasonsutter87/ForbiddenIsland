@@ -327,11 +327,12 @@ const handleGameEvents = ({
       io.to(roomName).emit('setPlayersOnBoard', rooms[roomName]);
 
       let updatedRoom = floodBoard(rooms[roomName], 6)
+
       rooms[roomName] = updatedRoom
 
       io.to(roomName).emit('floodBoard', rooms[roomName]);
-
-      io.to(roomName).emit('setFloodDeck', rooms[roomName])
+      
+      io.to(roomName).emit('floodDeckDiscard', rooms[roomName]);
 
       io.to(roomName).emit('setCurrentPlayer', rooms[roomName].gameDetails.current_player)
 

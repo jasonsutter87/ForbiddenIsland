@@ -2,14 +2,14 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { movePlayer } from './board.js'
 
 //1. Connect to Socket.io server
-const serverUrl = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://forbiddenisland.onrender.com';
+// const serverUrl = window.location.hostname === 'localhost' 
+//     ? 'http://localhost:3000' 
+//     : 'https://forbiddenisland.onrender.com';
 
-// Connect to the Socket.io server
-const socket = io(serverUrl);
+// // Connect to the Socket.io server
+// const socket = io(serverUrl);
 
-// const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000');
 
 let gameRoom;
 
@@ -125,7 +125,7 @@ socket.on('redrawBoard', (data) => {
 })
 
 socket.on('floodBoard', (data)=> {
-    createBoardUI(data.gameDetails.gameBoard)
+    createBoardUI(data.gameDetails.gameBoard);
 })
 
 socket.on('floodDeckUnusedCount0', ()=> {
@@ -137,9 +137,10 @@ socket.on('floodDeckUnusedCount0', ()=> {
 })
 
 socket.on('floodDeckDiscard', (data)=> {
+    console.log(data)
     $('#floodDiscardPile').empty()
     $('#floodDiscardPile').append(`
-        <img class="ui-cards" src="/assets/images/flood/${data.gameDetails.flood_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.flood_deck.discard[0].name}">
+        <img class="ui-cards" src="/assets/images/flood/${data.gameDetails.flood_deck.discard[data.gameDetails.flood_deck.discard.length - 1].slug}.jpeg" alt="${data.gameDetails.flood_deck.discard[data.gameDetails.flood_deck.discard.length - 1].name}">
     `) 
 })
 
@@ -372,7 +373,6 @@ if(game_details.current_player.name == "Explorer"){
 )
 .map(tile => board[tile.row][tile.col].id);
 }
-
 
 let getTitleById = (board, id) => {
     let flatten = board.flat()
