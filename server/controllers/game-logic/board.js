@@ -46,15 +46,19 @@ let selectObjectById = (board, id) => {
 
 let floodBoard = (room, tileCount) => {
   room.gameDetails.flood_deck.unused.forEach((val, ind) => {
-      if(ind < tileCount) {
-      let tile = selectObjectById(room.gameDetails.gameBoard, val.id)
-      tile.flooded = true 
-      moveCardNewPile(room.gameDetails.flood_deck.discard,  room.gameDetails.flood_deck.unused );
+    if(ind < tileCount) {
+       moveCardNewPile(room.gameDetails.flood_deck.discard,  room.gameDetails.flood_deck.unused );
       }
-  });
+  })
+
+  room.gameDetails.flood_deck.discard.forEach((val, ind) => {
+  let tile = selectObjectById(room.gameDetails.gameBoard, val.id)
+  tile.flooded = true;
+})
 
   return room;
 };
+
 let unFloodTile = (room, id) => {
   let boardTitle = selectObjectById(room.gameDetails.gameBoard, id)
 
@@ -233,6 +237,7 @@ let resetGame = () => {
         unused: []
     },
     players: [],
+    captured_treasures: [],
     number_of_players: null,
     current_player: null,
     current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },

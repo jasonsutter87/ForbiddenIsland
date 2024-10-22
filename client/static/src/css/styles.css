@@ -18966,6 +18966,7 @@ html {
   gap: 10px; /* Adjust spacing between items as needed */
   padding: 1px;
   aspect-ratio: 1/1;
+  min-width: 140px;
 }
 #game-ui .header2 .captured-treasures .treasure {
   width: 100%;

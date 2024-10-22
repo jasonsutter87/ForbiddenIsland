@@ -122,10 +122,13 @@ socket.on('setPlayersOnBoard', (room) => {
 socket.on('redrawBoard', (data) => {
     createBoardUI(data.gameDetails.gameBoard);
     redrawPlayers(data)
+    redrawCapturedTreasures(data)
 })
 
 socket.on('floodBoard', (data)=> {
-    createBoardUI(data.gameDetails.gameBoard)
+    console.log(data)
+    createBoardUI(data.gameDetails.gameBoard);
+    redrawCapturedTreasures(data)
 })
 
 socket.on('floodDeckUnusedCount0', ()=> {
@@ -373,7 +376,6 @@ if(game_details.current_player.name == "Explorer"){
 .map(tile => board[tile.row][tile.col].id);
 }
 
-
 let getTitleById = (board, id) => {
     let flatten = board.flat()
     let tile = flatten.filter(tile => tile.id == id)
@@ -485,6 +487,17 @@ let redrawPlayers = (data) => {
         }
     });
 }
+
+
+let redrawCapturedTreasures = (data) => {
+    if(data.gameDetails.captured_treasures.length > 0) {
+        data.gameDetails.captured_treasures.forEach((val, ind) => {
+            $('.captured-treasures').append(`
+                <img class="treasure" src="/assets/images/treasures/${val.slug}.webp" alt="treasure: ${val.name}, color: ${val.color}">
+            `)
+        })
+    }
+ }
 
 export { socket, gameRoom };
 
