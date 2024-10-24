@@ -488,7 +488,6 @@ let redrawPlayers = (data) => {
     });
 }
 
-
 let redrawCapturedTreasures = (data) => {
     if(data.gameDetails.captured_treasures.length > 0) {
         data.gameDetails.captured_treasures.forEach((val, ind) => {
