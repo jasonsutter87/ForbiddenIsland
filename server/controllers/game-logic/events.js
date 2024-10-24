@@ -301,23 +301,28 @@ const handleGameEvents = ({
   
     //deal action cards to a player
     const dealInitialActionCards = (from, to, dealCount) => {
-    let player = to.actionCards;
-
-    while (dealCount > 0) {
-      const firstCard = from[0];
-      
-      if (firstCard.name !== "water rises") {
-        player.push(from.shift());
-        dealCount--; 
-      } else {
-        from.shift();
-        const randomIndex = Math.floor(Math.random() * from.length);
-        from.splice(randomIndex, 0, firstCard);
-        dealCount++;
+      let player = to.actionCards;
+    
+      let attempts = 0; 
+      const maxAttempts = from.length * 2; 
+    
+      while (dealCount > 0 && attempts < maxAttempts) {
+        const firstCard = from[0];
+    
+        if (firstCard.name !== "water rises") {
+          player.push(from.shift());
+          dealCount--; 
+        } else {
+          // Move "water rises" to a random position in the remaining deck
+          from.shift();
+          const randomIndex = Math.floor(Math.random() * from.length);
+          from.splice(randomIndex, 0, firstCard);
+        }
+        
+        attempts++; 
       }
-    }
     };
-
+    
     // Start the game loop (example)
     const startGameLoop = (roomName) => {
       // place players on the board.
