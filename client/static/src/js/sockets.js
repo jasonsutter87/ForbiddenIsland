@@ -15,6 +15,8 @@ let gameRoom;
 
 socket.on('settingRoomName', (data) => {
     socket.roomName = data
+    console.log('Room Name:',  socket.roomName)
+    console.info('try the endpoint at: /api/game/game-details/:room')
 })
 
 ///////////////////////
@@ -126,7 +128,6 @@ socket.on('redrawBoard', (data) => {
 })
 
 socket.on('floodBoard', (data)=> {
-    console.log(data)
     createBoardUI(data.gameDetails.gameBoard);
     redrawCapturedTreasures(data)
 })

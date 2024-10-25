@@ -343,7 +343,7 @@ const handleGameEvents = ({
 
       io.to(roomName).emit('setCurrentPlayer', rooms[roomName].gameDetails.current_player)
 
-      console.log('The Game is Ready.')
+      console.log(`The Game is Ready. Room: ${roomName}`)
 
     };
 
