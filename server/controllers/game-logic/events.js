@@ -195,6 +195,8 @@ const handleGameEvents = ({
               io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
             } else {
 
+              
+
               let movedCard = moveCardNewPile(rooms[roomName].gameDetails.players[0].actionCards,  rooms[roomName].gameDetails.action_deck.unused );
               io.to(roomName).emit('actionDeckDiscard', rooms[roomName], rooms[roomName].gameDetails.players[0], movedCard);
             }
