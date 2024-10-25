@@ -147,8 +147,12 @@ $('#dealFloodCard').on('click', e => {
     socket.emit('getRoomDetails', socket.roomName, (roomDetails) => {
         game_details = roomDetails.gameDetails;
 
-        if((game_details.current_player_turn.number_of_actions >= 3 && game_details.current_player_turn.action_cards_deal >= 1) && game_details.current_player_turn.flood_cards_deal < game_details.flood_deal_count ) {
-            socket.emit('dealFloodCard', socket.roomName) 
+        if(socket.playerName == game_details.current_player.name) {
+            if((game_details.current_player_turn.number_of_actions >= 3 && game_details.current_player_turn.action_cards_deal >= 1) && game_details.current_player_turn.flood_cards_deal < game_details.flood_deal_count ) {
+                socket.emit('dealFloodCard', socket.roomName) 
+            }
+        } else {
+            alert('Its Not your turn yo  🤡')
         }
     })
 

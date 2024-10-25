@@ -1,5 +1,5 @@
 const { GAME_STATUS } = require("../../Enums/enums.js");
-const { shuffleCards, shuffle } = require('../game-machanics/shuffling')
+const { dividedShuffle, shuffleCards, shuffle } = require('../game-machanics/shuffling')
 const { 
         FLOOD_CARDS,
         ACTION_CARDS,
@@ -190,6 +190,7 @@ const handleGameEvents = ({
             let peekCard =  rooms[roomName].gameDetails.action_deck.unused[0]
 
             if(peekCard.name == 'water rises') {
+              rooms[roomName].gameDetails.action_deck.unused = dividedShuffle(ooms[roomName].gameDetails.action_deck.discard, rooms[roomName].gameDetails.action_deck.unused)
               moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard,  rooms[roomName].gameDetails.action_deck.unused );
               io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
             } else {
