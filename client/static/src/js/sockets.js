@@ -16,7 +16,7 @@ let gameRoom;
 socket.on('settingRoomName', (data) => {
     socket.roomName = data
     console.log('Room Name:',  socket.roomName)
-    console.info('try the endpoint at: /api/game/game-details/:room')
+    console.info(`try the endpoint at: ${serverUrl}/api/game/game-details/${socket.roomName}`)
 })
 
 ///////////////////////
