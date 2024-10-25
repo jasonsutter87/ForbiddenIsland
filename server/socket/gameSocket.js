@@ -1,6 +1,7 @@
+const rooms = {};
+
 module.exports = (io) => {
   // Track rooms and player counts
-  const rooms = {};
   const { initialize } =  require('../controllers/game-logic/game')
   const { handleGameEvents } = require('../controllers/game-logic/events.js')
   const { game_details,  GAME_BOARDS  } = require('../models/models')
@@ -52,3 +53,6 @@ module.exports = (io) => {
     return newRoomName;
   };
 };
+
+
+module.exports.rooms = rooms;
