@@ -48,7 +48,7 @@ module.exports = (io) => {
       chat_history: [],
       gameDetails: game_details,
       startingGameBoard: GAME_BOARDS[0].layout,
-      GameLayoutName: GAME_BOARDS[0].name,
+      gameLayoutName: GAME_BOARDS[0].name,
       status: GAME_STATUS.notStarted
     };
     return newRoomName;
