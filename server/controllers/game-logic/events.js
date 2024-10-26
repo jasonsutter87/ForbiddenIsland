@@ -127,6 +127,7 @@ const handleGameEvents = ({
       GAME_BOARDS.filter(board => {
         if(board.id == gameLayoutId) {
           rooms[roomName].startingGameBoard = board.layout
+          rooms[roomName].GameLayoutName = board.name
 
           io.to(roomName).emit('setGameLayout', gameLayoutId); 
         }
