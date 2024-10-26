@@ -143,8 +143,7 @@ let game_details = {
     current_player: null,
     current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
     gameBoard: GAME_BOARDS[0].layout,
-    current_flood_level: 1,
-    flood_deal_count: 2
+    flood_details: {current_flood_level: 1, flood_deal_count: 2}
 };
 
 const PLAYER_CARDS = [

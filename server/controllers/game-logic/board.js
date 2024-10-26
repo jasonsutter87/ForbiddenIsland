@@ -103,7 +103,7 @@ let checkForWaterRise = ({
   if(discardAction && discardAction.name == "water rises"){
 
   
-    if(room.gameDetails.current_flood_level == 10) {
+    if(room.gameDetails.flood_details.current_flood_level == 10) {
       return 'game over'    
     } else {
       io.to(room.name).emit('updateFloodLevelUI', room); 
@@ -114,18 +114,18 @@ let checkForWaterRise = ({
       room.gameDetails.flood_deck.discard = [];
 
 
-      let current_flood_level = room.gameDetails.current_flood_level++
+      let current_flood_level = room.gameDetails.flood_details.current_flood_level++
       if (current_flood_level == 8) {
-        room.gameDetails.flood_deal_count = 5;
+        room.gameDetails.flood_details.flood_deal_count = 5;
       } else if (current_flood_level == 6) {
-        room.gameDetails.flood_deal_count = 4;
+        room.gameDetails.flood_details.flood_deal_count = 4;
       } else if (current_flood_level == 3) {
-        room.gameDetails.flood_deal_count = 3;
+        room.gameDetails.flood_details.flood_deal_count = 3;
       }
 
 
       //flood # of card per the flood level
-      let updatedRoom = floodBoard(room, room.gameDetails.flood_deal_count)
+      let updatedRoom = floodBoard(room, room.gameDetails.flood_details.flood_deal_count)
       room = updatedRoom
 
       return room
@@ -155,7 +155,7 @@ let checkTreasureSunk = (board, treasure) => {
 
 let checkForPlayerLost = (room) => {
 
-    if(room.gameDetails.current_flood_level >= 10 ) {
+    if(room.gameDetails.flood_details.current_flood_level >= 10 ) {
       return true;
     }
        //- Wind is sunk under
@@ -210,7 +210,7 @@ let checkForPlayerWon = () => {
 
 let setDifficulty = (playerDifficuly) => {
     return new Promise(resolve => {
-        game_details.current_flood_level = playerDifficuly;
+        game_details.flood_details.current_flood_level = playerDifficuly;
         resolve();
     });
 }
@@ -242,7 +242,7 @@ let resetGame = () => {
     current_player: null,
     current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
     gameBoard: game_board,
-    current_flood_level: 1
+    flood_details: {current_flood_level: 1, flood_deal_count: 2}
 }; 
 
  

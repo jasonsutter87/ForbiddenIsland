@@ -75,8 +75,7 @@ const handleGameEvents = ({
           current_player: null,
           current_player_turn: { number_of_actions: 0, action_cards_deal: 0, flood_cards_deal: 0 },
           gameBoard: rooms[roomName].startingGameBoard,
-          current_flood_level: 1,
-          flood_deal_count: 2
+          flood_details: {current_flood_level: 1, flood_deal_count: 2}
         }; 
 
         let newActionCards = JSON.parse(JSON.stringify(ACTION_CARDS)); 
@@ -112,7 +111,7 @@ const handleGameEvents = ({
 
           rooms[roomName].status = GAME_STATUS.inProgress;
 
-          rooms[roomName].gameDetails.current_flood_level = 1
+          rooms[roomName].gameDetails.flood_details.current_flood_level = 1
           rooms[roomName].gameDetails.current_player = rooms[roomName].gameDetails.players[0]
           io.to(roomName).emit('startGame', result); 
           io.to(roomName).emit('updateFloodLevelUI', rooms[roomName]); 
@@ -164,7 +163,7 @@ const handleGameEvents = ({
 
             io.to(roomName).emit('redrawBoard', rooms[roomName]);
 
-            if(rooms[roomName].gameDetails.current_player_turn.flood_cards_deal ==  rooms[roomName].gameDetails.flood_deal_count) {
+            if(rooms[roomName].gameDetails.current_player_turn.flood_cards_deal ==  rooms[roomName].gameDetails.flood_details.flood_deal_count) {
               rotatePlayers(roomName) 
               io.to(roomName).emit('rotateUIPlayers', rooms[roomName]); 
             }
@@ -190,7 +189,7 @@ const handleGameEvents = ({
             let peekCard =  rooms[roomName].gameDetails.action_deck.unused[0]
 
             if(peekCard.name == 'water rises') {
-              rooms[roomName].gameDetails.action_deck.unused = dividedShuffle(ooms[roomName].gameDetails.action_deck.discard, rooms[roomName].gameDetails.action_deck.unused)
+              rooms[roomName].gameDetails.action_deck.unused = dividedShuffle(rooms[roomName].gameDetails.action_deck.discard, rooms[roomName].gameDetails.action_deck.unused)
               moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard,  rooms[roomName].gameDetails.action_deck.unused );
               io.to(roomName).emit('actionDeckDiscard', rooms[roomName]);
             } else {

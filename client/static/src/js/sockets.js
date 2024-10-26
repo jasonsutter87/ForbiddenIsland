@@ -10,6 +10,7 @@ const serverUrl = window.location.hostname === 'localhost'
 const socket = io(serverUrl);
 
 // const socket = io('http://localhost:3000');
+// const serverUrl = "http://localhost:3000"
 
 let gameRoom;
 
@@ -209,8 +210,8 @@ socket.on('renderPlayerActionCards', (data) => {
 })
 
 socket.on('updateFloodLevelUI', (data) => {
-        $('.flood-level-slider').css('width', `${data.gameDetails.current_flood_level * 10}%`)
-        let level = data.gameDetails.current_flood_level;
+        $('.flood-level-slider').css('width', `${data.gameDetails.flood_details.current_flood_level * 10}%`)
+        let level = data.gameDetails.flood_details.current_flood_level;
         
         if (level >= 10) {
             $('.flood-level-slider').css('background', '#ff1919');
@@ -224,8 +225,8 @@ socket.on('updateFloodLevelUI', (data) => {
             $('.flood-level-slider').css('background', '#5858da'); 
         }
 
-        $('.current-flood-number').html(data.gameDetails.current_flood_level)
-        $('.current-flood-deal-number').html(data.gameDetails.flood_deal_count)
+        $('.current-flood-number').html(data.gameDetails.flood_details.current_flood_level)
+        $('.current-flood-deal-number').html(data.gameDetails.flood_details.flood_deal_count)
 })
 
 socket.on('increaseBadgeCount', (count) => {
