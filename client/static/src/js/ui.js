@@ -148,7 +148,7 @@ $('#dealFloodCard').on('click', e => {
         game_details = roomDetails.gameDetails;
 
         if(socket.playerName == game_details.current_player.name) {
-            if((game_details.current_player_turn.number_of_actions >= 3 && game_details.current_player_turn.action_cards_deal >= 1) && game_details.current_player_turn.flood_cards_deal < game_details.flood_deal_count ) {
+            if((game_details.current_player_turn.number_of_actions >= 3 && game_details.current_player_turn.action_cards_deal >= 1) && game_details.current_player_turn.flood_cards_deal < game_details.flood_details.flood_deal_count ) {
                 socket.emit('dealFloodCard', socket.roomName) 
             }
         } else {
