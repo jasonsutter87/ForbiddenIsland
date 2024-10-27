@@ -231,15 +231,12 @@ const handleGameEvents = ({
    
     socket.on('playerForcedDeltActionCard', (roomName, cardId, player) => {
         let temp = rooms[roomName].gameDetails.current_player.actionCards.filter(card => card.id == cardId)
-        removeById(rooms[roomName].gameDetails.current_player.actionCards, cardId) /// <- not working
-        moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard, temp);  /// <- working
-
-
-        // TODO
+        rooms[roomName].gameDetails.current_player.actionCards = removeById(rooms[roomName].gameDetails.current_player.actionCards, cardId) /// <- not working 
+        moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard, temp);
 
         io.to(roomName).emit('redrawBoard', rooms[roomName]);
-        io.to(roomName).emit('redrawPlayersActionCards', rooms[roomName]); /// <- triggering, not implemented
-        io.to(roomName).emit('redrawDiscardActionCards', rooms[roomName]); /// <- triggering, not implemented
+        io.to(roomName).emit('redrawPlayersActionCards', rooms[roomName]);
+        io.to(roomName).emit('redrawDiscardActionCards', rooms[roomName]); 
     })
 
 

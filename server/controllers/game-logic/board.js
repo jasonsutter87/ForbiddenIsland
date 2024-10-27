@@ -34,10 +34,13 @@ let moveCardNewPile = (inbound, outbound) => {
 };
 
 let removeById = (arr, id) => {
-  const index = arr.findIndex(item => item.id === id);
+  
+  const index = arr.findIndex(item => item.id == id);
   if (index !== -1) {
       arr.splice(index, 1);
   }
+
+  return arr;
 }
 
 let selectObjectById = (board, id) => {

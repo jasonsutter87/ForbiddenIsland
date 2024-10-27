@@ -2,15 +2,15 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { movePlayer } from './board.js'
 
 //1. Connect to Socket.io server
-// const serverUrl = window.location.hostname === 'localhost' 
-//     ? 'http://localhost:3000' 
-//     : 'https://forbiddenisland.onrender.com';
+const serverUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : 'https://forbiddenisland.onrender.com';
 
-// // Connect to the Socket.io server
-// const socket = io(serverUrl);
+// Connect to the Socket.io server
+const socket = io(serverUrl);
 
-const socket = io('http://localhost:3000');
-const serverUrl = "http://localhost:3000"
+// const socket = io('http://localhost:3000');
+// const serverUrl = "http://localhost:3000"
 
 let gameRoom;
 
@@ -210,18 +210,22 @@ socket.on('renderPlayerActionCards', (data) => {
 })
 
 socket.on('redrawPlayersActionCards', (data) => { 
-
-console.log('redrawPlayersActionCards', data)
-
-
+    let playerName = data.gameDetails.current_player.name
+    $(`#${playerName}-action-cards`).empty()
+    data.gameDetails.current_player.actionCards.forEach((card, cardIndex) => {
+        $(`#${playerName}-action-cards`).append(`
+            <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">
+        `)
+    })
 })
+
+
 socket.on('redrawDiscardActionCards', (data) => { 
-
-    console.log('redrawDiscardActionCards', data)
-
+    $('#actionDiscardPile').empty()
+    $('#actionDiscardPile').append(`
+        <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[0].name}">
+    `) 
 })
-
-
 
 socket.on('updateFloodLevelUI', (data) => {
         $('.flood-level-slider').css('width', `${data.gameDetails.flood_details.current_flood_level * 10}%`)
