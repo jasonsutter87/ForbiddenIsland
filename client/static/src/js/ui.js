@@ -2,10 +2,10 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 import { socket } from './sockets.js'
 
 //master
-let socketURL = 'https://forbiddenisland.onrender.com';
+// let socketURL = 'https://forbiddenisland.onrender.com';
 
 //dev
-// let socketURL = 'http://localhost:3000';
+let socketURL = 'http://localhost:3000';
 
 $('#btn-play-game').on('click', e => {
     e.preventDefault();
@@ -180,9 +180,29 @@ $('#dealActionCard').on('click', e => {
         } else {
             alert('Its Not your turn yo  🤡')
         }
-
-     
+        
+        
     })  
+})
+
+
+$(document).on('click', '.forced-discard-cards', e => {
+    e.preventDefault()
+    const cardId = $(e.currentTarget).attr('cardid');
+    const player = $(e.currentTarget).attr('player');
+
+    let game_details;
+    
+    socket.emit('getRoomDetails', socket.roomName, (roomDetails) => {
+        game_details = roomDetails.gameDetails;
+
+        if(socket.playerName == game_details.current_player.name) {
+            $('.forceActionDiscard-wrapper').addClass('d-none')    
+            socket.emit('playerForcedDeltActionCard', socket.roomName, cardId, player)  
+        } else {
+            alert('Its Not your turn yo  🤡')
+        }
+    })
 })
 
 $('.chat-window-btn').on('click', e => {

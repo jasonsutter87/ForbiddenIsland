@@ -362,7 +362,7 @@ html {
 //   }
 // }
 
-
+.forceActionDiscard-wrapper,
 .moveOrUnfloodModal-wrapper {
   position: absolute;
   top: 0;
@@ -386,6 +386,16 @@ html {
           max-width: 300px;
           background-color: greenyellow;
           padding: 1.25rem;
+
+          &.discard {
+            max-width: 700px;
+            background-color: rgb(47, 241, 255);
+            padding: 3rem 1.25rem;
+          }
+
+
+
+
       }
     }
 }
@@ -710,6 +720,16 @@ html {
     &:hover {
       transform: scale(1.05);
     }
+  }
+}
+
+
+.forced-discard-cards {
+  transition: transform 0.3s;
+  border-radius: 8px;
+  
+  &:hover {
+    transform: scale(1.05);
   }
 }
 

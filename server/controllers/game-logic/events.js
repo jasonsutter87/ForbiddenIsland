@@ -9,6 +9,7 @@ const {
 const { checkForPlayerLost,
         placeTilesOnBoard,
         moveCardNewPile,
+        removeById,
         floodOrSink,
         unFloodTile,
         checkForWaterRise, floodBoard } =  require('../game-logic/board')
@@ -198,7 +199,12 @@ const handleGameEvents = ({
               
 
               let movedCard = moveCardNewPile(rooms[roomName].gameDetails.players[0].actionCards,  rooms[roomName].gameDetails.action_deck.unused );
-              io.to(roomName).emit('actionDeckDiscard', rooms[roomName], rooms[roomName].gameDetails.players[0], movedCard);
+              
+              if(rooms[roomName].gameDetails.players[0].actionCards.length > 5) {
+                io.to(roomName).emit('forcePlayerActionDiscard', rooms[roomName], rooms[roomName].gameDetails.players[0]);
+              }else {
+                io.to(roomName).emit('actionDeckDiscard', rooms[roomName], rooms[roomName].gameDetails.players[0], movedCard);
+              }
             }
           
 
@@ -222,6 +228,23 @@ const handleGameEvents = ({
         }
 
     })
+   
+    socket.on('playerForcedDeltActionCard', (roomName, cardId, player) => {
+        let temp = rooms[roomName].gameDetails.current_player.actionCards.filter(card => card.id == cardId)
+        removeById(rooms[roomName].gameDetails.current_player.actionCards, cardId) /// <- not working
+        moveCardNewPile(rooms[roomName].gameDetails.action_deck.discard, temp);  /// <- working
+
+
+        // TODO
+
+        io.to(roomName).emit('redrawBoard', rooms[roomName]);
+        io.to(roomName).emit('redrawPlayersActionCards', rooms[roomName]); /// <- triggering, not implemented
+        io.to(roomName).emit('redrawDiscardActionCards', rooms[roomName]); /// <- triggering, not implemented
+    })
+
+
+
+  
 
 
     socket.on('unFloodTile', (roomName, tile) => {

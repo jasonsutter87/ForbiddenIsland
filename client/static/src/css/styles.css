@@ -19177,6 +19177,7 @@ html {
   border: 5px solid #ffff00;
 }
 
+.forceActionDiscard-wrapper,
 .moveOrUnfloodModal-wrapper {
   position: absolute;
   top: 0;
@@ -19188,17 +19189,25 @@ html {
   z-index: 25;
   background-color: rgba(0, 0, 0, 0.3);
 }
+.forceActionDiscard-wrapper .modal-main,
 .moveOrUnfloodModal-wrapper .modal-main {
   display: flex;
   align-items: center;
   height: 100vh;
   justify-content: center;
 }
+.forceActionDiscard-wrapper .modal-main .modal-body,
 .moveOrUnfloodModal-wrapper .modal-main .modal-body {
   width: 100%;
   max-width: 300px;
   background-color: greenyellow;
   padding: 1.25rem;
+}
+.forceActionDiscard-wrapper .modal-main .modal-body.discard,
+.moveOrUnfloodModal-wrapper .modal-main .modal-body.discard {
+  max-width: 700px;
+  background-color: rgb(47, 241, 255);
+  padding: 3rem 1.25rem;
 }
 
 .player-piece {
@@ -19476,6 +19485,14 @@ html {
   cursor: pointer;
 }
 .ui-cards.backs:hover {
+  transform: scale(1.05);
+}
+
+.forced-discard-cards {
+  transition: transform 0.3s;
+  border-radius: 8px;
+}
+.forced-discard-cards:hover {
   transform: scale(1.05);
 }
 
