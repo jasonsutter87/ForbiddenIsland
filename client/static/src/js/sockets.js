@@ -209,6 +209,24 @@ socket.on('renderPlayerActionCards', (data) => {
     })
 })
 
+socket.on('redrawPlayersActionCards', (data) => { 
+    let playerName = data.gameDetails.current_player.name
+    $(`#${playerName}-action-cards`).empty()
+    data.gameDetails.current_player.actionCards.forEach((card, cardIndex) => {
+        $(`#${playerName}-action-cards`).append(`
+            <img class="player-action-cards" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}">
+        `)
+    })
+})
+
+
+socket.on('redrawDiscardActionCards', (data) => { 
+    $('#actionDiscardPile').empty()
+    $('#actionDiscardPile').append(`
+        <img class="ui-cards" src="/assets/images/action/action_${data.gameDetails.action_deck.discard[0].slug}.jpeg" alt="${data.gameDetails.action_deck.discard[0].name}">
+    `) 
+})
+
 socket.on('updateFloodLevelUI', (data) => {
         $('.flood-level-slider').css('width', `${data.gameDetails.flood_details.current_flood_level * 10}%`)
         let level = data.gameDetails.flood_details.current_flood_level;
@@ -249,6 +267,17 @@ socket.on('rotateUIPlayers',  (data) => {
     $('.clients-current-players-name span').html(data.gameDetails.current_player.name)
 
     redrawPlayers(data)
+})
+
+
+socket.on('forcePlayerActionDiscard', (room, player) => { 
+    $('.forceActionDiscard-wrapper').removeClass('d-none')
+
+    player.actionCards.forEach(card => {
+        $('#current_players_actions_cards').append(`
+             <img class="player-action-cards forced-discard-cards" player="${player.name}" src="/assets/images/action/action_${card.slug}.jpeg" alt="${card.name}" cardid="${card.id}">
+        `)
+    })
 })
 
 //gameover

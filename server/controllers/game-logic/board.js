@@ -33,6 +33,16 @@ let moveCardNewPile = (inbound, outbound) => {
   return null; 
 };
 
+let removeById = (arr, id) => {
+  
+  const index = arr.findIndex(item => item.id == id);
+  if (index !== -1) {
+      arr.splice(index, 1);
+  }
+
+  return arr;
+}
+
 let selectObjectById = (board, id) => {
   for (let row of board) {
       for (let tile of row) {
@@ -279,5 +289,6 @@ module.exports = {
     floodBoard,
     checkForWaterRise,
     unFloodTile,
-    floodByWaterLevel
+    floodByWaterLevel,
+    removeById
 };
