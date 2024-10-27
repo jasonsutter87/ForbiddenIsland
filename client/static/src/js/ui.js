@@ -198,6 +198,7 @@ $(document).on('click', '.forced-discard-cards', e => {
 
         if(socket.playerName == game_details.current_player.name) {
             $('.forceActionDiscard-wrapper').addClass('d-none')    
+            $('#current_players_actions_cards').empty() 
             socket.emit('playerForcedDeltActionCard', socket.roomName, cardId, player)  
         } else {
             alert('Its Not your turn yo  🤡')
